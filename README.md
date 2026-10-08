@@ -12,6 +12,7 @@
 ![查全率](https://img.shields.io/badge/异常查全率-7%2F7-success)
 ![成因判定](https://img.shields.io/badge/成因判定-7%2F7-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
+[![在线打开](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E6%89%93%E5%BC%80-GitHub%20Pages-2E7D6F)](https://arnoldwang-86.github.io/pingan-branch-ops-monitoring/)
 
 ---
 
