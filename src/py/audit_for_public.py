@@ -31,11 +31,18 @@ TEXT_EXT = {".py", ".js", ".ps1", ".bat", ".md", ".sql", ".html", ".json",
 SKIP_DIRS = {"_qa", "__pycache__", ".git", "node_modules"}
 SKIP_FILES = {"xlsx.full.min.js", "web_data.js"}     # 第三方/生成物
 
+# 注意：这些正则必须排除「文档里描述如何取凭据」的写法。
+# 早期版本用 (password|pwd)\s*=\s*['\"]... 会误报 README 中的
+#   Select-String "^password=").Line -replace "^password=",""
+# 这类说明性文本——它匹配到的是字符串 "^password="，根本不含真实口令。
+# 修法：值不能以 ^ $ [ ( 等正则元字符开头（那说明是模式而非字面量），
+#       且必须确实是引号包裹的字面量。
 SECRET_PATTERNS = [
     (r"sk-[A-Za-z0-9]{20,}", "疑似 API Key"),
     (r"DEEPSEEK_API_KEY\s*=\s*['\"]?sk-", "明文写入 API Key"),
-    (r"(?i)(password|passwd|pwd)\s*=\s*['\"][^'\"]{3,}['\"]", "疑似硬编码口令"),
-    (r"(?i)(secret|private[_-]?key|access[_-]?token)\s*=\s*['\"][^'\"]{8,}['\"]",
+    (r"""(?ix)(password|passwd|pwd)\s*=\s*['"](?![\^$\[\](){}|*+?\\])[^'"\s]{3,}['"]""",
+     "疑似硬编码口令"),
+    (r"""(?ix)(secret|private[_-]?key|access[_-]?token)\s*=\s*['"](?![\^$\[\](){}|*+?\\])[^'"\s]{8,}['"]""",
      "疑似密钥/令牌"),
     (r"Bearer\s+sk-[A-Za-z0-9]{10,}", "疑似 Bearer 令牌"),
 ]
