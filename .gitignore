@@ -32,3 +32,6 @@ assets/证件照.jpg
 assets/
 简历*.docx
 *简历*
+
+# 审计输出（含本机路径，可随时重新生成）
+tools/audit_report.txt

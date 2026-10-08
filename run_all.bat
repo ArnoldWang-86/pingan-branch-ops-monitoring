@@ -22,19 +22,40 @@ echo  Bank Branch Operations Monitoring - reproduce pipeline
 echo ============================================================
 echo.
 
+REM Interpreter selection: try candidates in order, pick the first one
+REM that actually has the dependencies. Do NOT just use whatever `python`
+REM resolves to -- a bare system Python may lack duckdb/dotenv and will
+REM silently break step 6.
+REM
+REM Portability: set OPS_PYTHON to your own interpreter to override.
+REM The second candidate is the DSH bundled runtime path used during
+REM development; it simply will not exist on other machines, which is fine.
 set "PY="
-set "RUNTIME_PY=C:\Users\Arnold\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
-if exist "%RUNTIME_PY%" (
-  "%RUNTIME_PY%" -c "import duckdb" >nul 2>nul
-  if not errorlevel 1 set "PY=%RUNTIME_PY%"
+if defined OPS_PYTHON (
+  if exist "%OPS_PYTHON%" (
+    "%OPS_PYTHON%" -c "import duckdb" >nul 2>nul
+    if not errorlevel 1 set "PY=%OPS_PYTHON%"
+  )
+)
+set "RUNTIME_PY=%USERPROFILE%\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
+if not defined PY (
+  if exist "%RUNTIME_PY%" (
+    "%RUNTIME_PY%" -c "import duckdb" >nul 2>nul
+    if not errorlevel 1 set "PY=%RUNTIME_PY%"
+  )
 )
 if not defined PY (
   where python >nul 2>nul
   if not errorlevel 1 set "PY=python"
 )
 if not defined PY (
+  where py >nul 2>nul
+  if not errorlevel 1 set "PY=py"
+)
+if not defined PY (
   echo [ERROR] No usable Python found.
-  echo         Expected: %RUNTIME_PY%
+  echo         Set OPS_PYTHON to your interpreter, e.g.
+  echo           set OPS_PYTHON=C:\Python313\python.exe
   exit /b 1
 )
 echo Python: %PY%

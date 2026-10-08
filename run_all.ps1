@@ -16,17 +16,30 @@ Set-Location $PSScriptRoot
 # 解释器选择：优先选「真的装了依赖」的那个。
 # 本机系统 Python 3.13 缺 duckdb / dotenv，而运行时 Python 有，
 # 所以不能用「python 解析到哪个就用哪个」——会静默地在第 6 步炸掉。
-$runtime = "C:\Users\Arnold\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
+# 可移植性：用 $env:OPS_PYTHON 覆盖；否则依次尝试
+#  ① 环境变量指定的解释器
+#  ② 开发时使用的 DSH 运行时 Python（其他机器上不存在，会自动跳过）
+#  ③ PATH 里的 python / py
+$candidates = @()
+if ($env:OPS_PYTHON) { $candidates += $env:OPS_PYTHON }
+$candidates += (Join-Path $env:USERPROFILE ".dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe")
+foreach ($n in @("python", "py")) {
+    $c = Get-Command $n -ErrorAction SilentlyContinue
+    if ($c) { $candidates += $c.Source }
+}
 $py = $null
-if (Test-Path $runtime) {
-    & $runtime -c "import duckdb" 2>$null
-    if ($LASTEXITCODE -eq 0) { $py = $runtime }
+foreach ($cand in $candidates) {
+    if (-not $cand -or -not (Test-Path $cand)) { continue }
+    & $cand -c "import duckdb" 2>$null
+    if ($LASTEXITCODE -eq 0) { $py = $cand; break }
 }
+# 若没有装齐依赖的，退而求其次：只要存在就用，后面会给出 WARN
 if (-not $py) {
-    $c = Get-Command python -ErrorAction SilentlyContinue
-    if ($c) { $py = $c.Source }
+    foreach ($cand in $candidates) {
+        if ($cand -and (Test-Path $cand)) { $py = $cand; break }
+    }
 }
-if (-not $py) { throw "找不到可用的 Python，请先安装依赖" }
+if (-not $py) { throw "找不到可用的 Python。可用 `$env:OPS_PYTHON 指定，例如 `$env:OPS_PYTHON='C:\Python313\python.exe'" }
 & $py -c "import duckdb" 2>$null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[WARN] 该 Python 未安装 duckdb，第 6 步会失败。" -ForegroundColor Yellow
