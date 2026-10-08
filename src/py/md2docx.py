@@ -298,23 +298,40 @@ def build_all():
     作为命令行参数传给 Python，参数会经过 cmd.exe 的代码页转换而损坏
     （实测报 FileNotFoundError，文件名里全是 \\ufffd）。让脚本自己在
     目录里找文件，就完全绕开了这一层编码问题——目录名是 ASCII 的。
+
+    早期版本把要转的文件名**硬编码**成三个，结果新增文档（例如
+    `给其他智能体的提示词_*.md`）永远拿不到 Word 版，而脚本也不会提醒。
+    改为扫描目录：`docs/` 与 `results/` 下的每个 .md 都转，
+    这样新增文档会自动被纳入，不会静默漏掉。
     """
-    pairs = [
-        (os.path.join(PROJ, "results"), "运营建议报告.md"),
-        (os.path.join(PROJ, "docs"), "方法说明书.md"),
-        (PROJ, "README.md"),
-    ]
+    targets = [(PROJ, "README.md")]
+    for sub in ("docs", "results"):
+        folder = os.path.join(PROJ, sub)
+        if not os.path.isdir(folder):
+            continue
+        for fn in sorted(os.listdir(folder)):
+            # 跳过：非 markdown、Office 临时锁文件（~$ 前缀）
+            if not fn.lower().endswith(".md") or fn.startswith("~$"):
+                continue
+            targets.append((folder, fn))
+
     ok = 0
-    for folder, name in pairs:
+    for folder, name in targets:
         src = os.path.join(folder, name)
         if not os.path.exists(src):
             print(f"跳过（未找到）: {src}")
             continue
         dst = os.path.splitext(src)[0] + ".docx"
-        np_, nt = convert(src, dst)
+        try:
+            np_, nt = convert(src, dst)
+        except PermissionError:
+            # Word 打开着目标文件时会锁住，给出可操作的提示而不是抛栈
+            print(f"[跳过] 目标被占用（请先关闭 Word）: {dst}")
+            continue
         print(f"已生成: {dst}（段落 {np_} / 表格 {nt}）")
         ok += 1
     print(f"\n共转换 {ok} 份文档。")
+    return ok
 
 
 def main():
