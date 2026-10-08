@@ -1,22 +1,29 @@
 # -*- coding: utf-8 -*-
-"""把本地领先于远端的提交推送到 GitHub（走 Git Data API）。
+"""把本地提交推送到 GitHub（走 Git Data API，支持新增/修改/删除）。
 
-为什么需要它
-------------
-本机 `github.com:443` 的 push 通道不通（git push 永远报
-"Failed to connect to github.com port 443"），但 `api.github.com` 可用。
-所以推送只能走 Git Data API：blob → tree → commit → 更新 ref。
+为什么不能用 git push
+---------------------
+本机 `github.com:443` 的传输通道不通（git push 永远报
+"Failed to connect to github.com port 443"），只有 `api.github.com` 可用。
+所以推送改为：blob → tree → commit → 更新 ref。
 
-与 push_via_api.py 的分工
--------------------------
-  · push_via_api.py  —— 首次全量推送（空仓库引导 + 全量 blob），保留作为完整参考
-  · 本脚本           —— 日常增量推送：只上传本地 HEAD 与远端不一致的文件
+设计要点（都是踩过坑之后的结论）
+--------------------------------
+1. **以本地 HEAD 的树为准，而不是 `git ls-files`。**
+   早期版本用 `git ls-files` 取清单，而它不含已删除的文件，
+   导致「本地删了、远端还留着」——实测 `docs/~$方法说明书.docx`
+   从索引移除并推送后，远端依然存在。
 
-它会自动判断「哪些文件变了」，因此日常改几个文件只上传那几个，
-不必每次重传 54 个（尤其那两个几 MB 的 HTML）。
+2. **逐个比对 blob SHA，只上传真正变化的文件。**
+   git 的 blob SHA 就是内容哈希，直接对比即可判断文件是否变化，
+   不必重传那两个几 MB 的 HTML。
+   这解决了早期版本「把 56 个文件全部重传」的问题。
+
+3. **用 base_tree 复用远端未变更的条目**，只 patch 差异部分。
 
 用法：
-  python incremental_push.py
+  python push_now.py           # 推荐：自动取令牌后调用本脚本
+  python incremental_push.py   # 已设好 GH_TOK 时直接用
 """
 from __future__ import annotations
 
@@ -34,11 +41,26 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 TOK = os.environ.get("GH_TOK", "").strip()
 OWNER, REPO = "ArnoldWang-86", "pingan-branch-ops-monitoring"
 BRANCH = "main"
-GIT = r"C:\Program Files\Git\cmd\git.exe"
+
+GIT_CANDIDATES = [
+    r"C:\Program Files\Git\cmd\git.exe",
+    r"C:\Program Files (x86)\Git\cmd\git.exe",
+    os.path.expanduser(r"~\AppData\Local\Programs\Git\cmd\git.exe"),
+]
 H = {"Authorization": "token " + TOK,
      "Accept": "application/vnd.github+json",
      "User-Agent": "ops-push"}
 API = "https://api.github.com"
+
+
+def find_git() -> str:
+    for p in GIT_CANDIDATES:
+        if os.path.exists(p):
+            return p
+    return "git"
+
+
+GIT = find_git()
 
 
 def git(*args, check=True):
@@ -52,6 +74,7 @@ def git(*args, check=True):
 
 def api(method, path, payload=None, tries=6):
     """间歇性网络：单请求也带退避重试。"""
+    last = None
     for i in range(tries):
         try:
             kw = {"headers": dict(H), "timeout": 60}
@@ -59,20 +82,48 @@ def api(method, path, payload=None, tries=6):
                 kw["data"] = json.dumps(payload, ensure_ascii=False).encode("utf-8")
                 kw["headers"] = dict(H, **{"Content-Type": "application/json"})
             return requests.request(method, API + path, **kw)
-        except Exception:                                     # noqa: BLE001
+        except Exception as e:                                # noqa: BLE001
+            last = type(e).__name__
             time.sleep(2 + 2 * i)
+    print(f"    [网络失败] {method} {path} ({last})")
     return None
 
 
+def local_tree_entries():
+    """取本地 HEAD 的完整文件清单（路径 -> blob SHA）。
+
+    用 `git ls-tree -r HEAD` 而不是 `git ls-files`：
+    前者反映的是**提交内容**，包含删除结果；后者只看工作区现存文件。
+    """
+    out = git("ls-tree", "-r", "HEAD")
+    entries = {}
+    for line in out.split("\n"):
+        if not line.strip():
+            continue
+        # 形如：100644 blob <sha>\t<path>
+        meta, _, path = line.partition("\t")
+        parts = meta.split()
+        if len(parts) >= 3 and parts[1] == "blob":
+            entries[path] = parts[2]
+    return entries
+
+
+def remote_tree_entries(tree_sha):
+    r = api("GET", f"/repos/{OWNER}/{REPO}/git/trees/{tree_sha}?recursive=1")
+    if r is None or r.status_code != 200:
+        return None
+    return {x["path"]: x["sha"] for x in r.json().get("tree", [])
+            if x["type"] == "blob"}
+
+
 def push_once():
-    """执行一次推送。返回 0 成功 / 1 需要重试 / 2 永久失败。"""
+    """返回 0 成功 / 1 可重试 / 2 永久失败。"""
     local_head = git("rev-parse", "HEAD")
     print(f"本地 HEAD : {local_head[:12]}")
 
-    # 远端当前 HEAD
     r = api("GET", f"/repos/{OWNER}/{REPO}/git/ref/heads/{BRANCH}")
     if r is None:
-        return 1                    # 网络问题，可重试
+        return 1
     if r.status_code != 200:
         print(f"  读取远端 ref 失败 HTTP {r.status_code}: {r.text[:160]}")
         return 2
@@ -83,95 +134,88 @@ def push_once():
         print("\n两者一致，无需推送。")
         return 0
 
-    # 计算差异文件（本地相对远端）
-    #
-    # ⚠ 已知缺陷（务实取舍，不是疏忽）：
-    # 正常用法是「本地提交 → 运行本脚本」。但提交之后，本地 HEAD 与远端 HEAD
-    # 就已经分叉（远端还没有这个提交），于是 `git diff remote local` 会把
-    # **所有文件**都报成差异，本脚本会把 56 个文件全部重传一遍——
-    # 功能上正确（结果一样），但浪费带宽，尤其在两个几 MB 的 HTML 上。
-    #
-    # 想真正只传变更文件，必须在**提交之前**比对工作区，但那时又缺提交信息。
-    # 正确解法是用 `git diff --name-only origin/main` 取「相对于远端基线」的变更，
-    # 再单独取本地提交信息。鉴于本机到 GitHub 的通道间歇可用、重传代价可接受，
-    # 这里保留现状并明确标注，而不是假装它做到了增量。
-    changed = []
-    out = git("diff", "--name-only", remote_head, local_head, check=False)
-    if out:
-        changed = [x for x in out.split("\n") if x.strip()]
-    if not changed:
-        print("\n提交不同但文件内容无差异（可能只是提交信息差异）。")
-        changed = git("ls-files").split("\n")
-        changed = [x for x in changed if x.strip()]
+    local = local_tree_entries()
+    print(f"本地提交内文件: {len(local)}")
 
-    print(f"\n需上传文件: {len(changed)} 个")
-    for c in changed[:20]:
-        print("  " + c)
-    if len(changed) > 20:
-        print(f"  ... 另 {len(changed) - 20} 个")
-
-    # 远端已有的 tree，用来复用未变更的条目
+    # 远端当前树
     r = api("GET", f"/repos/{OWNER}/{REPO}/git/commits/{remote_head}")
-    if r is None or r.status_code != 200:
-        print("  无法读取远端提交")
+    if r is None:
         return 1
-    base_tree_sha = r.json()["tree"]["sha"]
+    remote_tree_sha = r.json()["tree"]["sha"]
+    remote = remote_tree_entries(remote_tree_sha)
+    if remote is None:
+        return 1
+    print(f"远端当前文件:   {len(remote)}")
 
-    # 为差异文件建 blob
-    print("\n创建 blob ...")
-    items = []
-    for i, f in enumerate(changed, 1):
-        if not os.path.exists(f):
-            print(f"  跳过（已删除，本期未处理删除）: {f}")
-            continue
-        with open(f, "rb") as fh:
-            content = fh.read()
-        rb = api("POST", f"/repos/{OWNER}/{REPO}/git/blobs",
-                 {"content": base64.b64encode(content).decode("ascii"),
-                  "encoding": "base64"})
-        if rb is None or rb.status_code != 201:
-            print(f"  [ERR] {f}: HTTP {rb.status_code if rb else 'N/A'}")
+    to_add = {p: s for p, s in local.items() if remote.get(p) != s}
+    to_del = [p for p in remote if p not in local]
+    print(f"\n需上传: {len(to_add)} 个    需删除: {len(to_del)} 个")
+    for p in list(to_add)[:15]:
+        print("  + " + p)
+    if len(to_add) > 15:
+        print(f"  ... 另 {len(to_add)-15} 个")
+    for p in to_del:
+        print("  - " + p)
+
+    if not to_add and not to_del:
+        # 文件内容与远端完全一致，只是提交历史不同：
+        # 直接复用本地提交的树，不必再创建 tree。
+        print("\n文件内容完全一致，只是提交历史不同。直接以本地提交为准更新 ref。")
+        r = api("GET", f"/repos/{OWNER}/{REPO}/git/commits/{local_head}")
+        if r is None or r.status_code != 200:
             return 1
-        items.append({"path": f.replace("\\", "/"), "mode": "100644",
-                      "type": "blob", "sha": rb.json()["sha"]})
-        if i % 10 == 0 or i == len(changed):
-            print(f"  {i}/{len(changed)}")
+        tree_sha = r.json()["tree"]["sha"]
+    else:
+        print("\n创建 blob ...")
+        items = []
+        for i, (p, _sha) in enumerate(sorted(to_add.items()), 1):
+            if not os.path.exists(p):
+                print(f"  [跳过] 工作区无此文件: {p}")
+                continue
+            with open(p, "rb") as fh:
+                content = fh.read()
+            rb = api("POST", f"/repos/{OWNER}/{REPO}/git/blobs",
+                     {"content": base64.b64encode(content).decode("ascii"),
+                      "encoding": "base64"})
+            if rb is None or rb.status_code != 201:
+                print(f"  [ERR] {p}: HTTP {rb.status_code if rb else 'N/A'}")
+                return 1
+            items.append({"path": p, "mode": "100644", "type": "blob",
+                          "sha": rb.json()["sha"]})
+            if i % 10 == 0 or i == len(to_add):
+                print(f"  {i}/{len(to_add)}")
+        # 删除：GitHub 约定 sha 为 null 表示移除该路径
+        for p in to_del:
+            items.append({"path": p, "mode": "100644", "type": "blob", "sha": None})
 
-    if not items:
-        print("没有需要上传的内容。")
-        return 0
+        print("\n创建 tree ...")
+        rt = api("POST", f"/repos/{OWNER}/{REPO}/git/trees",
+                 {"base_tree": remote_tree_sha, "tree": items})
+        if rt is None or rt.status_code != 201:
+            print(f"  [ERR] HTTP {rt.status_code if rt else 'N/A'}")
+            return 1
+        tree_sha = rt.json()["sha"]
+        print(f"  tree {tree_sha[:12]}")
 
-    # 以远端树为基底打补丁，未变更文件自动保留
-    print("\n创建 tree ...")
-    rt = api("POST", f"/repos/{OWNER}/{REPO}/git/trees",
-             {"base_tree": base_tree_sha, "tree": items})
-    if rt is None or rt.status_code != 201:
-        print(f"  [ERR] HTTP {rt.status_code if rt else 'N/A'}")
-        return 1
-    tree_sha = rt.json()["sha"]
-    print(f"  tree {tree_sha[:12]}")
-
-    # 提交
     msg = git("log", "-1", "--pretty=%B") or "update"
     rc = api("POST", f"/repos/{OWNER}/{REPO}/git/commits",
              {"message": msg, "tree": tree_sha, "parents": [remote_head]})
     if rc is None or rc.status_code != 201:
-        print(f"  [ERR] HTTP {rc.status_code if rc else 'N/A'}")
+        print(f"  [ERR] 创建 commit 失败 HTTP {rc.status_code if rc else 'N/A'}")
         return 1
     new_commit = rc.json()["sha"]
     print(f"  commit {new_commit[:12]}")
 
-    # 更新分支（不用 force，保证不覆盖别人的提交）
     rp = api("PATCH", f"/repos/{OWNER}/{REPO}/git/refs/heads/{BRANCH}",
              {"sha": new_commit, "force": False})
     if rp is None or rp.status_code != 200:
-        print(f"  [ERR] 更新 ref 失败 HTTP {rp.status_code if rp else 'N/A'}: "
-              f"{(rp.text[:200] if rp else '')}")
+        print(f"  [ERR] 更新 ref 失败 HTTP {rp.status_code if rp else 'N/A'}")
         return 1
     print(f"  {BRANCH} -> {new_commit[:12]}")
 
-    # 让本地记录也跟上（否则下次 diff 基准不对）
-    subprocess.run([GIT, "fetch", "origin", BRANCH], capture_output=True)
+    # 让本地引用跟上，避免下次又按旧基准比对
+    subprocess.run([GIT, "update-ref", f"refs/remotes/origin/{BRANCH}", new_commit],
+                   capture_output=True)
     print("\n推送完成。")
     print(f"  https://github.com/{OWNER}/{REPO}")
     return 0
@@ -179,15 +223,12 @@ def push_once():
 
 def main():
     if not TOK:
-        print("缺少 GH_TOK 环境变量")
+        print("缺少 GH_TOK 环境变量（可用 push_now.py 自动取）")
         return 1
-
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     os.chdir(root)
-
-    # 本机到 GitHub 的 TLS 通道间歇可用，整流程循环多轮等一个稳定窗口
     print("=" * 66)
-    print(" 增量推送到 GitHub（间歇网络下循环重试）")
+    print(" 推送到 GitHub（Git Data API，间歇网络下循环重试）")
     print("=" * 66)
     for rnd in range(1, 11):
         print(f"\n--- 第 {rnd} 轮 ---")
@@ -203,8 +244,7 @@ def main():
         wait = min(20, 5 + 3 * rnd)
         print(f"  网络不稳定，{wait} 秒后重试 ...")
         time.sleep(wait)
-
-    print("\n多轮重试后仍未成功（网络持续不稳定），请稍后再运行本脚本。")
+    print("\n多轮重试后仍未成功，请稍后再运行。")
     return 1
 
 
