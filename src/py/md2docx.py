@@ -78,7 +78,17 @@ def set_cjk(run, font=FONT):
 
 
 def emit_runs(paragraph, text, *, size=None, italic=False, color=None, force_bold=False):
-    """写入一段文本，处理 **粗体** 与 `行内代码` 两种标记。"""
+    """写入一段文本，处理 **粗体** 与 `行内代码` 两种标记。
+
+    同时把 Markdown 链接 `[文字](地址)` 压成纯文字。
+    原因：Word 里没有锚点跳转，URL 会原样显示成噪音——
+    方法说明书的目录因此变成一堆 `[零、...](#零...)`，
+    在 Word 里完全没法读。这里只保留链接文字。
+    """
+    try:
+        text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
+    except Exception:                                          # noqa: BLE001
+        pass
     for seg in re.split(r"(\*\*[^*]+\*\*|`[^`]+`)", text):
         if not seg:
             continue
