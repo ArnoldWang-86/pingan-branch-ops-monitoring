@@ -36,6 +36,12 @@
 
 ## 🎯 先看这三个
 
+**在线直接打开**（GitHub Pages，无需下载）：
+🤖 [Text-to-Excel Agent](https://arnoldwang-86.github.io/pingan-branch-ops-monitoring/results/%E8%BF%90%E8%90%A5%E9%97%AE%E6%95%B0Agent.html)
+· 📊 [交互式看板](https://arnoldwang-86.github.io/pingan-branch-ops-monitoring/results/%E7%9C%8B%E6%9D%BF.html)
+
+**本地打开**（离线可用）：
+
 | 交付物 | 打开方式 |
 |---|---|
 | 🤖 **Text-to-Excel Agent** | 双击 `results/运营问数Agent.html`（单文件、离线可用） |
@@ -388,6 +394,72 @@ python src\py\md2docx.py --all         # Markdown 转 Word
    这是「不再披露」而非「数据缺失」，做长时序时处理方式不同。
 
 详细局限见 `docs/方法说明书.md` 第九节。
+
+---
+
+## 推送机制（这台机器上必须知道的事）
+
+**本机的 `github.com:443` 通道不通**，所以标准的 `git push` 无法使用：
+
+```
+git push origin main
+# fatal: unable to access 'https://github.com/...': Failed to connect to github.com port 443
+```
+
+实测结论（同一网络环境下反复验证）：
+
+| 通道 | 可用性 |
+|---|---|
+| `github.com:443`（git 的 HTTPS 传输） | **不通**（连接超时） |
+| `ssh.github.com:443` / `github.com:22` | TCP 可建连，但认证握手挂住 |
+| `api.github.com:443` | **可用，但间歇性**（时好时坏，会抛 `SSLEOFError`） |
+| `git fetch`（读） | 偶尔可用 |
+
+因此推送改为走 **Git Data API**，脚本已入库：
+
+```powershell
+# 1) 注入令牌（脚本从环境变量读取，不写盘、不打印）
+$git = "C:\Program Files\Git\cmd\git.exe"
+$tok = ("protocol=https`nhost=github.com`n`n" | & $git credential fill |
+        Select-String "^password=").Line -replace "^password=",""
+$env:GH_TOK = $tok.Trim()
+
+# 2) 提交本地改动
+git add -A ; git commit -m "..."
+
+# 3) 推送（内置整流程重试，能扛住间歇性 TLS 失败）
+python src\py\incremental_push.py
+```
+
+两个脚本的分工：
+
+| 脚本 | 用途 |
+|---|---|
+| `push_via_api.py` | 首次全量推送（含**空仓库引导**：GitHub 的 Git Data API 在完全空的仓库上不能创建 blob，会返回 409，必须先用 Contents API 造一个初始提交） |
+| `incremental_push.py` | 日常推送，含整流程重试 |
+
+### 两个必须记住的坑
+
+1. **`incremental_push.py` 实际会重传全部文件**，不是真正增量。
+   因为正常用法是「先提交、再推送」，而提交之后本地 HEAD 与远端 HEAD 已分叉，
+   `git diff remote local` 会把所有文件都报成差异。功能正确（结果一样），只是浪费带宽。
+   正确解法是改用 `git diff --name-only origin/main` 取相对远端基线的变更，属于待改进项。
+2. **API 推送不会更新本地 `origin/main`**，所以本地会显示"落后于远端"。
+   对齐方式（推送完成后执行）：
+
+   ```powershell
+   # 从 API 取远端真实 SHA，再更新本地引用
+   git update-ref refs/remotes/origin/main <远端 SHA>
+   git reset --hard <远端 SHA>   # 若本地提交已被 API 推送，本地历史会分叉
+   ```
+
+### 另两个环境坑
+
+- **git 全局配的代理 `127.0.0.1:33210` 会干扰推送**。该代理能转发 CONNECT，
+  但 TLS 握手失败（`curl exit 35`）。已清除 `http.proxy` / `https.proxy`。
+- **中文字符串处理**：`git ls-files` 默认 `core.quotepath=true`，
+  会把中文路径转成 `\345\205...` 八进制转义，直接 `open()` 会报
+  `Invalid argument`。脚本里已设 `core.quotepath=false` 并剥掉可能的双引号。
 
 ---
 
