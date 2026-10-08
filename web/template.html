@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>银行网点运营指标 · Text-to-Excel Agent</title>
+<style>
+:root{
+  --navy:#1F3864; --navy2:#2E5C9A; --accent:#C8102E; --ok:#2E7D6F;
+  --warn:#C98A00; --gray:#6B7C8F; --line:#E3E9F0; --bg:#F5F7FA; --card:#FFFFFF;
+  --code:#EEF2F7;
+}
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);
+     margin:0;color:#22303F;font-size:14px;line-height:1.7}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 22px 60px}
+header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+       flex-wrap:wrap;margin-bottom:6px}
+h1{font-size:22px;color:var(--navy);margin:0 0 4px}
+.sub{color:var(--gray);font-size:13px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.badge{background:#EAF0F8;color:var(--navy2);border-radius:20px;padding:3px 11px;font-size:12px}
+.badge.off{background:#F0F3F7;color:var(--gray)}
+
+.disclaimer{background:#FFF8E6;border-left:4px solid #F2A03D;border-radius:7px;
+  padding:12px 16px;margin:16px 0 18px;font-size:12.5px;color:#6B5A2E;line-height:1.75}
+.disclaimer b{color:#8A5B00}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:1080px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--card);border-radius:11px;padding:16px 18px;
+      box-shadow:0 2px 10px rgba(20,40,80,.07);margin-bottom:18px}
+.card h2{font-size:15px;color:var(--navy);margin:0 0 3px;display:flex;
+         align-items:center;gap:8px;justify-content:space-between}
+.card h2 .t{display:flex;align-items:center;gap:8px}
+.note{font-size:12.5px;color:var(--gray);margin:0 0 10px}
+
+/* 输入区 */
+.inputrow{display:flex;gap:9px;margin-top:6px;align-items:stretch}
+textarea#q{flex:1 1 auto;min-width:0;resize:vertical;min-height:74px;padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:9px;font-family:inherit;font-size:14px;line-height:1.6;color:#22303F;outline:none}
+textarea#q:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(46,92,154,.10)}
+button{background:var(--navy);color:#fff;border:0;border-radius:9px;padding:0 20px;
+  font-family:inherit;font-size:14px;cursor:pointer;font-weight:600}
+/* 只有运行按钮跟着输入框拉伸；给所有 button 设 min-height 会把别处的按钮也撑开，
+   早期版本因此把输入框压扁、与下方示例按钮重叠（截图才发现）。 */
+#run{align-self:stretch;flex:0 0 auto;min-width:120px}
+button:hover{background:var(--navy2)}
+button:disabled{background:#9AA5B1;cursor:not-allowed}
+.samples{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.chip{background:#F0F4F9;border:1px solid var(--line);color:var(--navy2);border-radius:16px;
+  padding:4px 12px;font-size:12.5px;cursor:pointer;transition:.15s}
+.chip:hover{background:#E2EAF5;border-color:#C6D5E8}
+
+/* 流水线 */
+.stage{border:1px solid var(--line);border-radius:9px;margin-bottom:9px;overflow:hidden;
+  background:#FCFDFE;transition:.2s}
+.stage .head{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;
+  user-select:none}
+.stage .idx{width:22px;height:22px;border-radius:50%;background:#E7EDF5;color:var(--navy2);
+  display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex:0 0 auto}
+.stage .nm{font-weight:600;font-size:13px;flex:1}
+.stage .ms{font-size:11.5px;color:var(--gray);font-variant-numeric:tabular-nums}
+.stage .st{font-size:11.5px;padding:1px 8px;border-radius:10px;background:#EEF2F7;color:var(--gray)}
+.stage.run{border-color:#C6D5E8;background:#F7FAFE}
+.stage.run .idx{background:var(--navy2);color:#fff;animation:pulse 1s infinite}
+.stage.done .idx{background:var(--ok);color:#fff}
+.stage.done .st{background:#E6F2EF;color:var(--ok)}
+.stage .body{padding:0 12px 11px 44px;font-size:12.5px;color:#3A4A5C;display:none}
+.stage.open .body{display:block}
+.stage .body .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:4px 0}
+.stage .body .kv b{color:var(--navy);font-weight:600}
+pre{background:var(--code);border-radius:7px;padding:9px 11px;overflow:auto;
+    font-family:Consolas,Monaco,monospace;font-size:11.5px;line-height:1.65;margin:6px 0;color:#1F3864}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* 结果 */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin:4px 0 14px}
+.kpi{background:#F7F9FC;border-radius:9px;padding:9px 11px;border:1px solid var(--line)}
+.kpi .v{font-size:18px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.kpi .k{font-size:11.5px;color:var(--gray);margin-top:1px}
+.kpi .u{font-size:11px;color:var(--gray);font-weight:400;margin-left:2px}
+
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:4px}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:right;
+      font-variant-numeric:tabular-nums}
+th{background:#F2F6FB;color:var(--navy);font-weight:600;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+tbody tr:nth-child(even){background:#FAFCFE}
+tbody tr:hover{background:#F0F6FF}
+td.bad{color:var(--accent);font-weight:600}
+td.good{color:var(--ok);font-weight:600}
+.tblwrap{max-height:360px;overflow:auto;border-radius:8px}
+
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:6px}
+.chart{background:#FCFDFE;border:1px solid var(--line);border-radius:9px;padding:10px}
+.chart h4{margin:0 0 6px;font-size:12.5px;color:var(--navy);font-weight:600}
+.chart svg{display:block;width:100%;height:auto}
+
+.dl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;
+    padding-top:12px;border-top:1px dashed var(--line)}
+.dl a,.dl button{background:var(--ok);color:#fff;text-decoration:none;border-radius:8px;
+  padding:8px 16px;font-size:13px;font-weight:600;min-height:auto;cursor:pointer;border:0}
+.dl a:hover,.dl button:hover{background:#256B5E}
+.dl .hint{font-size:12px;color:var(--gray)}
+
+.sheets{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sheet{background:#EAF0F8;color:var(--navy2);border-radius:6px;padding:3px 10px;font-size:12px}
+.sheet.act{background:var(--navy);color:#fff}
+
+.guard{background:#F4F8FF;border-left:4px solid var(--navy2);border-radius:7px;
+  padding:10px 14px;font-size:12.5px;color:#33455A;margin:8px 0}
+.guard.warn{background:#FFF8E6;border-color:#F2A03D;color:#6B5A2E}
+.guard b{color:var(--navy)}
+.empty{color:var(--gray);font-size:13px;padding:26px 4px;text-align:center}
+
+details.key{margin-top:6px;font-size:12.5px}
+details.key summary{cursor:pointer;color:var(--navy2);font-weight:600}
+details.key .inner{padding:8px 0 2px}
+input#apikey{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;
+  font-family:Consolas,monospace;font-size:12px;margin-top:6px}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;margin-left:6px}
+.tag.real{background:#E6F2EF;color:var(--ok)}
+.tag.sim{background:#FDECEF;color:var(--accent)}
+.tag.info{background:#EAF0F8;color:var(--navy2)}
+footer{margin-top:26px;color:#8B98A6;font-size:12px;line-height:1.9;
+  border-top:1px solid var(--line);padding-top:14px}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:12px;
+     font-family:Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>银行网点运营指标 · Text-to-Excel Agent</h1>
+    <div class="sub">用自然语言提问 → 看到 Agent 完整工作流程 → 拿到一份带格式与图表的 Excel 工作簿</div>
+    <div class="badges">
+      <span class="badge" id="bBadge">数据已内嵌</span>
+      <span class="badge" id="bEngine">Excel 引擎就绪</span>
+      <span class="badge off" id="bLLM">未接 LLM · 模板匹配模式</span>
+      <span class="badge">单文件 · 离线可用</span>
+    </div>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <b>⚠ 数据性质声明（请先读）</b><br>
+  <b>① 真实公开数据</b>：28 个来源、601 条已核实指标（人民银行《支付体系运行总体情况》17 份、
+  平安银行 6 份定期报告、金融监管总局、银行业协会、上海市统计局），
+  用于锚定模拟数据的量级，逐条可溯源。<br>
+  <b>② 模拟数据</b>：网点级「日运营指标」——<b>国内没有公开的网点级微观运营数据</b>，
+  等候时长、柜面业务量、差错率、投诉率均属各行内部经营数据。
+  因此本页用 <b>20 家网点 × 90 天 = 1,800 条</b>模拟数据（内置 7 例已知异常）来演示方法本身。<br>
+  <b>边界</b>：所有网点层面的具体数字<b>不代表任何真实银行的经营情况</b>。
+</div>
+
+<div class="grid">
+  <!-- 左：提问 + 流水线 -->
+  <div>
+    <div class="card">
+      <h2><span class="t">① 提问</span></h2>
+      <p class="note">用中文描述你想看的运营问题。Agent 会在右侧逐步展示它做了什么、为什么这样做。</p>
+      <div class="inputrow">
+        <textarea id="q" placeholder="例如：哪些网点等候时长最长？&#10;     周一到周日业务量怎么变的？&#10;     8 月业务量相比 7 月有没有异常？"></textarea>
+        <button id="run">运行 Agent</button>
+      </div>
+      <div class="samples" id="samples"></div>
+
+      <details class="key">
+        <summary>可选：接入你的 DeepSeek API Key，支持任意自然语言提问</summary>
+        <div class="inner">
+          <div class="guard">
+            不填也能用——Agent 会用<b>内置模板匹配</b>回答上面这类常见问题，全程离线。
+            填入 Key 后，任意问法都能被理解（由浏览器直接调用 DeepSeek）。
+            <b>Key 只保存在你的浏览器 sessionStorage，不会写入任何文件、不会发往第三方。</b>
+            本页面是本地文件，关闭标签页即清除。
+          </div>
+          <input id="apikey" type="password" placeholder="sk-...（留空则使用模板匹配）" autocomplete="off">
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h2><span class="t">② Agent 工作流程</span><span class="note" id="flowNote"
+          style="margin:0"></span></h2>
+      <div id="pipeline"><div class="empty">还没有提问。输入一个问题，这里会逐步显示 Agent 的每一步。</div></div>
+    </div>
+  </div>
+
+  <!-- 右：结果 -->
+  <div>
+    <div class="card">
+      <h2><span class="t">③ 结果</span><span class="note" id="resNote" style="margin:0"></span></h2>
+      <div id="result"><div class="empty">结果会在这里呈现：关键指标、图表、明细表，以及可下载的 Excel。</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>Agent 能力边界（如实说明）</b><br>
+  · 支持的操作为<b>白名单制</b>：Agent 只能从预定义操作里选择并填参数，
+  <b>不会执行任意代码</b>——这样从结构上排除了代码注入与幻觉带来的风险。<br>
+  · 不填 API Key 时，Agent 用<b>关键词+语义规则</b>匹配内置模板；匹配不到会明确告知，
+  而不是硬凑一个答案。<br>
+  · 生成的 Excel 由浏览器端 SheetJS 现场构造，<b>不含任何宏</b>，可直接用 Excel / WPS 打开。<br>
+  · 数据为模拟数据，仅用于演示方法，<b>不可用于推断任何真实银行</b>。<br>
+  <span id="genInfo"></span>
+</footer>
+</div>
+
+<script>/*__SHEETJS__*/</script>
+<script>/*__DATA__*/</script>
+<script>
+/* =========================================================================
+   Text-to-Excel Agent —— 浏览器端完整实现
+   -------------------------------------------------------------------------
+   设计要点（也是这个 Agent 与「让 LLM 写代码」的关键区别）：
+   1. 操作白名单。Agent 只能从 OPS 里选择操作并填参数，永不执行任意代码。
+   2. 七阶段可观测。每个阶段的输入、输出、依据、耗时都渲染到页面上，
+      让人能看出「它为什么这么答」，而不是只给结论。
+   3. 口径守卫。违反分析纪律的参数（如按日粒度看差错率）会被自动纠正，
+      并把纠正过程展示出来——这是语义层的价值所在。
+   ========================================================================= */
+
+const D = window.OPS_DATA;
+const $ = (id) => document.getElementById(id);
+
+/* ---------------------------------------------------------------- 工具 */
+const fmt = (v, n = 2) => (v === null || v === undefined || Number.isNaN(v))
+  ? '—' : Number(v).toLocaleString('zh-CN', {minimumFractionDigits: n, maximumFractionDigits: n});
+const pct = (v, n = 1) => (v === null || v === undefined || Number.isNaN(v))
+  ? '—' : (v * 100).toFixed(n) + '%';
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* 从列式存储还原成行对象数组 */
+function rows() {
+  const c = D.detail_cols, n = c.date_i.length, out = new Array(n);
+  for (let i = 0; i < n; i++) {
+    out[i] = {
+      di: c.date_i[i], bi: c.branch_i[i], wd: c.weekday[i],
+      vol: c.vol[i], wait: c.wait[i], err: c.err[i], comp: c.comp[i],
+      ech: c.ech[i], cap: c.cap[i], sat: c.sat[i], cost: c.cost[i],
+      volDev: c.vol_dev[i], waitDev: c.wait_dev[i], err7: c.err7[i],
+      date: D.dates[c.date_i[i]],
+      code: D.branches[c.branch_i[i]].code,
+    };
+  }
+  return out;
+}
+const ROWS = rows();
+
+/* 同星期几基线查询 */
+const WDMAP = {};
+D.wd_base.forEach(x => { WDMAP[x.b + '_' + x.w] = x; });
+
+/* 疑似单位错误的阈值：平均等候超过 3 小时在任何网点都不可信 */
+const WAIT_IMPLAUSIBLE = 180;
+
+/* ---------------------------------------------------------------- 指标口径 */
+const METRIC_META = {
+  vol:   {label:'柜面业务量', unit:'笔',     dec:0, hi:true},
+  wait:  {label:'平均等候时长', unit:'分钟', dec:1, hi:true},
+  err:   {label:'业务差错率', unit:'',       dec:3, hi:true, ratio:true, times1000:true},
+  comp:  {label:'投诉率', unit:'笔/万笔',    dec:2, hi:true},
+  ech:   {label:'电子渠道分流率', unit:'',   dec:1, hi:true, ratio:true},
+  cap:   {label:'窗口产能饱和度', unit:'',   dec:1, hi:true, ratio:true},
+  sat:   {label:'客户满意度', unit:'分',     dec:2, hi:true},
+  cost:  {label:'运营成本收入比', unit:'',   dec:2, hi:false, ratio:true},
+  volDev:{label:'业务量偏离度', unit:'',     dec:1, hi:true, ratio:true, signed:true},
+  waitDev:{label:'等候时长偏离度', unit:'',  dec:1, hi:true, ratio:true, signed:true},
+};
+
+/* =========================================================================
+   操作白名单 —— Agent 的「手」
+   每个 op：可识别的关键词、所需参数、执行函数、产出（工作簿表/图表/口径备注）
+   ========================================================================= */
+const OPS = [
+
+/* ---------------------------------------------------- 1. 网点排名 */
+{
+  id: 'branch_rank',
+  title: '网点指标排名',
+  desc: '按指定指标对 20 家网点排名，输出 Top N / Bottom N',
+  keywords: ['排名','最长','最高','最低','最差','最好','top','排行','哪些网点','哪个网点','对比','谁'],
+  params: {
+    metric: {type:'enum', values:['wait','vol','err','comp','ech','cap','sat','cost'],
+             default:'wait', label:'指标'},
+    n:      {type:'int', min:3, max:20, default:8, label:'条数'},
+    order:  {type:'enum', values:['desc','asc'], default:'desc', label:'方向'},
+  },
+  run(p) {
+    const m = p.metric, meta = METRIC_META[m];
+    const arr = D.branches.map(b => ({...b, v: b['avg_' + m]}))
+      .filter(x => x.v !== null && x.v !== undefined);
+    arr.sort((a, b) => p.order === 'desc' ? b.v - a.v : a.v - b.v);
+    const top = arr.slice(0, p.n);
+
+    const cols = [
+      {k:'rank', t:'排名', dec:0},
+      {k:'code', t:'网点编码'},
+      {k:'name', t:'网点名称'},
+      {k:'kind', t:'网点类型'},
+      {k:'v', t:meta.label + (meta.unit ? `（${meta.unit}）` : ''), dec:meta.dec,
+       ratio:meta.ratio, times1000:meta.times1000, highlight:true},
+      {k:'avg_vol', t:'日均柜面业务量（笔）', dec:0},
+      {k:'windows', t:'开放窗口数', dec:0},
+      {k:'avg_cap', t:'产能饱和度', ratio:true, dec:1},
+    ];
+    const data = top.map((x, i) => ({...x, rank:i + 1}));
+
+    return {
+      kpis: [
+        {k:'统计网点数', v:arr.length, u:'家'},
+        {k:`${meta.label}中位数`, v:fmt(median(arr.map(x=>x.v)), meta.dec), u:meta.unit},
+        {k:`${meta.label}最高`, v:fmt(top[0].v, meta.dec), u:meta.unit},
+        {k:'与最低差距', v:fmt(times(top[0].v, arr[arr.length-1].v), 1), u:'倍'},
+      ],
+      sheets: [
+        {name:'网点排名', title:`按${meta.label}排名（${p.order==='desc'?'降序':'升序'}，共 ${arr.length} 家）`,
+         cols, data, note:`指标口径 — ${metricNote(m)}`},
+        {name:'全部网点', title:'全部网点运营画像',
+         cols: cols.filter(c => c.k !== 'rank'),
+         data: D.branches.map(b => ({...b, v:b['avg_'+m]})),
+         note:'本表为全部 20 家网点，便于与排名表对照。'},
+      ],
+      charts: [
+        {type:'bar', title:`${meta.label} · Top ${p.n}`,
+         labels: top.map(x => x.code), values: top.map(x => x.v),
+         dec: meta.dec, ratio: meta.ratio, times1000: meta.times1000,
+         hi: true},
+      ],
+      interpretation:
+        `按${meta.label}排序后，${top[0].code}（${top[0].name}）以 ${fmt(top[0].v, meta.dec)}` +
+        `${meta.unit} 排在首位，是最低网点的 ${fmt(times(top[0].v, arr[arr.length-1].v),1)} 倍。` +
+        (p.metric === 'wait'
+          ? ` 注意：等候时长偏高的网点要先区分「产能不足」与「流程/技能问题」——` +
+            `若其产能饱和度也高，属于真实的窗口供给不足；若饱和度不高，则更可能是流程问题，加窗口无用。`
+          : ` 建议结合产能饱和度与该网点类型一起看，避免跨类型直接比较。`),
+    };
+  },
+},
+
+/* ---------------------------------------------------- 2. 周内规律 */
+{
+  id: 'weekday_pattern',
+  title: '周内业务规律（星期几效应）',
+  desc: '按星期几聚合业务量、等候时长、差错率，识别周内规律',
+  keywords: ['星期','周内','周一','周日','哪天','工作日','周末','规律','每天'],
+  params: {
+    metric: {type:'enum', values:['vol','wait','err','comp'], default:'vol', label:'指标'},
+  },
+  run(p) {
+    const wdNames = ['周一','周二','周三','周四','周五','周六','周日'];
+    const agg = wdNames.map((nm, i) => {
+      const g = ROWS.filter(r => r.wd === i + 1);
+      const vols = g.map(r => r.vol);
+      const waits = g.filter(r => r.wait !== null).map(r => r.wait);
+      const errs = g.map(r => r.err7).filter(x => x !== null);
+      return {
+        wd: i + 1, name: nm, n: g.length,
+        vol: mean(vols), wait: median(waits), err7: mean(errs),
+        cap: mean(g.map(r => r.cap).filter(x => x !== null)),
+      };
+    });
+    const vmax = Math.max(...agg.map(a => a.vol)), vmin = Math.min(...agg.map(a => a.vol));
+    const busy = agg.find(a => a.vol === vmax), quiet = agg.find(a => a.vol === vmin);
+    const meta = METRIC_META[p.metric];
+
+    return {
+      kpis: [
+        {k:'最忙', v:busy.name, u:''},
+        {k:'最闲', v:quiet.name, u:''},
+        {k:'落差', v:pct(1 - vmin / vmax, 0), u:''},
+        {k:'日均业务量极值比', v:fmt(vmax / vmin, 2), u:'倍'},
+      ],
+      sheets: [
+        {name:'周内规律', title:'按星期几聚合（跨全部网点与日期）',
+         cols: [
+           {k:'name', t:'星期'},
+           {k:'n', t:'样本数（网点·日）', dec:0},
+           {k:'vol', t:'日均柜面业务量（笔）', dec:1, highlight:true},
+           {k:'wait', t:'平均等候时长中位数（分钟）', dec:2},
+           {k:'cap', t:'平均产能饱和度', ratio:true, dec:1},
+           {k:'err7', t:'周度差错率', ratio:true, dec:4, times1000:true},
+         ],
+         data: agg,
+         note:'口径 — 业务量取算术均值；等候时长取中位数（避免「字段单位错误」的极端值拉偏均值）。'},
+      ],
+      charts: [
+        {type:'bar', title:'各星期几日均柜面业务量（笔）',
+         labels: agg.map(a => a.name), values: agg.map(a => a.vol), dec:1, hi:true},
+        {type:'bar', title:'各星期几平均等候时长中位数（分钟）',
+         labels: agg.map(a => a.name), values: agg.map(a => a.wait), dec:2, color:'#C8102E'},
+      ],
+      interpretation:
+        `${busy.name}最忙、${quiet.name}最闲，后者业务量只有前者的 ${pct(vmin/vmax,0)}` +
+        `（相差 ${fmt(vmax/vmin,2)} 倍）。这个落差有直接的后果：` +
+        `如果用「前 7 日滚动均值」做监控基线，每个${quiet.name}都会显示约 -${pct(1-vmin/vmax,0)} 的偏离，` +
+        `等于每周固定制造一次假异常。因此本项目的基线一律按「同星期几」对齐——` +
+        `这正是语义层里被列为纪律的第 2 条。`,
+    };
+  },
+},
+
+/* ---------------------------------------------------- 3. 时间趋势 */
+{
+  id: 'trend',
+  title: '指标时间趋势',
+  desc: '按日/周聚合时间序列，支持区间筛选与前后期对比',
+  keywords: ['趋势','走势','变化','怎么变','比对','时间','月度','周度','日度','这段时间','8月','7月','6月','9月','区间','增长','下降','相比','环比'],
+  params: {
+    metric: {type:'enum', values:['vol','wait','err','comp','ech','sat','cap'],
+             default:'wait', label:'指标'},
+    from:   {type:'date', default:null, label:'起始日期'},
+    to:     {type:'date', default:null, label:'结束日期'},
+    grain:  {type:'enum', values:['day','week'], default:'day', label:'粒度'},
+  },
+  run(p) {
+    let rs = ROWS;
+    if (p.from) rs = rs.filter(r => r.date >= p.from);
+    if (p.to) rs = rs.filter(r => r.date <= p.to);
+    const meta = METRIC_META[p.metric];
+
+    // 是否需要用中位数（等候时长有单位错误极端值）
+    const useMedian = p.metric === 'wait';
+
+    const byDate = {};
+    rs.forEach(r => {
+      const key = p.grain === 'day' ? r.date : weekKey(r.date);
+      (byDate[key] = byDate[key] || []).push(r);
+    });
+    const keys = Object.keys(byDate).sort();
+    const series = keys.map(k => {
+      const g = byDate[k];
+      const vals = g.map(r => r[p.metric]).filter(v => v !== null && v !== undefined);
+      return {
+        d: k, n: vals.length,
+        v: useMedian ? median(vals) : mean(vals),
+        mean: mean(vals),
+        max: Math.max(...vals), min: Math.min(...vals),
+      };
+    });
+
+    // 前后期对比（对半切）
+    const half = Math.floor(series.length / 2);
+    const a = mean(series.slice(0, half).map(s => s.v));
+    const b = mean(series.slice(half).map(s => s.v));
+    const delta = a ? (b - a) / a : null;
+
+    return {
+      kpis: [
+        {k:'样本区间', v:keys[0] + ' 起', u:''},
+        {k:'数据点', v:series.length, u:p.grain === 'day' ? '天' : '周'},
+        {k:`${meta.label}（前期均）`, v:fmt(a, meta.dec), u:meta.unit},
+        {k:`${meta.label}（后期均）`, v:fmt(b, meta.dec), u:meta.unit},
+        {k:'后期环比', v:delta === null ? '—' : (delta >= 0 ? '+' : '') + pct(delta, 1), u:''},
+      ],
+      sheets: [
+        {name:'时间趋势', title:`${meta.label} · ${p.grain === 'day' ? '日度' : '周度'}序列`,
+         cols: [
+           {k:'d', t:p.grain === 'day' ? '日期' : '周起始日'},
+           {k:'n', t:'样本数', dec:0},
+           {k:'v', t:`${meta.label}${useMedian ? '（中位数）' : '（均值）'}`,
+            dec:meta.dec, ratio:meta.ratio, times1000:meta.times1000, highlight:true},
+           {k:'mean', t:'均值', dec:meta.dec, ratio:meta.ratio, times1000:meta.times1000},
+           {k:'min', t:'最小值', dec:meta.dec, ratio:meta.ratio, times1000:meta.times1000},
+           {k:'max', t:'最大值', dec:meta.dec, ratio:meta.ratio, times1000:meta.times1000},
+         ],
+         data: series,
+         note:`口径 — ${metricNote(p.metric)}` +
+              (useMedian ? '　本表主口径取**中位数**：等候时长存在「字段单位错误」的极端值，均值会被显著拉高。' : '')},
+      ],
+      charts: [
+        {type:'line', title:`${meta.label} 趋势（${p.grain === 'day' ? '日度' : '周度'}）`,
+         labels: series.map(s => s.d), values: series.map(s => s.v),
+         dec: meta.dec, ratio: meta.ratio, times1000: meta.times1000},
+      ],
+      interpretation:
+        `区间 ${keys[0]} ~ ${keys[keys.length-1]}，共 ${series.length} 个${p.grain==='day'?'日':'周'}。` +
+        `前半段均值 ${fmt(a, meta.dec)}${meta.unit}，后半段 ${fmt(b, meta.dec)}${meta.unit}，` +
+        (delta === null ? '无法计算环比变动。'
+          : `后期相对前期 ${delta >= 0 ? '上升' : '下降'} ${pct(Math.abs(delta),1)}。` +
+            (p.metric === 'err'
+              ? ' 注意差错率是低频计数指标，日粒度噪声极大，本表已默认按周度口径展示才有意义。'
+              : '')) +
+        (p.metric === 'wait'
+          ? ' 趋势里若出现单日飙到数倍的值，先排查字段单位问题，不要直接当成服务恶化。'
+          : ''),
+    };
+  },
+},
+
+/* ---------------------------------------------------- 4. 网点深钻 */
+{
+  id: 'branch_drill',
+  title: '单网点深钻',
+  desc: '某个网点的完整画像：关键指标、时序、与全行对比、该网点预警',
+  keywords: ['某网点','单个','详细','深钻','画像','这个网点','SH0','具体看'],
+  params: {
+    branch: {type:'branch', default:'SH010', label:'网点'},
+  },
+  run(p) {
+    const b = D.branches.find(x => x.code === p.branch) || D.branches[0];
+    const rs = ROWS.filter(r => r.code === b.code).sort((x, y) => x.date < y.date ? -1 : 1);
+    const clean = rs.filter(r => r.wait === null || r.wait <= WAIT_IMPLAUSIBLE);
+
+    const allWait = D.branches.map(x => x.avg_wait);
+    const rankW = allWait.filter(v => v !== null).sort((x,y)=>y-x).indexOf(b.avg_wait) + 1;
+
+    const series = rs.map(r => ({d:r.date, v:r[['vol','wait','err','comp','ech','cap','sat'][0]] === undefined ? null : null}));
+    // 直接构造四个序列（避免上面那行误导）
+    const sWait = rs.map(r => ({d:r.date, v:(r.wait !== null && r.wait > WAIT_IMPLAUSIBLE) ? null : r.wait}));
+    const sVol  = rs.map(r => ({d:r.date, v:r.vol}));
+    const baseWait = rs.map(r => {
+      const wb = WDMAP[r.bi + '_' + r.wd];
+      return {d:r.date, v: wb ? wb.wait : null};
+    });
+
+    const alerts = D.alerts.filter(a => a.code === b.code);
+
+    return {
+      kpis: [
+        {k:'网点类型', v:b.kind, u:''},
+        {k:'开放窗口数', v:b.windows, u:'个'},
+        {k:'日均柜面业务量', v:fmt(b.avg_vol,0), u:'笔'},
+        {k:'平均等候时长', v:fmt(b.avg_wait,2), u:'分钟'},
+        {k:'等候时长全行排名', v:'第 ' + rankW, u:'/' + allWait.length},
+        {k:'产能饱和度', v:pct(b.avg_cap,1), u:''},
+        {k:'周度差错率', v:fmt(b.avg_err * 1000,3), u:'‰'},
+        {k:'该网点预警数', v:alerts.length, u:'条'},
+      ],
+      sheets: [
+        {name:'网点画像', title:`${b.code} ${b.name} · 运营画像`,
+         cols:[{k:'item',t:'项目'},{k:'value',t:'值'},{k:'note2',t:'说明'}],
+         data:[
+           {item:'网点编码', value:b.code, note2:''},
+           {item:'网点名称', value:b.name, note2:''},
+           {item:'网点类型', value:b.kind, note2:'不同类型规模差异大，跨类型比较需谨慎'},
+           {item:'所属片区', value:b.region, note2:''},
+           {item:'开放窗口数', value:b.windows, note2:''},
+           {item:'日均在岗人数', value:b.staff, note2:''},
+           {item:'日均柜面业务量（笔）', value:fmt(b.avg_vol,1), note2:'柜面渠道'},
+           {item:'平均等候时长（分钟）', value:fmt(b.avg_wait,2), note2:'已剔除疑似单位错误的极端值'},
+           {item:'等候时长全行排名', value:'第 '+rankW+' / '+allWait.length, note2:'1 为最长'},
+           {item:'产能饱和度', value:pct(b.avg_cap,1), note2:'单窗口实际业务量 / 理论产能'},
+           {item:'电子渠道分流率', value:pct(b.avg_ech,1), note2:'与柜面业务量为互补关系'},
+           {item:'周度差错率', value:fmt(b.avg_err*1000,3)+'‰', note2:'低频计数指标，按周看'},
+           {item:'投诉率（笔/万笔）', value:fmt(b.avg_comp,2), note2:''},
+           {item:'客户满意度（分）', value:fmt(b.avg_sat,3), note2:'满分 5'},
+           {item:'运营成本收入比', value:pct(b.avg_cost,2), note2:''},
+         ],
+         note:'口径说明见「语义层」面板；等候时长已剔除疑似字段单位错误的记录。'},
+        {name:'日度明细', title:`${b.code} 日度指标序列`,
+         cols:[
+           {k:'d',t:'日期'},{k:'wdName',t:'星期'},
+           {k:'vol',t:'柜面业务量（笔）',dec:0},
+           {k:'waitShow',t:'平均等候时长（分钟）',dec:2,highlight:true},
+           {k:'wb',t:'同星期几基线（分钟）',dec:2},
+           {k:'dev',t:'相对基线偏离',ratio:true,dec:1,signed:true},
+           {k:'cap',t:'产能饱和度',ratio:true,dec:1},
+           {k:'err7',t:'周度差错率',ratio:true,dec:4,times1000:true},
+           {k:'flag',t:'数据质量标记'},
+         ],
+         data: rs.map(r => {
+           const wb = WDMAP[r.bi + '_' + r.wd];
+           const bad = r.wait !== null && r.wait > WAIT_IMPLAUSIBLE;
+           const dev = (wb && wb.wait && !bad) ? (r.wait - wb.wait) / wb.wait : null;
+           return {
+             d:r.date, wdName:['周一','周二','周三','周四','周五','周六','周日'][r.wd-1],
+             vol:r.vol,
+             waitShow: bad ? null : r.wait,
+             wb: wb ? wb.wait : null,
+             dev, cap:r.cap, err7:r.err7,
+             flag: bad ? '⚠ 疑似单位错误（原始值 ' + r.wait + ' 分钟），已排除' : '',
+           };
+         }),
+         note:'「同星期几基线」= 该网点该星期几的历史中位数。偏离度必须对照它看，不能对照 7 日滚动均值。'},
+        {name:'该网点预警', title:`${b.code} 全部预警（${alerts.length} 条）`,
+         cols:[{k:'date',t:'日期'},{k:'sev',t:'严重度',dec:0},{k:'score',t:'严重度分',dec:1},
+               {k:'metricLabel',t:'主因指标'},{k:'causeCn',t:'疑似成因'},
+               {k:'method',t:'命中方法'},{k:'action',t:'处置建议'}],
+         data: alerts,
+         note:'成因判定区分「数据错误 / 口径差异 / 真实风险」三类——前两类不应问责网点。'},
+      ],
+      charts: [
+        {type:'line', title:'平均等候时长 与 同星期几基线（分钟）',
+         labels: sWait.map(x=>x.d), values: sWait.map(x=>x.v), dec:2, color:'#C8102E',
+         second: {name:'同星期几基线', values: baseWait.map(x=>x.v), color:'#9AA5B1', dashed:true}},
+        {type:'line', title:'柜面业务量（笔）', labels: sVol.map(x=>x.d),
+         values: sVol.map(x=>x.v), dec:0, color:'#1F3864'},
+      ],
+      interpretation:
+        `${b.code}（${b.name}，${b.kind}）日均柜面业务量 ${fmt(b.avg_vol,0)} 笔，` +
+        `平均等候时长 ${fmt(b.avg_wait,2)} 分钟，在全行 20 家网点中排第 ${rankW}。` +
+        `产能饱和度 ${pct(b.avg_cap,1)}、电子渠道分流率 ${pct(b.avg_ech,1)}。` +
+        (b.avg_cap > 0.85
+          ? ' 其产能饱和度偏高，属于真实的窗口供给压力，应评估弹性排班或分流引导。'
+          : b.avg_cap < 0.55
+            ? ' 其产能饱和度偏低但等候时长仍需关注，这类「不忙但慢」的网点问题更可能在流程或技能上，加窗口无效。'
+            : ' 产能与等候时长均在合理区间。') +
+        (alerts.length ? ` 该网点累计产生 ${alerts.length} 条预警。` : ' 该网点未产生预警。'),
+    };
+  },
+},
+
+/* ---------------------------------------------------- 5. 预警分析 */
+{
+  id: 'alert_analysis',
+  title: '预警结构与成因分析',
+  desc: '预警按性质/严重度/主因指标分布，并区分「真风险」与「数据/口径问题」',
+  keywords: ['预警','告警','异常','风险','成因','多少条','报警','问题'],
+  params: {
+    view: {type:'enum', values:['cause','severity','metric','branch'], default:'cause', label:'分组维度'},
+  },
+  run(p) {
+    const A = D.alerts;
+    const labelOf = c => ({
+      data_error_unit:'数据错误·字段单位', data_error_duplicate:'数据错误·批量重跑',
+      caliber_gap:'口径差异', true_risk_channel_outage:'真实风险·渠道故障',
+      true_risk_capacity:'真实风险·产能不足', true_risk_operational:'真实风险·操作风险',
+      true_risk_service:'真实风险·服务事件', undetermined:'待定',
+    }[c] || c);
+
+    const group = (keyFn, nameFn) => {
+      const m = {};
+      A.forEach(a => { const k = keyFn(a); m[k] = (m[k] || 0) + 1; });
+      return Object.keys(m).map(k => ({k: nameFn ? nameFn(k) : k, n: m[k]}))
+        .sort((x, y) => y.n - x.n);
+    };
+
+    let groups, groupTitle, keyName;
+    if (p.view === 'cause') { groups = group(a => a.cause, labelOf); groupTitle = '按疑似成因'; keyName='疑似成因'; }
+    else if (p.view === 'severity') { groups = group(a => a.sev, k => k + ' 级'); groupTitle='按严重度'; keyName='严重度'; }
+    else if (p.view === 'metric') { groups = group(a => a.metricLabel); groupTitle='按主因指标'; keyName='主因指标'; }
+    else { groups = group(a => a.code); groupTitle='按网点'; keyName='网点'; }
+
+    const nTrue = A.filter(a => (a.cause||'').startsWith('true_risk')).length;
+    const nData = A.filter(a => (a.cause||'').startsWith('data_error')).length;
+    const nCal  = A.filter(a => a.cause === 'caliber_gap').length;
+    const nUnd  = A.filter(a => a.cause === 'undetermined').length;
+
+    // 明细表（按严重度分降序）
+    const detail = A.slice().sort((a, b) => b.score - a.score).map(a => ({
+      date:a.date, code:a.code, sev:a.sev, score:a.score,
+      metricLabel:a.metricLabel, causeCn:a.causeCn, method:a.method,
+      evidence:a.evidence, action:a.action,
+    }));
+
+    const ev = D.evaluation;
+    const evRows = ev.map(x => ({
+      subtype:x.subtype, kind:x.kind, branch:x.branch,
+      detected: x.detected ? '✓ 检出' : '✗ 漏检',
+      on:x.on || '—', cause:x.cause || '—',
+      correct: x.correct ? '性质判定正确' : (x.detected ? '性质判定错误' : '—'),
+    }));
+
+    return {
+      kpis: [
+        {k:'预警总数', v:A.length, u:'条'},
+        {k:'真实风险', v:nTrue, u:'条'},
+        {k:'数据错误', v:nData, u:'条'},
+        {k:'口径差异', v:nCal, u:'条'},
+        {k:'待定', v:nUnd, u:'条'},
+        {k:'注入异常检出', v:`${D.meta.evaluation.n_detected}/${D.meta.evaluation.n_injected}`, u:''},
+      ],
+      sheets: [
+        {name:'预警结构', title:`预警分布 · ${groupTitle}`,
+         cols:[{k:'k',t:keyName},{k:'n',t:'预警条数',dec:0},
+               {k:'share',t:'占比',ratio:true,dec:1}],
+         data: groups.map(g => ({...g, share: g.n / A.length})),
+         note:'「真实风险」才需要运营干预；「数据错误」应修系统，「口径差异」应回算基线——后两类都不应问责网点。'},
+        {name:'预警明细', title:`预警明细（共 ${A.length} 条，按严重度分降序）`,
+         cols:[{k:'date',t:'日期'},{k:'code',t:'网点'},{k:'sev',t:'严重度',dec:0},
+               {k:'score',t:'严重度分',dec:1},{k:'metricLabel',t:'主因指标'},
+               {k:'causeCn',t:'疑似成因'},{k:'method',t:'命中方法'},
+               {k:'evidence',t:'证据'},{k:'action',t:'处置建议'}],
+         data: detail,
+         note:'严重度 = 幅度 × 持续性 × 方法一致性；证据字段列出命中的方法与偏离倍数。'},
+        {name:'检出评估', title:'对 7 例已知注入异常的检出与性质判定',
+         cols:[{k:'subtype',t:'注入异常'},{k:'kind',t:'真实性质'},{k:'branch',t:'网点'},
+               {k:'detected',t:'是否检出'},{k:'on',t:'首次检出日'},
+               {k:'cause',t:'判定性质'},{k:'correct',t:'性质是否正确'}],
+         data: evRows,
+         note:'这是本项目「能证明预警可信」的关键：异常是人为注入且登记在案的，因此查全率与判定准确率是可验证的，不是自说自话。'},
+      ],
+      charts: [
+        {type:'bar', title:`预警分布 · ${groupTitle}`,
+         labels: groups.map(g => g.k), values: groups.map(g => g.n), dec:0,
+         color:'#C8102E', horizontal:true},
+      ],
+      interpretation:
+        `共 ${A.length} 条预警。按性质拆分：真实业务风险 ${nTrue} 条、数据错误 ${nData} 条、` +
+        `口径差异 ${nCal} 条、待定 ${nUnd} 条。` +
+        `**这个拆分比「发现了几条异常」重要得多**：预警系统的价值不在于报出异常，` +
+        `而在于判断出哪些异常不是风险——如果把数据错误和口径调整都当成风险去问责网点，` +
+        `运营侧很快就会不再相信预警。` +
+        ` 对 7 例已知注入异常，检出 ${D.meta.evaluation.n_detected} 例、` +
+        `性质判定正确 ${D.meta.evaluation.n_cause_correct} 例` +
+        `（查全率 ${pct(D.meta.evaluation.recall,0)}、判定准确率 ${pct(D.meta.evaluation.cause_accuracy,0)}）。`,
+    };
+  },
+},
+
+/* ---------------------------------------------------- 6. 数据质量核查 */
+{
+  id: 'data_quality',
+  title: '数据质量核查',
+  desc: '扫描疑似字段单位错误、口径异常与不自洽记录',
+  keywords: ['数据质量','脏数据','单位','错误','核查','质量','可疑','异常值'],
+  params: {},
+  run() {
+    const bad = ROWS.filter(r => r.wait !== null && r.wait > WAIT_IMPLAUSIBLE);
+    const byBr = {};
+    bad.forEach(r => { byBr[r.code] = (byBr[r.code] || 0) + 1; });
+    const brRows = Object.keys(byBr).map(c => ({
+      code: c, n: byBr[c],
+      name: (D.branches.find(b => b.code === c) || {}).name || '',
+      max: Math.max(...bad.filter(r => r.code === c).map(r => r.wait)),
+    })).sort((a, b) => b.n - a.n);
+
+    // 指标不自洽：业务量明显高于同星期几基线，但成本率反而低于自身基线
+    const inc = [];
+    ROWS.forEach(r => {
+      const wb = WDMAP[r.bi + '_' + r.wd];
+      if (!wb || !wb.vol) return;
+      const dev = (r.vol - wb.vol) / wb.vol;
+      if (dev > 0.35) {
+        const b = D.branches[r.bi];
+        if (r.cost !== null && b.avg_cost !== null && r.cost < b.avg_cost) {
+          inc.push({date:r.date, code:r.code, vol:r.vol, base:wb.vol,
+                    dev, cost:r.cost, avgCost:b.avg_cost});
+        }
+      }
+    });
+
+    return {
+      kpis: [
+        {k:'扫描记录', v:ROWS.length, u:'条'},
+        {k:'疑似单位错误', v:bad.length, u:'条'},
+        {k:'涉及网点', v:brRows.length, u:'家'},
+        {k:'指标不自洽', v:inc.length, u:'条'},
+      ],
+      sheets: [
+        {name:'单位错误核查', title:`疑似字段单位错误记录（等候时长 > ${WAIT_IMPLAUSIBLE} 分钟）`,
+         cols:[{k:'date',t:'日期'},{k:'code',t:'网点'},{k:'wdName',t:'星期'},
+               {k:'wait',t:'平均等候时长（分钟）',dec:2,highlight:true},
+               {k:'wb',t:'同星期几基线（分钟）',dec:2},
+               {k:'times',t:'相对基线倍数',dec:1},
+               {k:'verdict',t:'判定'}],
+         data: bad.map(r => {
+           const wb = WDMAP[r.bi + '_' + r.wd];
+           return {
+             date:r.date, code:r.code,
+             wdName:['周一','周二','周三','周四','周五','周六','周日'][r.wd-1],
+             wait:r.wait, wb: wb ? wb.wait : null,
+             times: wb && wb.wait ? r.wait / wb.wait : null,
+             verdict:'数据错误·字段单位（分钟被按秒写入），应修正系统而非问责网点',
+           };
+         }),
+         note:`判定依据：平均等候时长超过 ${WAIT_IMPLAUSIBLE} 分钟（3 小时）在任何网点都不可信；` +
+              `且这些记录的业务量与差错率均无异常，因此不是真实的服务恶化。`},
+        {name:'不自洽核查', title:'业务量虚高但成本率反降（指标间不自洽，疑似批量重跑）',
+         cols:[{k:'date',t:'日期'},{k:'code',t:'网点'},
+               {k:'vol',t:'当日柜面业务量',dec:0},
+               {k:'base',t:'同星期几基线',dec:0},
+               {k:'dev',t:'偏离度',ratio:true,dec:1,signed:true},
+               {k:'cost',t:'当日成本收入比',ratio:true,dec:3},
+               {k:'avgCost',t:'该网点平均',ratio:true,dec:3}],
+         data: inc,
+         note:'判定依据：成本收入比的分母是业务量。业务量被虚高会导致该比率被动下降——指标之间的不自洽是数据错误的典型特征。'},
+      ],
+      charts: brRows.length ? [
+        {type:'bar', title:'疑似单位错误记录数（按网点）',
+         labels: brRows.map(x => x.code), values: brRows.map(x => x.n), dec:0, color:'#B07AA1'},
+      ] : [],
+      interpretation:
+        `扫描 ${ROWS.length} 条记录，发现 ${bad.length} 条疑似「字段单位错误」` +
+        `（等候时长超过 ${WAIT_IMPLAUSIBLE} 分钟），涉及 ${brRows.length} 家网点；` +
+        `另有 ${inc.length} 条指标间不自洽记录（业务量虚高但成本率反降）。` +
+        ` 这两类都属于**数据错误**，处置方向是修系统与核对批量任务，` +
+        `**不应据此问责网点**——这正是本项目反复强调的三分法：` +
+        `数据错误 / 口径差异 / 真实风险，处置方向完全不同。`,
+    };
+  },
+},
+];
+
+/* ---------------------------------------------------------------- 计算工具 */
+function mean(a) { const v = a.filter(x => x !== null && x !== undefined && !Number.isNaN(x));
+  return v.length ? v.reduce((s, x) => s + x, 0) / v.length : null; }
+function median(a) { const v = a.filter(x => x !== null && x !== undefined && !Number.isNaN(x)).sort((x,y)=>x-y);
+  if (!v.length) return null; const m = Math.floor(v.length/2);
+  return v.length % 2 ? v[m] : (v[m-1] + v[m]) / 2; }
+function times(a, b) { return (b === null || b === 0) ? null : a / b; }
+function weekKey(ds) { const dt = new Date(ds + 'T00:00:00');
+  const wd = (dt.getDay() + 6) % 7; dt.setDate(dt.getDate() - wd);
+  return dt.toISOString().slice(0, 10); }
+function metricNote(field) {
+  const M = {
+    wait:'平均等候时长（分钟）：客户取号到开始办理的平均等待。⚠ 存在字段单位错误的极端值，故主口径取中位数并剔除 >180 分钟的记录',
+    err:'业务差错率：差错笔数 / 柜面业务量。⚠ 低频计数事件，日粒度噪声极大，必须按周看（7 天累计差错 / 7 天累计业务量）',
+    comp:'投诉率（笔/万笔）：投诉笔数 / 柜面业务量 × 10000。⚠ 基线常为 0，相对变化率会变成无穷大，必须用绝对增量判定',
+    vol:'柜面业务量（笔）：当日人工柜台办理笔数',
+    ech:'电子渠道分流率：非柜面渠道 / 总业务量。(与柜面业务量为互补关系，不与业务量相加)',
+    cap:'窗口产能饱和度：（柜面业务量 / 窗口数）/ 理论产能。长期 >100% 说明窗口供给不足',
+    sat:'客户满意度（0-5 分）：当日服务评价均分',
+    cost:'运营成本收入比：运营成本 / 营业收入。分母为业务量，业务量虚高会让它被动下降',
+    volDev:'业务量偏离度：(当日值 − 同星期几基线) / 同星期几基线。⚠ 必须按星期几对齐，否则每个周日都显示 -65%',
+    waitDev:'等候时长偏离度：同上，按同星期几基线计算',
+  };
+  return M[field] || '';
+}
+</script>
+
+<script>
+/* =========================================================================
+   意图识别（两层）：模板规则 + 可选 LLM
+   ========================================================================= */
+
+const SAMPLES = [
+  '哪些网点等候时长最长',
+  '周一到周日业务量怎么变化的',
+  '8 月相比 7 月业务量有没有异常',
+  '看一下 SH010 这个网点的详细情况',
+  '这个项目一共报了多少条预警，都是什么性质',
+  '数据里有多少可疑的单位错误记录',
+  '各网点业务差错率排名',
+  '电子渠道分流率最高的网点是哪几家',
+];
+
+/* --- 第一层：关键词 + 规则打分 --- */
+function matchByRules(text) {
+  const t = text.toLowerCase();
+  let best = null;
+
+  OPS.forEach(op => {
+    let score = 0;
+    const hits = [];
+    op.keywords.forEach(k => {
+      if (t.includes(k.toLowerCase())) { score += k.length >= 2 ? 2 : 1; hits.push(k); }
+    });
+    // 网点代码直接命中
+    const codes = D.branches.filter(b => t.includes(b.code.toLowerCase()));
+    if (codes.length && op.params.branch) { score += 6; hits.push(codes[0].code); }
+    // 指标名命中
+    Object.keys(METRIC_META).forEach(m => {
+      if (t.includes(METRIC_META[m].label) && op.params.metric) { score += 3; hits.push(METRIC_META[m].label); }
+    });
+    if (score > 0 && (!best || score > best.score)) best = {op, score, hits};
+  });
+  return best;
+}
+
+/* --- 参数抽取 --- */
+function extractParams(op, text) {
+  const p = {}; const log = [];
+  for (const [key, spec] of Object.entries(op.params || {})) {
+    let v = spec.default;
+
+    // 注意：metric 在操作定义里写的是 type:'enum' + values:[指标键]，
+    // 早期版本这里判断的是 spec.type === 'metric'，与定义不一致，
+    // 导致**整个指标识别分支从未执行**——「差错率最高的网点」会被
+    // 静默当成默认指标「平均等候时长」。这里改为按「值域是否为指标键」判定。
+    const isMetric = spec.type === 'metric' ||
+      (spec.type === 'enum' && Array.isArray(spec.values) && spec.values.length &&
+       spec.values.every(x => Object.prototype.hasOwnProperty.call(METRIC_META, x)));
+
+    if (isMetric) {
+      for (const m of Object.keys(METRIC_META)) {
+        if (text.includes(METRIC_META[m].label)) { v = m; log.push(`指标 → ${METRIC_META[m].label}（${m}）`); break; }
+      }
+      // 同义说法（按键长度从长到短匹配，避免「量」抢在「业务量」前面）
+      if (v === spec.default) {
+        const syn = {'平均等候时长':'wait','等候时长':'wait','等候':'wait','等待':'wait','排队':'wait','时长':'wait',
+          '柜面业务量':'vol','业务量':'vol','笔数':'vol',
+          '业务差错率':'err','差错率':'err','差错':'err','出错':'err',
+          '投诉率':'comp','投诉':'comp','满意度':'sat',
+          '成本收入比':'cost','成本':'cost',
+          '电子渠道分流率':'ech','分流率':'ech','分流':'ech','线上':'ech',
+          '窗口产能饱和度':'cap','饱和度':'cap','产能':'cap'};
+        const keys = Object.keys(syn).sort((a, b) => b.length - a.length);
+        for (const k of keys) if (text.includes(k)) { v = syn[k]; log.push(`指标 → ${METRIC_META[v].label}（同义词「${k}」）`); break; }
+      }
+    }
+
+    if (spec.type === 'int') {
+      const m = text.match(/(\d+)\s*(家|个|条|名)/);
+      if (m) { const n = parseInt(m[1], 10); if (n >= spec.min && n <= spec.max) { v = n; log.push(`条数 → ${n}`); } }
+    }
+
+    if (spec.type === 'enum' && spec.values.includes('desc')) {
+      if (/最短|最低|最少|最小|升序/.test(text)) { v = 'asc'; log.push('方向 → 升序'); }
+      else if (/最长|最高|最多|最大|降序/.test(text)) { v = 'desc'; log.push('方向 → 降序'); }
+    }
+
+    if (spec.type === 'enum' && ['day','week'].includes(spec.values[0])) {
+      if (/周度|每周|按周/.test(text)) { v = 'week'; log.push('粒度 → 周'); }
+      else if (/日度|每天|按天|逐日/.test(text)) { v = 'day'; log.push('粒度 → 日'); }
+    }
+
+    if (spec.type === 'enum' && spec.values.includes('cause')) {
+      if (/严重度|级别/.test(text)) { v = 'severity'; log.push('分组 → 严重度'); }
+      else if (/网点/.test(text) && /预警|异常/.test(text)) { v = 'branch'; log.push('分组 → 网点'); }
+      else if (/指标/.test(text)) { v = 'metric'; log.push('分组 → 主因指标'); }
+    }
+
+    if (spec.type === 'branch') {
+      const c = D.branches.find(b => text.toLowerCase().includes(b.code.toLowerCase())
+        || text.includes(b.name));
+      if (c) { v = c.code; log.push(`网点 → ${c.code} ${c.name}`); }
+    }
+
+    if (spec.type === 'date') {
+      const m = text.match(/(\d{1,2})\s*月/);
+      if (m) {
+        const mo = String(parseInt(m[1], 10)).padStart(2, '0');
+        const inRange = D.dates.filter(d => d.slice(5, 7) === mo);
+        if (inRange.length) {
+          if (key === 'from') { v = inRange[0]; log.push(`起始日期 → ${v}`); }
+          if (key === 'to') { v = inRange[inRange.length-1]; log.push(`结束日期 → ${v}`); }
+        }
+      }
+    }
+
+    p[key] = v;
+  }
+  return {params: p, log};
+}
+
+/* --- 第二层：LLM（可选） --- */
+async function matchByLLM(text, apiKey) {
+  const sys = [
+    '你是一个银行运营数据分析 Agent 的意图识别模块。',
+    '你只能从下面这些操作中选择一个，并给出参数。不要回答业务问题本身，只做路由。',
+    '',
+    '可用操作：',
+    ...OPS.map(o => `- ${o.id}：${o.desc}；参数 ${JSON.stringify(Object.fromEntries(
+        Object.entries(o.params || {}).map(([k, s]) => [k, s.type === 'enum' ? s.values : s.type]))) }`),
+    '',
+    '参数取值范围：',
+    `- metric：${Object.keys(METRIC_META).join(', ')}（${Object.entries(METRIC_META).map(([k,v])=>k+'='+v.label).join('；')}）`,
+    `- branch：${D.branches.map(b => b.code).join(', ')}`,
+    `- 日期区间：数据覆盖 ${D.meta.date_range[0]} ~ ${D.meta.date_range[1]}`,
+    '',
+    '只输出一行 JSON，形如：{"op":"trend","params":{"metric":"vol","from":null,"to":null,"grain":"day"},"reason":"..."}',
+    '不要输出任何解释文字或代码块标记。',
+  ].join('\n');
+
+  const r = await fetch('https://api.deepseek.com/chat/completions', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey},
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      messages: [{role:'system', content:sys}, {role:'user', content:text}],
+      temperature: 0, max_tokens: 400,
+    }),
+  });
+  if (!r.ok) throw new Error('DeepSeek HTTP ' + r.status + '：' + (await r.text()).slice(0, 160));
+  const j = await r.json();
+  const raw = (j.choices?.[0]?.message?.content || '').trim();
+  const cleaned = raw.replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();
+  const parsed = JSON.parse(cleaned);
+  const op = OPS.find(o => o.id === parsed.op);
+  if (!op) throw new Error('模型返回了未知操作：' + parsed.op);
+  return {op, params: parsed.params || {}, reason: parsed.reason || ''};
+}
+</script>
+
+<script>
+/* =========================================================================
+   七阶段流水线：把 Agent 的每一步渲染到页面上
+   ========================================================================= */
+
+const STAGES = [
+  {id:'parse',   name:'阶段 1 · 意图识别'},
+  {id:'select',  name:'阶段 2 · 操作选择（白名单校验）'},
+  {id:'guard',   name:'阶段 3 · 口径守卫（语义层）'},
+  {id:'plan',    name:'阶段 4 · 执行引擎（计算）'},
+  {id:'workbook',name:'阶段 5 · 工作簿构建（Excel 规格）'},
+  {id:'render',  name:'阶段 6 · 文件产出（SheetJS）'},
+  {id:'answer',  name:'阶段 7 · 结果与解读'},
+];
+
+let STAGE_EL = {};
+
+function resetPipeline() {
+  const box = $('pipeline'); box.innerHTML = '';
+  STAGE_EL = {};
+  STAGES.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'stage';
+    d.innerHTML = `<div class="head"><div class="idx">${i+1}</div>
+      <div class="nm">${esc(s.name)}</div>
+      <div class="ms"></div><div class="st">待执行</div></div>
+      <div class="body"></div>`;
+    d.querySelector('.head').onclick = () => d.classList.toggle('open');
+    box.appendChild(d);
+    STAGE_EL[s.id] = d;
+  });
+}
+
+function stageRun(id) {
+  const d = STAGE_EL[id]; d.classList.add('run','open'); d.classList.remove('done');
+  d.querySelector('.st').textContent = '执行中';
+}
+function stageDone(id, ms, bodyHtml, ok = true) {
+  const d = STAGE_EL[id]; d.classList.remove('run'); d.classList.add('done');
+  d.querySelector('.st').textContent = ok ? '完成' : '已调整';
+  d.querySelector('.ms').textContent = ms.toFixed(0) + ' ms';
+  d.querySelector('.body').innerHTML = bodyHtml;
+}
+function kv(pairs) {
+  return '<div class="kv">' + pairs.map(([k, v]) =>
+    `<b>${esc(k)}</b><span>${v}</span>`).join('') + '</div>';
+}
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+/* ---------------------------------------------------------------- 主流程 */
+
+let LAST = null;
+
+async function runAgent(text) {
+  if (!text || !text.trim()) return;
+  const btn = $('run'); btn.disabled = true; btn.textContent = '运行中…';
+  $('result').innerHTML = '<div class="empty">Agent 运行中，请看左侧流程…</div>';
+  resetPipeline();
+
+  const apiKey = ($('apikey').value || '').trim();
+  const t0 = performance.now();
+
+  try {
+    /* ---------------- 阶段 1：意图识别 ---------------- */
+    stageRun('parse');
+    let s0 = performance.now();
+    await sleep(160);
+    let route = null, routeBy = '';
+    if (apiKey) {
+      try {
+        route = await matchByLLM(text, apiKey);
+        routeBy = 'LLM（DeepSeek）';
+      } catch (e) {
+        routeBy = 'LLM 调用失败，回落到模板匹配';
+        var llmErr = e.message;
+      }
+    }
+    if (!route) {
+      const m = matchByRules(text);
+      if (m) { route = {op: m.op, params: null, reason: `关键词命中：${m.hits.join('、')}`}; routeBy = routeBy || '模板规则匹配'; }
+    }
+    const msec1 = performance.now() - s0;
+
+    if (!route) {
+      stageDone('parse', msec1,
+        kv([['输入', esc(text)],
+            ['识别结果', '<b style="color:#C8102E">未能匹配到任何已知操作</b>'],
+            ['说明', 'Agent 没有硬凑答案。请换一种问法，或点击下方示例。']]) +
+        '<div class="guard warn">Agent 是<b>白名单制</b>：只能执行预定义操作。' +
+        '匹配不到时会明确告知，而不是生成一个看起来合理但无依据的结果。<br>' +
+        '你可以试试：' + SAMPLES.slice(0, 4).map(s => `<code>${esc(s)}</code>`).join('、') + '</div>', false);
+      STAGES.slice(1).forEach(s => stageDone(s.id, 0, '<span style="color:#9AA5B1">跳过（未进入执行）</span>', false));
+      $('result').innerHTML = '<div class="empty">未匹配到已知操作。请参考左侧提示换一种问法。</div>';
+      return;
+    }
+
+    stageDone('parse', msec1, kv([
+      ['用户输入', esc(text)],
+      ['识别方式', routeBy + (typeof llmErr !== 'undefined' ? `（${esc(llmErr)}）` : '')],
+      ['识别理由', esc(route.reason || '—')],
+      ['选定操作', `<b>${route.op.id}</b> — ${esc(route.op.title)}`],
+    ]));
+
+    /* ---------------- 阶段 2：操作选择 + 白名单校验 ---------------- */
+    stageRun('select'); s0 = performance.now(); await sleep(130);
+    const allowed = OPS.map(o => o.id);
+    const okOp = allowed.includes(route.op.id);
+    const schema = Object.entries(route.op.params || {}).map(([k, s]) => {
+      let d = `${k}: ${s.type}`;
+      if (s.type === 'enum') d += ` ∈ [${s.values.join(', ')}]`;
+      if (s.type === 'int') d += ` ∈ [${s.min}, ${s.max}]`;
+      return d;
+    });
+    const msec2 = performance.now() - s0;
+    stageDone('select', msec2,
+      kv([['白名单', allowed.length + ' 个操作'],
+          ['校验结果', okOp ? '<b style="color:#2E7D6F">通过</b>（操作在允许清单内）' : '<b style="color:#C8102E">拒绝</b>'],
+          ['参数模式', schema.length ? schema.map(esc).join('；') : '（无需参数）']]) +
+      '<div class="guard">这里是最关键的安全设计：<b>Agent 不会执行任意代码</b>。' +
+      '它只能从白名单里挑操作、填参数，参数还会被逐项校验范围。' +
+      '这样从结构上排除了代码注入与幻觉带来的风险——' +
+      '这也是与「让模型自由写 pandas 代码」最大的区别。</div>');
+
+    /* ---------------- 阶段 3：参数抽取 + 口径守卫 ---------------- */
+    stageRun('guard'); s0 = performance.now(); await sleep(140);
+    let params, extractLog = [];
+    if (route.params) {
+      params = route.params;   // LLM 给的
+      extractLog.push('参数来自 LLM 输出');
+    } else {
+      const ex = extractParams(route.op, text);
+      params = ex.params; extractLog = ex.log;
+    }
+    // 补齐默认值 + 范围校验（守卫）
+    const guards = [];
+    for (const [k, s] of Object.entries(route.op.params || {})) {
+      let v = params[k];
+      if (v === undefined || v === null || v === '') v = s.default;
+      if (s.type === 'enum' && !s.values.includes(v)) {
+        guards.push(`参数 <code>${k}</code> 取值「${esc(String(v))}」不在允许范围，已回退为默认值 <code>${s.default}</code>`);
+        v = s.default;
+      }
+      if (s.type === 'int') {
+        const n = parseInt(v, 10);
+        if (Number.isNaN(n) || n < s.min || n > s.max) {
+          guards.push(`参数 <code>${k}</code>=${esc(String(v))} 超出 [${s.min}, ${s.max}]，已截断为 <code>${Math.min(s.max, Math.max(s.min, Number.isNaN(n) ? s.default : n))}</code>`);
+          v = Number.isNaN(n) ? s.default : Math.min(s.max, Math.max(s.min, n));
+        } else v = n;
+      }
+      params[k] = v;
+    }
+    // 语义层驱动的自动纠正
+    if (route.op.id === 'trend' && params.metric === 'err' && params.grain === 'day') {
+      guards.push('触发语义层纪律 3：<b>差错率是低频计数指标，日粒度信噪比过低</b>。已自动切换为周度口径（7 天累计差错 / 7 天累计业务量）。');
+      params.grain = 'week';
+    }
+    if (route.op.id === 'branch_rank' && /跨|比较|不同类型/.test(text)) {
+      guards.push('提示：不同网点类型规模差异很大，跨类型直接比较该指标需谨慎（语义层纪律 5）。');
+    }
+    const msec3 = performance.now() - s0;
+    stageDone('guard', msec3,
+      kv([['参数抽取', extractLog.length ? extractLog.map(esc).join('<br>') : '（使用默认参数）'],
+          ['最终参数', '<code>' + esc(JSON.stringify(params)) + '</code>'],
+          ['口径守卫触发', guards.length ? guards.length + ' 次调整' : '未触发']]) +
+      (guards.length ? '<div class="guard warn">' + guards.map(g => '· ' + g).join('<br>') + '</div>' : '') +
+      '<div class="guard">语义层里写死了这个项目的<b>已知口径陷阱</b>：' +
+      '等候时长有字段单位错误的极端值、差错率必须按周看、投诉率不能用百分比、' +
+      '基线必须按星期几对齐。守卫会据此自动纠正参数，并把纠正过程展示出来。</div>');
+
+    /* ---------------- 阶段 4：执行 ---------------- */
+    stageRun('plan'); s0 = performance.now();
+    await sleep(120);
+    let out;
+    try {
+      out = route.op.run(params);
+    } catch (e) {
+      stageDone('plan', performance.now() - s0,
+        kv([['执行失败', '<b style="color:#C8102E">' + esc(e.message) + '</b>']]), false);
+      $('result').innerHTML = '<div class="empty">执行失败：' + esc(e.message) + '</div>';
+      return;
+    }
+    const msec4 = performance.now() - s0;
+    const rowsTotal = out.sheets.reduce((s, sh) => s + (sh.data ? sh.data.length : 0), 0);
+    stageDone('plan', msec4,
+      kv([['计算范围', `${D.meta.n_rows} 条网点日记录，${D.meta.n_branches} 家网点，${D.meta.n_dates} 天`],
+          ['产出工作表', out.sheets.map(s => s.name).join('、')],
+          ['总行数', rowsTotal + ' 行'],
+          ['关键指标卡', out.kpis.length + ' 个'],
+          ['图表', out.charts.length + ' 张']]) +
+      '<div class="guard">计算在浏览器内完成，<b>没有把数据上传到任何地方</b>。' +
+      '所有口径（同星期几基线、周度差错率、极端值剔除）都在这一步按语义层的定义执行。</div>');
+
+    /* ---------------- 阶段 5：工作簿构建 ---------------- */
+    stageRun('workbook'); s0 = performance.now(); await sleep(150);
+    const spec = buildWorkbookSpec(route.op, params, out, text);
+    const msec5 = performance.now() - s0;
+    stageDone('workbook', msec5,
+      kv([['工作簿名', '<code>' + esc(spec.filename) + '</code>'],
+          ['工作表', spec.sheets.map(s => `${esc(s.name)}（${s.rows.length} 行）`).join('<br>')],
+          ['格式', '表头冻结 + 列宽自适应 + 数字格式（千分位 / 百分比 / 千分号）'],
+          ['数据性质声明', '<b style="color:#2E7D6F">已作为第 1 张表写入</b>']]) +
+      '<div class="guard">Excel 的规格在这里定义：每张表的列、数字格式、备注行。' +
+      '<b>数据性质声明与口径备注会被自动写入工作簿</b>，' +
+      '这样任何人拿到文件都能看到「哪些数能用、哪些不能」，不需要另外查文档。<br>' +
+      '浏览器端格式能力有边界：单元格数字格式、列宽、冻结表头都可以做到；' +
+      '<b>条件格式色阶与图表需要 Excel 端二次渲染，本页不假装支持</b>——' +
+      '页面上的图表是为了让你当场看清分布。</div>');
+
+    /* ---------------- 阶段 6：真正生成 xlsx ---------------- */
+    stageRun('render'); s0 = performance.now();
+    let blob = null, xerr = null;
+    try {
+      blob = makeXlsxBlob(spec);
+    } catch (e) { xerr = e.message; }
+    await sleep(120);
+    const msec6 = performance.now() - s0;
+    stageDone('render', msec6,
+      kv([['生成库', 'SheetJS（已内嵌，离线可用）'],
+          ['文件大小', blob ? (blob.size / 1024).toFixed(1) + ' KB' : '<b style="color:#C8102E">生成失败</b>'],
+          ['宏', '不含任何宏（.xlsx）'],
+          ['兼容性', 'Excel / WPS / Numbers 可直接打开']]) +
+      (xerr ? '<div class="guard warn">生成失败：' + esc(xerr) + '</div>'
+            : '<div class="guard">文件在你的浏览器里现场构造，' +
+              '点下方按钮即可保存到你自己的下载目录——本页面不写任何本地文件。</div>'), !xerr);
+
+    /* ---------------- 阶段 7：结果 ---------------- */
+    stageRun('answer'); s0 = performance.now(); await sleep(100);
+    const total = performance.now() - t0;
+    stageDone('answer', performance.now() - s0,
+      kv([['解读', esc(out.interpretation)],
+          ['总耗时', total.toFixed(0) + ' ms'],
+          ['数据性质', '模拟数据（网点级），不含任何真实银行经营数据']]) +
+      '<div class="guard">每次输出都会附上<b>数据性质声明</b>。' +
+      '这不是形式——把模拟网点数据当成真实经营数据传播，' +
+      '是这个项目最需要避免的事。</div>');
+
+    renderResult(out, spec, blob, route.op, total);
+    LAST = {out, spec, blob};
+
+  } catch (e) {
+    $('result').innerHTML = '<div class="empty">运行出错：' + esc(e.message) + '</div>';
+    console.error(e);
+  } finally {
+    btn.disabled = false; btn.textContent = '运行 Agent';
+  }
+}
+</script>
+
+<script>
+/* =========================================================================
+   工作簿规格 + 真正的 xlsx 生成
+   ========================================================================= */
+
+function stamp() {
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+
+/* 把内部列名翻成可读表头，并按列定义格式化取值 */
+function cellValue(row, col) {
+  let v = row[col.k];
+  if (v === undefined || v === null || v === '' || (typeof v === 'number' && Number.isNaN(v))) return null;
+  if (typeof v === 'number') {
+    if (col.times1000) return v * 1000;      // 比率 -> 千分位展示
+    if (col.ratio) return v;                  // 保持比率，用百分比格式
+    return col.dec === 0 ? Math.round(v) : Number(v.toFixed(col.dec ?? 2));
+  }
+  return v;
+}
+
+function buildWorkbookSpec(op, params, out, question) {
+  const sheets = [];
+
+  // ---- 第 1 张：说明与数据性质（强制）
+  const S = D.meta.simulation;
+  sheets.push({
+    name: '说明与数据性质',
+    title: '银行网点运营指标 · Text-to-Excel Agent 输出',
+    rows: [
+      ['问题', question],
+      ['生成时间', new Date().toLocaleString('zh-CN')],
+      ['执行操作', `${op.id} — ${op.title}`],
+      ['参数', JSON.stringify(params)],
+      [],
+      ['⚠ 数据性质声明', ''],
+      ['① 真实公开数据', `28 个来源、${S.metric_count} 条已核实指标（人民银行支付体系报告 17 份、平安银行定期报告 6 份、金融监管总局、银行业协会、上海市统计局）。用于锚定模拟数据的量级，逐条可溯源。`],
+      ['② 模拟数据', `网点级「日运营指标」——国内没有公开的网点级微观运营数据（等候时长、柜面业务量、差错率、投诉率均属各行内部经营数据）。本工作簿用 ${D.meta.n_branches} 家网点 × ${D.meta.n_dates} 天 = ${D.meta.n_rows} 条模拟数据（注入 ${S.anomalies_injected} 例已知异常）演示方法本身。`],
+      ['边界', '所有网点层面的具体数字均不代表任何真实银行的经营情况。'],
+      [],
+      ['口径纪律', '1) 比率类指标只保留分子分母，比率在查询时计算；2) 时间序列比较必须用同星期几基线；3) 低频计数指标（差错/投诉）不用相对变化率而用绝对增量；4) 异常需先区分数据错误/口径差异/真实风险；5) 模拟数据与真实数据分开呈现。'],
+    ],
+    colWidths: [22, 96],
+    headerless: true,
+  });
+
+  // ---- 结果解读
+  sheets.push({
+    name: '结果解读',
+    title: 'Agent 的结论',
+    rows: [[out.interpretation]],
+    colWidths: [120],
+    headerless: true,
+    wrap: true,
+  });
+
+  // ---- 各数据表
+  out.sheets.forEach(sh => {
+    const header = sh.cols.map(c => c.t);
+    const rows = (sh.data || []).map(r => sh.cols.map(c => cellValue(r, c)));
+    const meta = sh.cols.map(c => ({
+      dec: c.dec ?? 2, ratio: !!c.ratio, times1000: !!c.times1000,
+      highlight: !!c.highlight, signed: !!c.signed, text: typeof (sh.data?.[0]?.[c.k]) === 'string',
+    }));
+    sheets.push({
+      name: sh.name, title: sh.title, header, rows, meta,
+      note: sh.note || '',
+      colWidths: sh.cols.map(c => Math.max(11, Math.min(34, (c.t || '').length + 4))),
+    });
+  });
+
+  // 文件名：操作 + 参数要点 + 时间戳
+  let tag = op.id;
+  if (params.metric) tag += '_' + (METRIC_META[params.metric]?.label || params.metric);
+  if (params.branch) tag += '_' + params.branch;
+
+  return {
+    filename: `银行网点运营_${tag}_${stamp()}.xlsx`,
+    sheets,
+    question, op, params,
+  };
+}
+
+/* ---- 用 SheetJS 真正生成 xlsx（含格式与条件格式） ---- */
+function makeXlsxBlob(spec) {
+  if (typeof XLSX === 'undefined') throw new Error('SheetJS 未加载');
+  const wb = XLSX.utils.book_new();
+
+  spec.sheets.forEach(sh => {
+    const aoa = [];
+    if (sh.title) aoa.push([sh.title]);
+    if (sh.header) aoa.push(sh.header);
+    sh.rows.forEach(r => aoa.push(r));
+    if (sh.note) { aoa.push([]); aoa.push(['口径备注：' + sh.note]); }
+
+    const ws = XLSX.utils.aoa_to_sheet(aoa);
+    const startRow = (sh.title ? 1 : 0) + (sh.header ? 1 : 0);
+
+    // 数字格式
+    if (sh.meta) {
+      sh.meta.forEach((m, ci) => {
+        for (let ri = 0; ri < sh.rows.length; ri++) {
+          const addr = XLSX.utils.encode_cell({r: startRow + ri, c: ci});
+          const cell = ws[addr];
+          if (!cell || cell.t !== 'n') continue;
+          if (m.times1000) cell.z = '0.000"‰"';
+          else if (m.ratio) cell.z = m.signed ? '+0.0%;-0.0%;0.0%' : '0.0%';
+          else cell.z = m.dec === 0 ? '#,##0' : '#,##0.' + '0'.repeat(m.dec);
+        }
+      });
+    }
+
+    // 列宽
+    if (sh.colWidths) ws['!cols'] = sh.colWidths.map(w => ({wch: w}));
+
+    // 冻结表头：让长表滚动时表头始终可见。
+    // 这是 SheetJS 社区版**确实支持**的格式能力之一。
+    ws['!freeze'] = {xSplit: 0, ySplit: startRow,
+                     topLeftCell: 'A' + (startRow + 1), activePane: 'bottomLeft'};
+
+    XLSX.utils.book_append_sheet(wb, ws, sh.name.slice(0, 31));
+  });
+
+  const arr = XLSX.write(wb, {bookType: 'xlsx', type: 'array', compression: true});
+  return new Blob([arr], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+
+/* =========================================================================
+   结果渲染：KPI + 图表（手绘 SVG）+ 工作表预览
+   ========================================================================= */
+
+function renderResult(out, spec, blob, op, totalMs) {
+  const R = $('result');
+  $('resNote').textContent = `${op.title} · ${totalMs.toFixed(0)} ms`;
+
+  let html = '';
+
+  // KPI
+  html += '<div class="kpis">' + out.kpis.map(k =>
+    `<div class="kpi"><div class="v">${esc(k.v)}${k.u ? `<span class="u">${esc(k.u)}</span>` : ''}</div>
+     <div class="k">${esc(k.k)}</div></div>`).join('') + '</div>';
+
+  // 图表
+  if (out.charts.length) {
+    html += '<div class="charts">' + out.charts.map(c => {
+      const svg = c.type === 'line' ? svgLine(c) : svgBar(c);
+      return `<div class="chart"><h4>${esc(c.title)}</h4>${svg}</div>`;
+    }).join('') + '</div>';
+  }
+
+  // 工作表预览
+  html += '<div class="sheets">' + spec.sheets.map((s, i) =>
+    `<span class="sheet${i === 0 ? ' act' : ''}" data-si="${i}">${esc(s.name)}</span>`).join('') + '</div>';
+  html += '<div class="tblwrap" id="sheetPreview"></div>';
+
+  // 解读
+  html += `<div class="guard" style="margin-top:12px"><b>Agent 解读：</b>${esc(out.interpretation)}</div>`;
+
+  // 下载
+  html += '<div class="dl">';
+  if (blob) {
+    const url = URL.createObjectURL(blob);
+    html += `<a href="${url}" download="${esc(spec.filename)}">↓ 下载 Excel（${(blob.size/1024).toFixed(1)} KB）</a>`;
+    html += `<span class="hint">文件名：<code>${esc(spec.filename)}</code></span>`;
+  } else {
+    html += '<span class="hint" style="color:#C8102E">Excel 生成失败</span>';
+  }
+  html += '</div>';
+
+  R.innerHTML = html;
+
+  // 工作表切换
+  const preview = $('sheetPreview');
+  function showSheet(i) {
+    const sh = spec.sheets[i];
+    document.querySelectorAll('.sheet').forEach((el, j) => el.classList.toggle('act', j === i));
+    let t = '';
+    if (sh.header) {
+      t += '<table><thead><tr>' + sh.header.map(h => `<th>${esc(h)}</th>`).join('') + '</tr></thead><tbody>';
+      sh.rows.slice(0, 300).forEach((r, ri) => {
+        t += '<tr>' + r.map((v, ci) => {
+          const m = sh.meta ? sh.meta[ci] : null;
+          let s, cls = '';
+          if (v === null || v === undefined) s = '—';
+          else if (typeof v === 'number') {
+            if (m && m.times1000) s = v.toFixed(3) + '‰';
+            else if (m && m.ratio) s = (v * 100).toFixed(m.dec ?? 1) + '%';
+            else s = Number(v).toLocaleString('zh-CN', {minimumFractionDigits: m?.dec ?? 0, maximumFractionDigits: m?.dec ?? 2});
+            if (m && m.highlight) cls = ' class="bad"';
+          } else { s = esc(String(v)); if (String(v).includes('⚠')) cls = ' class="bad"'; }
+          return `<td${cls}>${s}</td>`;
+        }).join('') + '</tr>';
+      });
+      t += '</tbody></table>';
+      if (sh.rows.length > 300) t += `<div class="note" style="padding:6px 2px">仅预览前 300 行，完整 ${sh.rows.length} 行见 Excel 文件</div>`;
+    } else {
+      t = '<table><tbody>' + sh.rows.slice(0, 200).map(r =>
+        '<tr>' + r.map((v, ci) => `<td style="${ci===0?'color:#1F3864;font-weight:600;white-space:nowrap':''}">${
+          v === null || v === undefined ? '' : esc(String(v))}</td>`).join('') + '</tr>').join('') + '</tbody></table>';
+    }
+    if (sh.note) t += `<div class="note" style="padding:8px 2px 2px;border-top:1px dashed #E3E9F0;margin-top:6px">口径备注：${esc(sh.note)}</div>`;
+    preview.innerHTML = t;
+  }
+  document.querySelectorAll('.sheet').forEach(el => {
+    el.onclick = () => showSheet(parseInt(el.dataset.si, 10));
+  });
+  showSheet(0);
+}
+
+/* ---- 手绘 SVG 图表（不依赖任何图表库，保证离线可用） ---- */
+function niceNum(v, dec, ratio, times1000) {
+  if (v === null || v === undefined) return '—';
+  if (times1000) return (v * 1000).toFixed(Math.min(3, dec ?? 3));
+  if (ratio) return (v * 100).toFixed(dec ?? 1) + '%';
+  return Number(v).toLocaleString('zh-CN', {maximumFractionDigits: dec ?? 1});
+}
+
+function svgBar(c) {
+  const W = 520, H = Math.max(150, 26 + c.labels.length * (c.horizontal ? 22 : 0) + 46);
+  const vals = c.values.map(v => v ?? 0);
+  const max = Math.max(...vals), min = Math.min(0, Math.min(...vals));
+  const color = c.color || '#1F3864';
+  if (c.horizontal) {
+    const padL = 64, padR = 66, padT = 14;
+    const bh = 18, gap = 6;
+    const h = padT + c.labels.length * (bh + gap) + 22;
+    const span = max || 1;
+    let g = `<svg viewBox="0 0 ${W} ${h}" preserveAspectRatio="xMidYMid meet">`;
+    c.labels.forEach((lb, i) => {
+      const y = padT + i * (bh + gap);
+      const w = Math.max(1, (vals[i] / span) * (W - padL - padR));
+      g += `<text x="${padL-7}" y="${y+bh*0.75}" text-anchor="end" font-size="11" fill="#3A4A5C">${esc(lb)}</text>`;
+      g += `<rect x="${padL}" y="${y}" width="${w}" height="${bh}" rx="3" fill="${color}" opacity="${0.55 + 0.45*(1-i/Math.max(1,c.labels.length-1))}"/>`;
+      g += `<text x="${padL+w+6}" y="${y+bh*0.75}" font-size="11" fill="#1F3864" font-weight="600">${niceNum(vals[i], c.dec, c.ratio, c.times1000)}</text>`;
+    });
+    return g + '</svg>';
+  }
+  // 竖排
+  const padL = 46, padR = 12, padT = 14, padB = 42;
+  const n = c.labels.length;
+  const bw = Math.max(6, (W - padL - padR) / n * 0.62);
+  const gap = (W - padL - padR) / n;
+  // 是否截断 y 轴：若最大值远超次大值（离群），从 0 起画会把其余柱子压扁。
+  // 截断时必须标注，否则会夸大差异——这是图表最低限度的诚实。
+  const sortedDesc = vals.slice().sort((a, b) => b - a);
+  const outlier = sortedDesc.length > 2 && sortedDesc[1] > 0 &&
+                  sortedDesc[0] > sortedDesc[1] * 1.6;
+  const lo = outlier ? Math.max(0, Math.min(...vals) * 0.9) : 0;
+  const hi = Math.max(...vals) || 1;
+  const span = Math.max(1e-9, hi - lo);
+  const Y = v => padT + (H - padT - padB) * (1 - (v - lo) / span);
+  let g = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">`;
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + (H - padT - padB) * i / 4;
+    const v = hi - span * i / 4;
+    g += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#EDF0F4"/>`;
+    g += `<text x="${padL-5}" y="${y+3.5}" text-anchor="end" font-size="9.5" fill="#9AA5B1">${niceNum(v, c.dec, c.ratio, c.times1000)}</text>`;
+  }
+  c.labels.forEach((lb, i) => {
+    const x = padL + gap * i + (gap - bw) / 2;
+    const yTop = Y(vals[i]);
+    const hgt = Math.max(2, H - padB - yTop);
+    g += `<rect x="${x}" y="${yTop}" width="${bw}" height="${hgt}" rx="3" fill="${c.color || '#1F3864'}" opacity=".88"/>`;
+    // 数值标签（数量少时显示，避免拥挤）
+    if (n <= 10) {
+      g += `<text x="${x+bw/2}" y="${yTop-3}" text-anchor="middle" font-size="9" fill="#1F3864">${
+        niceNum(vals[i], c.dec, c.ratio, c.times1000)}</text>`;
+    }
+    const short = lb.length > 6 ? lb.slice(5) : lb;
+    g += `<text x="${x+bw/2}" y="${H-padB+13}" text-anchor="middle" font-size="9.5" fill="#6B7C8F" transform="rotate(${n>8?-38:0} ${x+bw/2} ${H-padB+13})">${esc(short)}</text>`;
+  });
+  if (outlier) {
+    g += `<text x="${padL}" y="${H-4}" font-size="9.5" fill="#C98A00">注：纵轴未从 0 起（最高值远大于其余），差异被放大显示</text>`;
+  }
+  return g + '</svg>';
+}
+
+function svgLine(c) {
+  const W = 520, H = 210, padL = 46, padR = 14, padT = 14, padB = 34;
+  const vals = c.values.map(v => (v === null || v === undefined) ? null : v);
+  const all = vals.concat(c.second ? c.second.values.filter(v => v !== null) : []);
+  const nums = all.filter(v => v !== null);
+  const max = Math.max(...nums), min = Math.min(...nums);
+  const lo = min - (max - min) * 0.12, hi = max + (max - min) * 0.12;
+  const n = vals.length;
+  const X = i => padL + (W - padL - padR) * (n <= 1 ? 0.5 : i / (n - 1));
+  const Y = v => padT + (H - padT - padB) * (1 - (v - lo) / Math.max(1e-9, hi - lo));
+
+  let g = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">`;
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + (H - padT - padB) * i / 4;
+    const v = hi - (hi - lo) * i / 4;
+    g += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#EDF0F4"/>`;
+    g += `<text x="${padL-5}" y="${y+3.5}" text-anchor="end" font-size="9.5" fill="#9AA5B1">${niceNum(v, c.dec, c.ratio, c.times1000)}</text>`;
+  }
+  // 基线（第二条线）
+  if (c.second) {
+    const b = c.second.values;
+    let d = '', started = false;
+    b.forEach((v, i) => {
+      if (v === null || v === undefined) { started = false; return; }
+      d += (started ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1) + ' ';
+      started = true;
+    });
+    g += `<path d="${d}" fill="none" stroke="${c.second.color || '#9AA5B1'}" stroke-width="1.4"
+            stroke-dasharray="4 3" opacity=".9"/>`;
+  }
+  // 主线（跳过 null）
+  let d = '', started = false, area = '';
+  vals.forEach((v, i) => {
+    if (v === null || v === undefined) { started = false; return; }
+    d += (started ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1) + ' ';
+    started = true;
+  });
+  const col = c.color || '#C8102E';
+  g += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2"/>`;
+  // x 轴刻度（稀疏）
+  const step = Math.max(1, Math.floor(n / 6));
+  for (let i = 0; i < n; i += step) {
+    g += `<text x="${X(i)}" y="${H-padB+14}" text-anchor="middle" font-size="9.5" fill="#6B7C8F">${esc(c.labels[i].slice(5))}</text>`;
+  }
+  if (c.second) {
+    g += `<text x="${padL}" y="${H-4}" font-size="10" fill="#9AA5B1">— — 同星期几基线</text>`;
+  }
+  return g + '</svg>';
+}
+</script>
+
+<script>
+/* ---------------------------------------------------------------- 启动 */
+(function init() {
+  const M = D.meta;
+  $('bBadge').textContent = `数据已内嵌 · ${M.n_branches} 网点 × ${M.n_dates} 天 = ${M.n_rows} 条`;
+  $('bEngine').textContent = (typeof XLSX !== 'undefined')
+    ? 'Excel 引擎就绪（SheetJS）' : 'Excel 引擎缺失';
+  $('genInfo').textContent =
+    `数据生成：${M.generated_at}　｜　区间 ${M.date_range[0]} ~ ${M.date_range[1]}　｜　` +
+    `模拟随机种子 ${M.simulation.seed}　｜　真实公开来源 ${M.simulation.source_count} 个 / ` +
+    `${M.simulation.metric_count} 条已核实指标`;
+
+  const box = $('samples');
+  SAMPLES.forEach(s => {
+    const el = document.createElement('span');
+    el.className = 'chip'; el.textContent = s;
+    el.onclick = () => { $('q').value = s; runAgent(s); };
+    box.appendChild(el);
+  });
+
+  $('run').onclick = () => runAgent($('q').value);
+  $('q').addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runAgent($('q').value);
+  });
+  $('apikey').addEventListener('change', e => {
+    const on = !!e.target.value.trim();
+    $('bLLM').textContent = on ? '已接入 LLM · 可答任意问法' : '未接 LLM · 模板匹配模式';
+    $('bLLM').className = 'badge' + (on ? '' : ' off');
+    try { on ? sessionStorage.setItem('ops_key', e.target.value.trim())
+             : sessionStorage.removeItem('ops_key'); } catch (_) {}
+  });
+  try {
+    const k = sessionStorage.getItem('ops_key');
+    if (k) { $('apikey').value = k; $('bLLM').textContent = '已接入 LLM · 可答任意问法';
+             $('bLLM').className = 'badge'; }
+  } catch (_) {}
+
+  // 支持 ?q=问题 直接带问题打开（也用于自动化截图验证流水线渲染）。
+  // 例：运营问数Agent.html?q=哪些网点等候时长最长
+  try {
+    const qp = new URLSearchParams(location.search).get('q');
+    if (qp) {
+      $('q').value = qp;
+      setTimeout(() => runAgent(qp), 120);
+    }
+  } catch (_) {}
+})();
+</script>
+</body>
+</html>

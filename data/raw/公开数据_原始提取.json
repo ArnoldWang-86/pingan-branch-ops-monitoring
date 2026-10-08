@@ -1,0 +1,6353 @@
+{
+  "collected_at": "2026-10-08",
+  "meta": {
+    "project": "银行网点运营指标监控与异常预警 — 第一部分：真实公开数据",
+    "compiled_by": "东华大学统计学本科生作品集（数据收集环节）",
+    "quote_policy": "quote 字段为 PDF/网页原文文字，仅去除了 PDF 抽取产生的多余空白与换行，字符未作改动。表格类数据的 quote 为表格行原文。",
+    "provenance_policy": "所有 metrics 的 value 均来自本清单 sources 中 URL 指向的原文；本项目未从搜索引擎摘要填入任何数值。凡二手转载均在 note 中标注【来自二手转载】。凡本项目自行计算均带 derived: true。",
+    "extraction_method": "web_fetch 无法读取 PDF（返回 unsupported content type），因此全部 PDF 由本地 Python(urllib) 下载后用 pypdf 6.19.0 抽取文字，再以 read 工具读取 UTF-8 文本核对。抽取脚本与缓存文本保存在 data/raw/_pdf/。",
+    "url_verification": "全部 28 个来源 URL 已用 HTTP GET 复核，均返回 200 且 Content-Type 与来源类型一致（PDF/HTML）。复核日志：data/raw/_pdf/url_check.txt。",
+    "pbc_report_scope_change": "重要口径变化：人民银行《支付体系运行总体情况》自 2025 年第一季度报告起删除了「人均持有银行卡/信用卡」「每万人拥有ATM机具」「银联跨行支付系统联网特约商户」「联网POS机具」「每万人拥有联网POS机具」「银行卡卡均/笔均消费金额」「电话支付」等明细项，因此这些指标在 2025Q1 及以后为未披露（非缺失错误）。",
+    "verified_metric_count": 601
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "2023年第一季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/2cfb2e55a0ec48e7b3bf5b94f0ed3942/2023062015333976801.pdf",
+      "published_date": "2023-06-20",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S01.pdf"
+    },
+    {
+      "id": "S02",
+      "title": "2023年第二季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/8f7f0f31288946379b56fd91c7f85a10/2023090115201061429.pdf",
+      "published_date": "2023-09-01",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S02.pdf"
+    },
+    {
+      "id": "S03",
+      "title": "2023年第三季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/0876a20ea9ec4fd383557a06dd44ee53/2023122016023780753.pdf",
+      "published_date": "2023-12-21",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S03.pdf"
+    },
+    {
+      "id": "S04",
+      "title": "2023年第四季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/fbd6876ecc2e49d6b97d5876d378a3e3/2024032815224726913.pdf",
+      "published_date": "2024-03-28",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S04.pdf"
+    },
+    {
+      "id": "S05",
+      "title": "2023年支付体系运行总体情况（年度）",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/e65053157ab14b9abf06bc9b18badb3a/2024032815235914509.pdf",
+      "published_date": "2024-03-28",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S05.pdf"
+    },
+    {
+      "id": "S06",
+      "title": "2024年第一季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/ced4bb775a224829a2005d41971fdc40/2024062810432576956.pdf",
+      "published_date": "2024-06-28",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S06.pdf"
+    },
+    {
+      "id": "S07",
+      "title": "2024年第二季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5515239/2024112216575572768.pdf",
+      "published_date": "2024-11-22",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S07.pdf"
+    },
+    {
+      "id": "S08",
+      "title": "2024年第三季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5563954/2025011018414751195.pdf",
+      "published_date": "2025-01-10",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S08.pdf"
+    },
+    {
+      "id": "S09",
+      "title": "2024年第四季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5589302/2025021417362311097.pdf",
+      "published_date": "2025-02-14",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S09.pdf"
+    },
+    {
+      "id": "S10",
+      "title": "2024年支付体系运行总体情况（年度）",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5589365/2025021417373037368.pdf",
+      "published_date": "2025-02-14",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S10.pdf"
+    },
+    {
+      "id": "S11",
+      "title": "2025年第一季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/fileDir/resource/cms/2025/06/2025061318092984648.pdf",
+      "published_date": "2025-06-13",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S11.pdf"
+    },
+    {
+      "id": "S12",
+      "title": "2025年第二季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5811352/2025081517212382123.pdf",
+      "published_date": "2025-08-15",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S12.pdf"
+    },
+    {
+      "id": "S13",
+      "title": "2025年第三季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/5919291/2025120218462962946.pdf",
+      "published_date": "2025-12-02",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S13.pdf"
+    },
+    {
+      "id": "S14",
+      "title": "2025年第四季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/2026021217335040171/2026021217331343221.pdf",
+      "published_date": "2026-02-12",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S14.pdf"
+    },
+    {
+      "id": "S15",
+      "title": "2025年支付体系运行总体情况（年度）",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/2026021217345429754/2026021217343023236.pdf",
+      "published_date": "2026-02-12",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S15.pdf"
+    },
+    {
+      "id": "S16",
+      "title": "2026年第一季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/2026051517583881711/2026051517575586652.pdf",
+      "published_date": "2026-05-15",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S16.pdf"
+    },
+    {
+      "id": "S17",
+      "title": "2026年第二季度支付体系运行总体情况",
+      "publisher": "中国人民银行 支付结算司",
+      "url": "https://www.pbc.gov.cn/zhifujiesuansi/128525/128545/128643/2026090219081087604/2026090219072950269.pdf",
+      "published_date": "2026-09-02",
+      "accessed_ok": true,
+      "notes": "PDF 原文，已下载并本地抽取文字（pypdf）。文字版首页+银行卡章节为数据来源。",
+      "local_file": "pbc_S17.pdf"
+    },
+    {
+      "id": "S18",
+      "title": "平安银行股份有限公司2022年年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://ebank.pingan.com.cn/ir/file/upload/%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B82022%E5%B9%B4%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A.pdf",
+      "published_date": "2023-03-08",
+      "accessed_ok": true,
+      "notes": "PDF 原文，306 页，已下载并抽取文字。",
+      "local_file": "pingan_2022Y.pdf"
+    },
+    {
+      "id": "S19",
+      "title": "平安银行股份有限公司2023年年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://ebank.pingan.com.cn/ir/file/upload/%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B82023%E5%B9%B4%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A%202024-03-15.pdf",
+      "published_date": "2024-03-15",
+      "accessed_ok": true,
+      "notes": "PDF 原文，294 页，已下载并抽取文字。",
+      "local_file": "pingan_2023Y.pdf"
+    },
+    {
+      "id": "S20",
+      "title": "平安银行股份有限公司2023年半年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://ebank.pingan.com.cn/ir/file/upload/2023-08-24%20%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B82023%E5%B9%B4%E5%8D%8A%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A.pdf",
+      "published_date": "2023-08-24",
+      "accessed_ok": true,
+      "notes": "PDF 原文，236 页，已下载并抽取文字。",
+      "local_file": "pingan_2023H.pdf"
+    },
+    {
+      "id": "S21",
+      "title": "平安银行股份有限公司2024年年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://ebank.pingan.com.cn/ir/file/upload/%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C2024%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A_%E4%B8%AD%E6%96%87%E7%89%88%200703.pdf",
+      "published_date": "2025-03-14",
+      "accessed_ok": true,
+      "notes": "PDF 原文，169 页，已下载并抽取文字。",
+      "local_file": "pingan_2024Y.pdf"
+    },
+    {
+      "id": "S22",
+      "title": "平安银行股份有限公司2024年半年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2024-08-16/e997ceb0-6558-42dd-9c96-8ce6e16a75ad.PDF",
+      "published_date": "2024-08-16",
+      "accessed_ok": true,
+      "notes": "PDF 原文（深交所法定披露平台），225 页，已下载并抽取文字。",
+      "local_file": "pingan_2024H.pdf"
+    },
+    {
+      "id": "S23",
+      "title": "平安银行股份有限公司2025年年度报告",
+      "publisher": "平安银行股份有限公司",
+      "url": "https://ebank.pingan.com.cn/ir/file/upload/%E5%B9%B3%E5%AE%89%E9%93%B6%E8%A1%8C%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B82025%E5%B9%B4%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A.pdf",
+      "published_date": "2026-03-20",
+      "accessed_ok": true,
+      "notes": "PDF 原文，288 页，已下载并抽取文字。含「上海自贸试验区分行」单独列示的资产规模与员工人数。",
+      "local_file": "pingan_2025Y.pdf"
+    },
+    {
+      "id": "S24",
+      "title": "2025年二季度银行业保险业主要监管指标数据情况",
+      "publisher": "国家金融监督管理总局",
+      "url": "https://www.nfra.gov.cn/chinese/OFFICE/PDF/1221429.pdf",
+      "published_date": "2025-08-15",
+      "accessed_ok": true,
+      "notes": "PDF 原文，4 页，已下载并抽取文字。商业银行口径为法人口径。",
+      "local_file": "nfra_1221429.pdf"
+    },
+    {
+      "id": "S25",
+      "title": "2024年中国银行业服务报告",
+      "publisher": "中国银行业协会",
+      "url": "https://www.china-cba.net/Uploads/ueditor/file/20250624/685abc1b3a3ad.pdf",
+      "published_date": "2025-06-24",
+      "accessed_ok": true,
+      "notes": "PDF 原文，102 页，已下载并抽取文字。网点/离柜/手机银行等数据标注为「中国银行业协会不完全统计」。",
+      "local_file": "cba_service2024.pdf"
+    },
+    {
+      "id": "S26",
+      "title": "2025年上海市国民经济和社会发展统计公报",
+      "publisher": "上海市统计局 国家统计局上海调查总队",
+      "url": "https://tjj.sh.gov.cn/tjgb/20260330/e0772941e8e041eaaad2df850b44ef98.html",
+      "published_date": "2026-03-30",
+      "accessed_ok": true,
+      "notes": "HTML 原文，含人口、收入、金融业、中国(上海)自由贸易试验区建设等章节。"
+    },
+    {
+      "id": "S27",
+      "title": "国家金融监督管理总局上海监管局直接监管的银行业机构名单（截至2025年12月31日）",
+      "publisher": "国家金融监督管理总局上海监管局",
+      "url": "https://www.nfra.gov.cn/chinese/docfile/2026/e0c1a76904134366b911be751cae494d.pdf",
+      "published_date": "2026-01-01",
+      "accessed_ok": true,
+      "notes": "PDF 原文，14 页，共 302 条机构记录（已按序号计数）。",
+      "local_file": "sh_nfra_banklist2025.pdf"
+    },
+    {
+      "id": "S28",
+      "title": "最新丨4070家银行业金融机构法人名单",
+      "publisher": "普益标准（转载于金融界）——原始数据源：国家金融监督管理总局",
+      "url": "https://m.jrj.com.cn/madapter/bank/2025/12/08220554636253.shtml",
+      "published_date": "2025-12-08",
+      "accessed_ok": true,
+      "notes": "【二手转载】金融监管总局官网法人名单页面为 JS 动态渲染，无法直接读取表格；此文为第三方整理，仅作线索，未能核对官网原始名单。"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 142.21,
+      "unit": "亿户",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "截至一季度末，全国共开立银行账户142.21亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 9517.38,
+      "unit": "万户",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "全国共开立单位银行账户9517.38万户。",
+      "note": "2023Q4 起人行改为以「亿户」披露，2023Q1-Q3 为「万户」。"
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 6689.88,
+      "unit": "万户",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "其中，基本存款账户6689.88万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 141.26,
+      "unit": "亿户",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "全国共开立个人银行账户141.26亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 95.73,
+      "unit": "亿张",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "全国共开立银行卡95.73亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 87.82,
+      "unit": "亿张",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "其中，借记卡87.82亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.91,
+      "unit": "亿张",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "信用卡和借贷合一卡7.91亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 88.27,
+      "unit": "万台",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "ATM机具88.27万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1145.87,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，全国银行共办理非现金支付业务1145.87亿笔，金额1277.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1277.53,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，全国银行共办理非现金支付业务1145.87亿笔，金额1277.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1118.39,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，全国共发生银行卡交易1118.39亿笔，金额292.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 292.9,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，全国共发生银行卡交易1118.39亿笔，金额292.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 635.99,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "消费业务635.99亿笔，金额33.04万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 33.04,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "消费业务635.99亿笔，金额33.04万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 675.84,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，银行共处理电子支付业务675.84亿笔，金额831.82万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 831.82,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，银行共处理电子支付业务675.84亿笔，金额831.82万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 412.84,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "移动支付业务412.84亿笔，金额144.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 144.6,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "移动支付业务412.84亿笔，金额144.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 220.89,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "网上支付业务220.89亿笔，金额666.15万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 666.15,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "网上支付业务220.89亿笔，金额666.15万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 2665.01,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "非银行支付机构处理网络支付业务2665.01亿笔，金额84.66万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 84.66,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "非银行支付机构处理网络支付业务，金额84.66万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 2584.32,
+      "unit": "亿笔",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，支付系统共处理支付业务2584.32亿笔，金额2777.43万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 2777.43,
+      "unit": "万亿元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "一季度，支付系统共处理支付业务，金额2777.43万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.78,
+      "unit": "张",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "人均持有银行卡6.78张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.56,
+      "unit": "张",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "人均持有信用卡和借贷合一卡0.56张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 6.25,
+      "unit": "台",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "全国每万人拥有ATM机具6.25台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银联跨行支付系统联网特约商户",
+      "value": 2561.38,
+      "unit": "万户",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "银联跨行支付系统联网特约商户2561.38万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "联网POS机具",
+      "value": 3309.74,
+      "unit": "万台",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "联网POS机具3309.74万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有联网POS机具",
+      "value": 234.44,
+      "unit": "台",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "全国每万人拥有联网POS机具234.44台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3451.12,
+      "unit": "元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "银行卡卡均消费金额3451.12元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 519.48,
+      "unit": "元",
+      "period": "2023Q1",
+      "region": "全国",
+      "source_id": "S01",
+      "quote": "笔均消费金额519.48元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 142.87,
+      "unit": "亿户",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "截至二季度末，全国共开立银行账户142.87亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 9771.34,
+      "unit": "万户",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "全国共开立单位银行账户9771.34万户。",
+      "note": "2023Q4 起人行改为以「亿户」披露，2023Q1-Q3 为「万户」。"
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 6871.91,
+      "unit": "万户",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "其中，基本存款账户6871.91万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 141.89,
+      "unit": "亿户",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "全国共开立个人银行账户141.89亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 96.21,
+      "unit": "亿张",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "全国共开立银行卡96.21亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 88.34,
+      "unit": "亿张",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "其中，借记卡88.34亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.86,
+      "unit": "亿张",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "信用卡和借贷合一卡7.86亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 86.28,
+      "unit": "万台",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "ATM机具86.28万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1302.27,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，全国银行共办理非现金支付业务1302.27亿笔，金额1308.83万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1308.83,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，全国银行共办理非现金支付业务1302.27亿笔，金额1308.83万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1273.97,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，全国共发生银行卡交易1273.97亿笔，金额271.76万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 271.76,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，全国共发生银行卡交易1273.97亿笔，金额271.76万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 724.3,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "消费业务724.3亿笔，金额32.89万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 32.89,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "消费业务724.3亿笔，金额32.89万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 735.78,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，银行共处理电子支付业务735.78亿笔，金额842.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 842.19,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，银行共处理电子支付业务735.78亿笔，金额842.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 460.42,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "移动支付业务460.42亿笔，金额138.96万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 138.96,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "移动支付业务460.42亿笔，金额138.96万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 236.45,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "网上支付业务236.45亿笔，金额685.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 685.19,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "网上支付业务236.45亿笔，金额685.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3082.57,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "非银行支付机构处理网络支付业务3082.57亿笔，金额82.74万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 82.74,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "非银行支付机构处理网络支付业务，金额82.74万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3035.75,
+      "unit": "亿笔",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，支付系统共处理支付业务3035.75亿笔，金额3047.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3047.92,
+      "unit": "万亿元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "二季度，支付系统共处理支付业务，金额3047.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.81,
+      "unit": "张",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "人均持有银行卡6.81张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.56,
+      "unit": "张",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "人均持有信用卡和借贷合一卡0.56张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 6.11,
+      "unit": "台",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "全国每万人拥有ATM机具6.11台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银联跨行支付系统联网特约商户",
+      "value": 2774.47,
+      "unit": "万户",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "银联跨行支付系统联网特约商户2774.47万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "联网POS机具",
+      "value": 3549.38,
+      "unit": "万台",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "联网POS机具3549.38万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有联网POS机具",
+      "value": 251.42,
+      "unit": "台",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "全国每万人拥有联网POS机具251.42台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3418.35,
+      "unit": "元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "银行卡卡均消费金额3418.35元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 454.05,
+      "unit": "元",
+      "period": "2023Q2",
+      "region": "全国",
+      "source_id": "S02",
+      "quote": "笔均消费金额454.05元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 143.73,
+      "unit": "亿户",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "截至三季度末，全国共开立银行账户143.73亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 10017.87,
+      "unit": "万户",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "全国共开立单位银行账户10017.87万户。",
+      "note": "2023Q4 起人行改为以「亿户」披露，2023Q1-Q3 为「万户」。"
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7043.7,
+      "unit": "万户",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "其中，基本存款账户7043.7万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 142.73,
+      "unit": "亿户",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "全国共开立个人银行账户142.73亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 97.26,
+      "unit": "亿张",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "全国共开立银行卡97.26亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 89.47,
+      "unit": "亿张",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "其中，借记卡89.47亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.79,
+      "unit": "亿张",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "信用卡和借贷合一卡7.79亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 84.7,
+      "unit": "万台",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "ATM机具84.7万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1455.22,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，全国银行共办理非现金支付业务1455.22亿笔，金额1326.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1326.19,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，全国银行共办理非现金支付业务1455.22亿笔，金额1326.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1426.19,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，全国共发生银行卡交易1426.19亿笔，金额260.77万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 260.77,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，全国共发生银行卡交易1426.19亿笔，金额260.77万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 811.84,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "消费业务811.84亿笔，金额34.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 34.53,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "消费业务811.84亿笔，金额34.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 771.11,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，银行共处理电子支付业务771.11亿笔，金额858.34万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 858.34,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，银行共处理电子支付业务771.11亿笔，金额858.34万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 484.29,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "移动支付业务484.29亿笔，金额137.71万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 137.71,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "移动支付业务484.29亿笔，金额137.71万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 246.42,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "网上支付业务246.42亿笔，金额702.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 702.4,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "网上支付业务246.42亿笔，金额702.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3267.94,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "非银行支付机构处理网络支付业务3267.94亿笔，金额85.77万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 85.77,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "非银行支付机构处理网络支付业务，金额85.77万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3358.88,
+      "unit": "亿笔",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，支付系统共处理支付业务3358.88亿笔，金额3151.37万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3151.37,
+      "unit": "万亿元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "三季度，支付系统共处理支付业务，金额3151.37万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.89,
+      "unit": "张",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "人均持有银行卡6.89张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.55,
+      "unit": "张",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "人均持有信用卡和借贷合一卡0.55张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 6.0,
+      "unit": "台",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "全国每万人拥有ATM机具6.0台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银联跨行支付系统联网特约商户",
+      "value": 3465.9,
+      "unit": "万户",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "银联跨行支付系统联网特约商户3465.9万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "联网POS机具",
+      "value": 4304.3,
+      "unit": "万台",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "联网POS机具4304.3万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有联网POS机具",
+      "value": 304.89,
+      "unit": "台",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "全国每万人拥有联网POS机具304.89台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3550.57,
+      "unit": "元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "银行卡卡均消费金额3550.57元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 425.35,
+      "unit": "元",
+      "period": "2023Q3",
+      "region": "全国",
+      "source_id": "S03",
+      "quote": "笔均消费金额425.35元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 144.65,
+      "unit": "亿户",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "截至四季度末，全国共开立银行账户144.65亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.02,
+      "unit": "亿户",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "开立单位银行账户1.02亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7195.23,
+      "unit": "万户",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "其中，基本存款账户7195.23万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 143.63,
+      "unit": "亿户",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "全国共开立个人银行账户143.63亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 97.87,
+      "unit": "亿张",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "全国共开立银行卡97.87亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 90.2,
+      "unit": "亿张",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "其中，借记卡90.2亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.67,
+      "unit": "亿张",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "信用卡和借贷合一卡7.67亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 84.55,
+      "unit": "万台",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "ATM机具84.55万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1522.53,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，全国银行共办理非现金支付业务1522.53亿笔，金额1338.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1338.75,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，全国银行共办理非现金支付业务1522.53亿笔，金额1338.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1492.33,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，全国共发生银行卡交易1492.33亿笔，金额259.64万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 259.64,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，全国共发生银行卡交易1492.33亿笔，金额259.64万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 902.28,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "消费业务902.28亿笔，金额35.54万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 35.54,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "消费业务902.28亿笔，金额35.54万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 778.91,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，银行共处理电子支付业务778.91亿笔，金额862.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 862.92,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，银行共处理电子支付业务778.91亿笔，金额862.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 493.92,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "移动支付业务493.92亿笔，金额134.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 134.06,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "移动支付业务493.92亿笔，金额134.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 245.12,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "网上支付业务245.12亿笔，金额711.39万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 711.39,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "网上支付业务245.12亿笔，金额711.39万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3270.01,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "非银行支付机构处理网络支付业务3270.01亿笔，金额87.08万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 87.08,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "非银行支付机构处理网络支付业务，金额87.08万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3537.99,
+      "unit": "亿笔",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，支付系统共处理支付业务3537.99亿笔，金额3085.95万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3085.95,
+      "unit": "万亿元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "四季度，支付系统共处理支付业务，金额3085.95万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.93,
+      "unit": "张",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "人均持有银行卡6.93张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.54,
+      "unit": "张",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "人均持有信用卡和借贷合一卡0.54张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.99,
+      "unit": "台",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "全国每万人拥有ATM机具5.99台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3631.5,
+      "unit": "元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "银行卡卡均消费金额3631.5元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 393.91,
+      "unit": "元",
+      "period": "2023Q4",
+      "region": "全国",
+      "source_id": "S04",
+      "quote": "笔均消费金额393.91元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 144.65,
+      "unit": "亿户",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "截至2023年末，全国共开立银行账户144.65亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.02,
+      "unit": "亿户",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "开立单位银行账户1.02亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7195.23,
+      "unit": "万户",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "其中，基本存款账户7195.23万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 143.63,
+      "unit": "亿户",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "全国共开立个人银行账户143.63亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 97.87,
+      "unit": "亿张",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "全国共开立银行卡97.87亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 90.2,
+      "unit": "亿张",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "其中，借记卡90.2亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.67,
+      "unit": "亿张",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "信用卡和借贷合一卡7.67亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 84.55,
+      "unit": "万台",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "ATM机具84.55万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 5425.89,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，全国银行共办理非现金支付业务5425.89亿笔，金额5251.3万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 5251.3,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，全国银行共办理非现金支付业务5425.89亿笔，金额5251.3万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 5310.87,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，全国共发生银行卡交易5310.87亿笔，金额1085.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 1085.07,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，全国共发生银行卡交易5310.87亿笔，金额1085.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 3074.41,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "消费业务3074.41亿笔，金额136.0万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 136.0,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "消费业务3074.41亿笔，金额136.0万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 2961.63,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，银行共处理电子支付业务2961.63亿笔，金额3395.27万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 3395.27,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，银行共处理电子支付业务2961.63亿笔，金额3395.27万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 1851.47,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "移动支付业务1851.47亿笔，金额555.33万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 555.33,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "移动支付业务1851.47亿笔，金额555.33万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 948.88,
+      "unit": "亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "网上支付业务948.88亿笔，金额2765.14万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 2765.14,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "网上支付业务948.88亿笔，金额2765.14万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 1.23,
+      "unit": "万亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "非银行支付机构处理网络支付业务1.23万亿笔，金额340.25万亿元。",
+      "note": "原文以「万亿笔」披露，未换算。"
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 340.25,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "非银行支付机构处理网络支付业务，金额340.25万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 1.25,
+      "unit": "万亿笔",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，支付系统共处理支付业务1.23万亿笔，金额12062.66万亿元。",
+      "note": "原文以「万亿笔」披露，未换算。"
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 12062.66,
+      "unit": "万亿元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "2023年，支付系统共处理支付业务，金额12062.66万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.93,
+      "unit": "张",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "人均持有银行卡6.93张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.54,
+      "unit": "张",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "人均持有信用卡和借贷合一卡0.54张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.99,
+      "unit": "台",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "全国每万人拥有ATM机具5.99台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 1.39,
+      "unit": "万元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "银行卡卡均消费金额1.39万元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 442.36,
+      "unit": "元",
+      "period": "2023Y",
+      "region": "全国",
+      "source_id": "S05",
+      "quote": "笔均消费金额442.36元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 145.77,
+      "unit": "亿户",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "截至一季度末，全国共开立银行账户145.77亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.05,
+      "unit": "亿户",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "开立单位银行账户1.05亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7362.28,
+      "unit": "万户",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "其中，基本存款账户7362.28万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 144.72,
+      "unit": "亿户",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "开立个人银行账户144.72亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 98.23,
+      "unit": "亿张",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "全国共开立银行卡98.23亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 90.63,
+      "unit": "亿张",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "其中，借记卡90.63亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.6,
+      "unit": "亿张",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "信用卡和借贷合一卡7.6亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 83.71,
+      "unit": "万台",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "ATM机具83.71万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1208.93,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，全国银行共办理非现金支付业务1208.93亿笔，金额1347.86万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1347.86,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，全国银行共办理非现金支付业务1208.93亿笔，金额1347.86万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1180.51,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，全国共发生银行卡交易1180.51亿笔，金额283.89万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 283.89,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，全国共发生银行卡交易1180.51亿笔，金额283.89万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 729.66,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "消费业务729.66亿笔，金额33.52万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 33.52,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "消费业务729.66亿笔，金额33.52万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 700.54,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，银行共处理电子支付业务700.54亿笔，金额851.46万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 851.46,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，银行共处理电子支付业务700.54亿笔，金额851.46万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 443.32,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "移动支付业务443.32亿笔，金额152.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 152.07,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "移动支付业务443.32亿笔，金额152.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 215.85,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "网上支付业务215.85亿笔，金额680.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 680.11,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "网上支付业务215.85亿笔，金额680.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3114.19,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "非银行支付机构处理网络支付业务3114.19亿笔，金额85.93万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 85.93,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "非银行支付机构处理网络支付业务，金额85.93万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 2900.75,
+      "unit": "亿笔",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，支付系统共处理支付业务2900.75亿笔，金额3121.29万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3121.29,
+      "unit": "万亿元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "一季度，支付系统共处理支付业务，金额3121.29万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.97,
+      "unit": "张",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "人均持有银行卡6.97张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.54,
+      "unit": "张",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "人均持有信用卡和借贷合一卡0.54张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.94,
+      "unit": "台",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "每万人拥有ATM机具5.94台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3412.05,
+      "unit": "元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "银行卡卡均消费金额3412.05元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 459.36,
+      "unit": "元",
+      "period": "2024Q1",
+      "region": "全国",
+      "source_id": "S06",
+      "quote": "笔均消费金额459.36元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 146.95,
+      "unit": "亿户",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "截至二季度末，全国共开立银行账户146.95亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.07,
+      "unit": "亿户",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "开立单位银行账户1.07亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7512.0,
+      "unit": "万户",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "其中，基本存款账户7512.0万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 145.88,
+      "unit": "亿户",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "开立个人银行账户145.88亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 98.59,
+      "unit": "亿张",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "全国共开立银行卡98.59亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 91.1,
+      "unit": "亿张",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "其中，借记卡91.1亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.49,
+      "unit": "亿张",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "信用卡和借贷合一卡7.49亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 82.43,
+      "unit": "万台",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "ATM机具82.43万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1384.0,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，全国银行共办理非现金支付业务1384.0亿笔，金额1319.65万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1319.65,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，全国银行共办理非现金支付业务1384.0亿笔，金额1319.65万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1354.78,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，全国共发生银行卡交易1354.78亿笔，金额241.49万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 241.49,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，全国共发生银行卡交易1354.78亿笔，金额241.49万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 857.15,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "消费业务857.15亿笔，金额32.01万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 32.01,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "消费业务857.15亿笔，金额32.01万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 753.75,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，银行共处理电子支付业务753.75亿笔，金额829.8万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 829.8,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，银行共处理电子支付业务753.75亿笔，金额829.8万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 541.88,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "移动支付业务541.88亿笔，金额134.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 134.4,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "移动支付业务541.88亿笔，金额134.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 175.19,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "网上支付业务175.19亿笔，金额679.81万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 679.81,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "网上支付业务175.19亿笔，金额679.81万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3435.0,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "非银行支付机构处理网络支付业务3435.0亿笔，金额80.32万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 80.32,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "非银行支付机构处理网络支付业务，金额80.32万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3371.14,
+      "unit": "亿笔",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，支付系统共处理支付业务3371.14亿笔，金额2999.71万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 2999.71,
+      "unit": "万亿元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "二季度，支付系统共处理支付业务，金额2999.71万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 6.99,
+      "unit": "张",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "人均持有银行卡6.99张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.53,
+      "unit": "张",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "人均持有信用卡和借贷合一卡0.53张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.85,
+      "unit": "台",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "每万人拥有ATM机具5.85台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3247.13,
+      "unit": "元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "银行卡卡均消费金额3247.13元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 373.47,
+      "unit": "元",
+      "period": "2024Q2",
+      "region": "全国",
+      "source_id": "S07",
+      "quote": "笔均消费金额373.47元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 148.12,
+      "unit": "亿户",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "截至三季度末，全国共开立银行账户148.12亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.09,
+      "unit": "亿户",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "开立单位银行账户1.09亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7642.96,
+      "unit": "万户",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "其中，基本存款账户7642.96万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 147.03,
+      "unit": "亿户",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "开立个人银行账户147.03亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 98.69,
+      "unit": "亿张",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "全国共开立银行卡98.69亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 91.32,
+      "unit": "亿张",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "其中，借记卡91.32亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.37,
+      "unit": "亿张",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "信用卡和借贷合一卡7.37亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 80.77,
+      "unit": "万台",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "ATM机具80.77万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1545.16,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，全国银行共办理非现金支付业务1545.16亿笔，金额1322.42万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1322.42,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，全国银行共办理非现金支付业务1545.16亿笔，金额1322.42万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1514.41,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，全国共发生银行卡交易1514.41亿笔，金额226.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 226.92,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，全国共发生银行卡交易1514.41亿笔，金额226.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 969.68,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "消费业务969.68亿笔，金额33.62万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 33.62,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "消费业务969.68亿笔，金额33.62万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 775.54,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，银行共处理电子支付业务775.54亿笔，金额822.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 822.97,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，银行共处理电子支付业务775.54亿笔，金额822.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 556.94,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "移动支付业务556.94亿笔，金额129.96万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 129.96,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "移动支付业务556.94亿笔，金额129.96万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 181.4,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "网上支付业务181.4亿笔，金额677.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 677.97,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "网上支付业务181.4亿笔，金额677.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3448.77,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "非银行支付机构处理网络支付业务3448.77亿笔，金额81.87万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 81.87,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "非银行支付机构处理网络支付业务，金额81.87万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3805.06,
+      "unit": "亿笔",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，支付系统共处理支付业务3805.06亿笔，金额3041.69万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3041.69,
+      "unit": "万亿元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "三季度，支付系统共处理支付业务，金额3041.69万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 7.0,
+      "unit": "张",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "人均持有银行卡7.0张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.52,
+      "unit": "张",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "人均持有信用卡和借贷合一卡0.52张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.73,
+      "unit": "台",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "每万人拥有ATM机具5.73台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3406.38,
+      "unit": "元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "银行卡卡均消费金额3406.38元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 346.7,
+      "unit": "元",
+      "period": "2024Q3",
+      "region": "全国",
+      "source_id": "S08",
+      "quote": "笔均消费金额346.7元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 149.51,
+      "unit": "亿户",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "截至四季度末，全国共开立银行账户149.51亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.11,
+      "unit": "亿户",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "开立单位银行账户1.11亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7753.43,
+      "unit": "万户",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "其中，基本存款账户7753.43万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 148.4,
+      "unit": "亿户",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "开立个人银行账户148.4亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 99.13,
+      "unit": "亿张",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "全国共开立银行卡99.13亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 91.86,
+      "unit": "亿张",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "其中，借记卡91.86亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.27,
+      "unit": "亿张",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "信用卡和借贷合一卡7.27亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 80.27,
+      "unit": "万台",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "ATM机具80.27万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1625.2,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，全国银行共办理非现金支付业务1625.2亿笔，金额1453.35万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1453.35,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，全国银行共办理非现金支付业务1625.2亿笔，金额1453.35万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1592.59,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，全国共发生银行卡交易1592.59亿笔，金额240.23万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 240.23,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，全国共发生银行卡交易1592.59亿笔，金额240.23万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 1015.3,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "消费业务1015.3亿笔，金额34.58万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 34.58,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "消费业务1015.3亿笔，金额34.58万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 786.84,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，银行共处理电子支付业务786.84亿笔，金额922.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 922.75,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，银行共处理电子支付业务786.84亿笔，金额922.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 567.66,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "移动支付业务567.66亿笔，金额147.27万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 147.27,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "移动支付业务567.66亿笔，金额147.27万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 181.91,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "网上支付业务181.91亿笔，金额760.43万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 760.43,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "网上支付业务181.91亿笔，金额760.43万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3381.08,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "非银行支付机构处理网络支付业务3381.08亿笔，金额83.55万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 83.55,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "非银行支付机构处理网络支付业务，金额83.55万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 4090.0,
+      "unit": "亿笔",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，支付系统共处理支付业务4090.0亿笔，金额3287.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3287.9,
+      "unit": "万亿元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "四季度，支付系统共处理支付业务，金额3287.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 7.04,
+      "unit": "张",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "人均持有银行卡7.04张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.52,
+      "unit": "张",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "人均持有信用卡和借贷合一卡0.52张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.7,
+      "unit": "台",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "每万人拥有ATM机具5.7台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 3488.11,
+      "unit": "元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "银行卡卡均消费金额3488.11元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 340.58,
+      "unit": "元",
+      "period": "2024Q4",
+      "region": "全国",
+      "source_id": "S09",
+      "quote": "笔均消费金额340.58元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 149.51,
+      "unit": "亿户",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "截至2024年末，全国共开立银行账户149.51亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.11,
+      "unit": "亿户",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "开立单位银行账户1.11亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7753.43,
+      "unit": "万户",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "其中，基本存款账户7753.43万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 148.4,
+      "unit": "亿户",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "开立个人银行账户148.4亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 99.13,
+      "unit": "亿张",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "全国共开立银行卡99.13亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 91.86,
+      "unit": "亿张",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "其中，借记卡91.86亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.27,
+      "unit": "亿张",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "信用卡和借贷合一卡7.27亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 80.27,
+      "unit": "万台",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "ATM机具80.27万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 5763.29,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，全国银行共办理非现金支付业务5763.29亿笔，金额5443.29万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 5443.29,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，全国银行共办理非现金支付业务5763.29亿笔，金额5443.29万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 5642.29,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，全国共发生银行卡交易5642.29亿笔，金额992.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 992.53,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，全国共发生银行卡交易5642.29亿笔，金额992.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 3571.78,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "消费业务3571.78亿笔，金额133.73万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 133.73,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "消费业务3571.78亿笔，金额133.73万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 3016.68,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，银行共处理电子支付业务3016.68亿笔，金额3426.99万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 3426.99,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，银行共处理电子支付业务3016.68亿笔，金额3426.99万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 2109.8,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "移动支付业务2109.8亿笔，金额563.7万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 563.7,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "移动支付业务2109.8亿笔，金额563.7万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 754.35,
+      "unit": "亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "网上支付业务754.35亿笔，金额2798.32万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 2798.32,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "网上支付业务754.35亿笔，金额2798.32万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 1.34,
+      "unit": "万亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "非银行支付机构处理网络支付业务1.34万亿笔，金额331.68万亿元。",
+      "note": "原文以「万亿笔」披露，未换算。"
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 331.68,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "非银行支付机构处理网络支付业务，金额331.68万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 1.42,
+      "unit": "万亿笔",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，支付系统共处理支付业务1.34万亿笔，金额12450.6万亿元。",
+      "note": "原文以「万亿笔」披露，未换算。"
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 12450.6,
+      "unit": "万亿元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "2024年，支付系统共处理支付业务，金额12450.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有银行卡",
+      "value": 7.04,
+      "unit": "张",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "人均持有银行卡7.04张。",
+      "note": ""
+    },
+    {
+      "metric_name": "人均持有信用卡和借贷合一卡",
+      "value": 0.52,
+      "unit": "张",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "人均持有信用卡和借贷合一卡0.52张。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有ATM机具",
+      "value": 5.7,
+      "unit": "台",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "每万人拥有ATM机具5.7台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡卡均消费金额",
+      "value": 1.35,
+      "unit": "万元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "银行卡卡均消费金额1.35万元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡笔均消费金额",
+      "value": 374.4,
+      "unit": "元",
+      "period": "2024Y",
+      "region": "全国",
+      "source_id": "S10",
+      "quote": "笔均消费金额374.4元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 150.97,
+      "unit": "亿户",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "截至一季度末，全国共开立银行账户150.97亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.14,
+      "unit": "亿户",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "开立单位银行账户1.14亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 7931.24,
+      "unit": "万户",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "其中，基本存款账户7931.24万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 149.83,
+      "unit": "亿户",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "开立个人银行账户149.83亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 100.0,
+      "unit": "亿张",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "全国共开立银行卡100.0亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 92.79,
+      "unit": "亿张",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "其中，借记卡92.79亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.21,
+      "unit": "亿张",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "信用卡和借贷合一卡7.21亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 79.25,
+      "unit": "万台",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "ATM机具79.25万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1329.49,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，全国银行共办理非现金支付业务1329.49亿笔，金额1318.58万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1318.58,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，全国银行共办理非现金支付业务1329.49亿笔，金额1318.58万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1299.1,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，全国共发生银行卡交易1299.1亿笔，金额257.79万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 257.79,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，全国共发生银行卡交易1299.1亿笔，金额257.79万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 808.75,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "消费业务808.75亿笔，金额32.09万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 32.09,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "消费业务808.75亿笔，金额32.09万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 719.0,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，银行共处理电子支付业务719.0亿笔，金额838.02万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 838.02,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，银行共处理电子支付业务719.0亿笔，金额838.02万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 513.65,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "移动支付业务513.65亿笔，金额152.64万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 152.64,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "移动支付业务513.65亿笔，金额152.64万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 167.98,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "网上支付业务167.98亿笔，金额669.22万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 669.22,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "网上支付业务167.98亿笔，金额669.22万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3060.72,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "非银行支付机构处理网络支付业务3060.72亿笔，金额84.17万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 84.17,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "非银行支付机构处理网络支付业务，金额84.17万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3459.22,
+      "unit": "亿笔",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，支付系统共处理支付业务3459.22亿笔，金额2770.23万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 2770.23,
+      "unit": "万亿元",
+      "period": "2025Q1",
+      "region": "全国",
+      "source_id": "S11",
+      "quote": "一季度，支付系统共处理支付业务，金额2770.23万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 152.38,
+      "unit": "亿户",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "截至二季度末，全国共开立银行账户152.38亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.16,
+      "unit": "亿户",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "开立单位银行账户1.16亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8075.15,
+      "unit": "万户",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "其中，基本存款账户8075.15万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 151.22,
+      "unit": "亿户",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "开立个人银行账户151.22亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 100.68,
+      "unit": "亿张",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "全国共开立银行卡100.68亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 93.54,
+      "unit": "亿张",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "其中，借记卡93.54亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.15,
+      "unit": "亿张",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "信用卡和借贷合一卡7.15亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 77.57,
+      "unit": "万台",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "ATM机具77.57万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1497.89,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，全国银行共办理非现金支付业务1497.89亿笔，金额1365.36万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1365.36,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，全国银行共办理非现金支付业务1497.89亿笔，金额1365.36万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1466.62,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，全国共发生银行卡交易1466.62亿笔，金额226.7万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 226.7,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，全国共发生银行卡交易1466.62亿笔，金额226.7万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 933.71,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "消费业务933.71亿笔，金额31.57万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 31.57,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "消费业务933.71亿笔，金额31.57万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 800.53,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，银行共处理电子支付业务800.53亿笔，金额858.16万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 858.16,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，银行共处理电子支付业务800.53亿笔，金额858.16万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 583.86,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "移动支付业务583.86亿笔，金额136.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 136.06,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "移动支付业务583.86亿笔，金额136.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 182.17,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "网上支付业务182.17亿笔，金额707.85万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 707.85,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "网上支付业务182.17亿笔，金额707.85万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3338.45,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "非银行支付机构处理网络支付业务3338.45亿笔，金额82.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 82.11,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "非银行支付机构处理网络支付业务，金额82.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3927.51,
+      "unit": "亿笔",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，支付系统共处理支付业务3927.51亿笔，金额3084.83万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3084.83,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S12",
+      "quote": "二季度，支付系统共处理支付业务，金额3084.83万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 153.95,
+      "unit": "亿户",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "截至三季度末，全国共开立银行账户153.95亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.19,
+      "unit": "亿户",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "开立单位银行账户1.19亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8270.91,
+      "unit": "万户",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "其中，基本存款账户8270.91万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 152.76,
+      "unit": "亿户",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "开立个人银行账户152.76亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 101.49,
+      "unit": "亿张",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "全国共开立银行卡101.49亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 94.42,
+      "unit": "亿张",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "其中，借记卡94.42亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 7.07,
+      "unit": "亿张",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "信用卡和借贷合一卡7.07亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 76.09,
+      "unit": "万台",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "ATM机具76.09万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1685.08,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，全国银行共办理非现金支付业务1685.08亿笔，金额1503.36万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1503.36,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，全国银行共办理非现金支付业务1685.08亿笔，金额1503.36万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1652.78,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，全国共发生银行卡交易1652.78亿笔，金额234.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 234.92,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，全国共发生银行卡交易1652.78亿笔，金额234.92万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 1035.94,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "消费业务1035.94亿笔，金额33.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 33.19,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "消费业务1035.94亿笔，金额33.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 834.55,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，银行共处理电子支付业务834.55亿笔，金额945.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 945.4,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，银行共处理电子支付业务834.55亿笔，金额945.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 606.31,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "移动支付业务606.31亿笔，金额137.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 137.53,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "移动支付业务606.31亿笔，金额137.53万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 193.93,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "网上支付业务193.93亿笔，金额792.59万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 792.59,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "网上支付业务193.93亿笔，金额792.59万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3380.19,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "非银行支付机构处理网络支付业务3380.19亿笔，金额85.28万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 85.28,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "非银行支付机构处理网络支付业务，金额85.28万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 4321.43,
+      "unit": "亿笔",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，支付系统共处理支付业务4321.43亿笔，金额3499.98万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3499.98,
+      "unit": "万亿元",
+      "period": "2025Q3",
+      "region": "全国",
+      "source_id": "S13",
+      "quote": "三季度，支付系统共处理支付业务，金额3499.98万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 155.56,
+      "unit": "亿户",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "截至四季度末，全国共开立银行账户155.56亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.2,
+      "unit": "亿户",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "开立单位银行账户1.2亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8332.12,
+      "unit": "万户",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "其中，基本存款账户8332.12万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 154.36,
+      "unit": "亿户",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "开立个人银行账户154.36亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 102.17,
+      "unit": "亿张",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "全国共开立银行卡102.17亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 95.21,
+      "unit": "亿张",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "其中，借记卡95.21亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 6.96,
+      "unit": "亿张",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "信用卡和借贷合一卡6.96亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 74.57,
+      "unit": "万台",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "ATM机具74.57万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1763.81,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，全国银行共办理非现金支付业务1763.81亿笔，金额1552.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1552.9,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，全国银行共办理非现金支付业务1763.81亿笔，金额1552.9万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1729.36,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，全国共发生银行卡交易1729.36亿笔，金额244.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 244.19,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，全国共发生银行卡交易1729.36亿笔，金额244.19万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 1076.72,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "消费业务1076.72亿笔，金额34.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 34.06,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "消费业务1076.72亿笔，金额34.06万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 843.13,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，银行共处理电子支付业务843.13亿笔，金额981.63万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 981.63,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，银行共处理电子支付业务843.13亿笔，金额981.63万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 610.81,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "移动支付业务610.81亿笔，金额145.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 145.75,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "移动支付业务610.81亿笔，金额145.75万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 197.4,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "网上支付业务197.4亿笔，金额821.02万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 821.02,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "网上支付业务197.4亿笔，金额821.02万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3475.1,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "非银行支付机构处理网络支付业务3475.1亿笔，金额86.25万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 86.25,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "非银行支付机构处理网络支付业务，金额86.25万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 4534.0,
+      "unit": "亿笔",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，支付系统共处理支付业务4534.0亿笔，金额3452.03万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3452.03,
+      "unit": "万亿元",
+      "period": "2025Q4",
+      "region": "全国",
+      "source_id": "S14",
+      "quote": "四季度，支付系统共处理支付业务，金额3452.03万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 155.56,
+      "unit": "亿户",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "截至2025年末，全国共开立银行账户155.56亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.2,
+      "unit": "亿户",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "开立单位银行账户1.2亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8332.12,
+      "unit": "万户",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "其中，基本存款账户8332.12万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 154.36,
+      "unit": "亿户",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "开立个人银行账户154.36亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 102.17,
+      "unit": "亿张",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "全国共开立银行卡102.17亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 95.21,
+      "unit": "亿张",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "其中，借记卡95.21亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 6.96,
+      "unit": "亿张",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "信用卡和借贷合一卡6.96亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 74.57,
+      "unit": "万台",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "ATM机具74.57万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 6276.28,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，全国银行共办理非现金支付业务6276.28亿笔，金额5740.24万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 5740.24,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，全国银行共办理非现金支付业务6276.28亿笔，金额5740.24万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 6147.85,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，全国共发生银行卡交易6147.85亿笔，金额963.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 963.6,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，全国共发生银行卡交易6147.85亿笔，金额963.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 3855.13,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "消费业务3855.13亿笔，金额130.91万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 130.91,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "消费业务3855.13亿笔，金额130.91万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 3197.21,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，银行共处理电子支付业务3197.21亿笔，金额3623.2万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 3623.2,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，银行共处理电子支付业务3197.21亿笔，金额3623.2万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 2314.64,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "移动支付业务2314.64亿笔，金额571.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 571.97,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "移动支付业务2314.64亿笔，金额571.97万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 741.48,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "网上支付业务741.48亿笔，金额2990.68万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 2990.68,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "网上支付业务741.48亿笔，金额2990.68万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 13254.45,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "非银行支付机构处理网络支付业务13254.45亿笔，金额337.81万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 337.81,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "非银行支付机构处理网络支付业务，金额337.81万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 16242.16,
+      "unit": "亿笔",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，支付系统共处理支付业务16242.16亿笔，金额12807.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 12807.07,
+      "unit": "万亿元",
+      "period": "2025Y",
+      "region": "全国",
+      "source_id": "S15",
+      "quote": "2025年，支付系统共处理支付业务，金额12807.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 156.4,
+      "unit": "亿户",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "截至一季度末，全国共开立银行账户156.4亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.23,
+      "unit": "亿户",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "开立单位银行账户1.23亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8513.82,
+      "unit": "万户",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "其中，基本存款账户8513.82万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 155.17,
+      "unit": "亿户",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "开立个人银行账户155.17亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 102.61,
+      "unit": "亿张",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "全国共开立银行卡102.61亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 95.74,
+      "unit": "亿张",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "其中，借记卡95.74亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 6.87,
+      "unit": "亿张",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "信用卡和借贷合一卡6.87亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 72.58,
+      "unit": "万台",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "ATM机具72.58万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1531.05,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，全国银行共办理非现金支付业务1531.05亿笔，金额1645.65万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1645.65,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，全国银行共办理非现金支付业务1531.05亿笔，金额1645.65万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1497.86,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，全国共发生银行卡交易1497.86亿笔，金额289.39万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 289.39,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，全国共发生银行卡交易1497.86亿笔，金额289.39万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 908.37,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "消费业务908.37亿笔，金额33.12万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 33.12,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "消费业务908.37亿笔，金额33.12万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 778.94,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，银行共处理电子支付业务778.94亿笔，金额1000.45万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 1000.45,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，银行共处理电子支付业务778.94亿笔，金额1000.45万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 561.54,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "移动支付业务561.54亿笔，金额167.15万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 167.15,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "移动支付业务561.54亿笔，金额167.15万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 181.79,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "网上支付业务181.79亿笔，金额816.69万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 816.69,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "网上支付业务181.79亿笔，金额816.69万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3048.7,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "非银行支付机构处理网络支付业务3048.7亿笔，金额84.79万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 84.79,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "非银行支付机构处理网络支付业务，金额84.79万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 3988.5,
+      "unit": "亿笔",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，支付系统共处理支付业务3988.5亿笔，金额3580.95万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3580.95,
+      "unit": "万亿元",
+      "period": "2026Q1",
+      "region": "全国",
+      "source_id": "S16",
+      "quote": "一季度，支付系统共处理支付业务，金额3580.95万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行账户数量",
+      "value": 156.58,
+      "unit": "亿户",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "截至二季度末，全国共开立银行账户156.58亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "单位银行账户数量",
+      "value": 1.25,
+      "unit": "亿户",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "开立单位银行账户1.25亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "基本存款账户数量",
+      "value": 8679.59,
+      "unit": "万户",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "其中，基本存款账户8679.59万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人银行账户数量",
+      "value": 155.32,
+      "unit": "亿户",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "开立个人银行账户155.32亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡发卡量",
+      "value": 102.67,
+      "unit": "亿张",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "全国共开立银行卡102.67亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "借记卡发卡量",
+      "value": 95.89,
+      "unit": "亿张",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "其中，借记卡95.89亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "信用卡和借贷合一卡发卡量",
+      "value": 6.77,
+      "unit": "亿张",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "信用卡和借贷合一卡6.77亿张。",
+      "note": ""
+    },
+    {
+      "metric_name": "ATM机具数量",
+      "value": 69.43,
+      "unit": "万台",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "ATM机具69.43万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务笔数",
+      "value": 1683.93,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，全国银行共办理非现金支付业务1683.93亿笔，金额1698.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非现金支付业务金额",
+      "value": 1698.4,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，全国银行共办理非现金支付业务1683.93亿笔，金额1698.4万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易笔数",
+      "value": 1650.37,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，全国共发生银行卡交易1650.37亿笔，金额250.51万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡交易金额",
+      "value": 250.51,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，全国共发生银行卡交易1650.37亿笔，金额250.51万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务笔数",
+      "value": 1027.44,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "消费业务1027.44亿笔，金额31.56万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行卡消费业务金额",
+      "value": 31.56,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "消费业务1027.44亿笔，金额31.56万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务笔数",
+      "value": 832.96,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，银行共处理电子支付业务832.96亿笔，金额1011.72万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "电子支付业务金额",
+      "value": 1011.72,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，银行共处理电子支付业务832.96亿笔，金额1011.72万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务笔数",
+      "value": 608.24,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "移动支付业务608.24亿笔，金额144.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "移动支付业务金额",
+      "value": 144.07,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "移动支付业务608.24亿笔，金额144.07万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务笔数",
+      "value": 192.52,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "网上支付业务192.52亿笔，金额853.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "网上支付业务金额",
+      "value": 853.6,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "网上支付业务192.52亿笔，金额853.6万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付笔数",
+      "value": 3407.02,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "非银行支付机构处理网络支付业务3407.02亿笔，金额80.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "非银行支付机构网络支付金额",
+      "value": 80.11,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "非银行支付机构处理网络支付业务，金额80.11万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务笔数",
+      "value": 4372.86,
+      "unit": "亿笔",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，支付系统共处理支付业务4372.86亿笔，金额3628.33万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "支付系统处理业务金额",
+      "value": 3628.33,
+      "unit": "万亿元",
+      "period": "2026Q2",
+      "region": "全国",
+      "source_id": "S17",
+      "quote": "二季度，支付系统共处理支付业务，金额3628.33万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12308.0,
+      "unit": "万户",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年末，本行零售客户数12,308万户，较上年末增长4.1%。",
+      "note": "原文正文以「12,308」披露；同报告表格「零售客户数（万户）12,308.00」。"
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12627.03,
+      "unit": "万户",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "2023年6月末，本行零售客户数12,627.03万户，较上年末增长2.6%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12543.2,
+      "unit": "万户",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年末，本行零售客户数12,543.20万户，较上年末增长1.9%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12553.79,
+      "unit": "万户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "2024年末，本行零售客户数12,553.79万户，较上年末增长0.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12619.08,
+      "unit": "万户",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "2024年6月末，本行零售客户数12,619.08万户，较上年末增长0.6%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售客户数",
+      "value": 12789.63,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行零售客户数12,789.63万户，较上年末增长1.9%。",
+      "note": ""
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 35872.74,
+      "unit": "亿元",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年末，本行管理零售客户资产（AUM）35,872.74亿元，较上年末增长12.7%。",
+      "note": "原文表格单位为百万元（3,587,274），正文以亿元披露。"
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 38640.24,
+      "unit": "亿元",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "2023年6月末，本行管理零售客户资产（AUM）38,640.24亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 40311.77,
+      "unit": "亿元",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年末，本行管理零售客户资产（AUM）40,311.77亿元，较上年末增长12.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 41940.74,
+      "unit": "亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "2024年末，本行零售客户数12,553.79万户，较上年末增长0.1%，管理零售客户资产（AUM）41,940.74亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 41206.3,
+      "unit": "亿元",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "2024年6月末，本行管理零售客户资产（AUM）41,206.30亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "管理零售客户资产（AUM）",
+      "value": 42384.09,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行零售客户数12,789.63万户，较上年末增长1.9%，管理零售客户资产（AUM）42,384.09亿元，较上年末增长1.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 126.52,
+      "unit": "万户",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "财富客户数（万户）126.52。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 133.52,
+      "unit": "万户",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "财富客户数（万户）133.52。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 137.75,
+      "unit": "万户",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "财富客户数（万户）137.75。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 142.43,
+      "unit": "万户",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "本行财富客户142.43万户，较上年末增长3.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 145.62,
+      "unit": "万户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "财富客户数（万户）145.62。",
+      "note": ""
+    },
+    {
+      "metric_name": "财富客户数",
+      "value": 149.15,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行财富客户149.15万户，较上年末增长2.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户数",
+      "value": 8.05,
+      "unit": "万户",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "本行财富客户126.52万户，较上年末增长15.0%，其中私行达标客户8.05万户，较上年末增长15.5%。",
+      "note": "2022年报口径名为「私行达标客户数」，2023年报起改称「私行客户数」。私行客户标准为近三月任意一月日均资产超600万元。"
+    },
+    {
+      "metric_name": "私行客户数",
+      "value": 9.02,
+      "unit": "万户",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "本行财富客户137.75万户，较上年末增长8.9%，其中私行客户9.02万户，较上年末增长12.0%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户数",
+      "value": 9.35,
+      "unit": "万户",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "本行财富客户142.43万户，较上年末增长3.4%，其中私行客户9.35万户，较上年末增长3.7%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户数",
+      "value": 9.68,
+      "unit": "万户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "私行客户数（万户）9.68。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户数",
+      "value": 10.56,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "本行财富客户149.15万户，较上年末增长2.4%，其中私行客户10.56万户，较上年末增长9.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户AUM余额",
+      "value": 16207.85,
+      "unit": "亿元",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "其中私行达标客户AUM余额16,207.85亿元，较上年末增长15.3%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户AUM余额",
+      "value": 19155.15,
+      "unit": "亿元",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "其中私行客户AUM余额19,155.15亿元，较上年末增长18.2%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户AUM余额",
+      "value": 19448.79,
+      "unit": "亿元",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "私行客户AUM余额19,448.79亿元，较上年末增长1.5%。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户AUM余额",
+      "value": 19754.71,
+      "unit": "亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "私行客户AUM余额1,975,471（百万元）。",
+      "note": ""
+    },
+    {
+      "metric_name": "私行客户AUM余额",
+      "value": 19913.13,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "私行客户AUM余额19,913.13亿元，较上年末增长0.8%。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人存款余额",
+      "value": 10349.7,
+      "unit": "亿元",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年末，本行个人存款余额10,349.70亿元，较上年末增长34.3%。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人存款余额",
+      "value": 12076.18,
+      "unit": "亿元",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "个人存款余额1,207,618（百万元）。",
+      "note": ""
+    },
+    {
+      "metric_name": "个人存款余额",
+      "value": 12875.0,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行个人存款余额12,875亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 27.45,
+      "unit": "%",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年，本集团成本收入比27.45%，同比下降0.85个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 26.45,
+      "unit": "%",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "2023年上半年，本集团成本收入比26.45%，同比下降0.01个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 27.9,
+      "unit": "%",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年，本集团业务及管理费459.59亿元，同比下降6.9%，成本收入比27.90%，同比上升0.45个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 27.37,
+      "unit": "%",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "2024年上半年，本集团业务及管理费211.09亿元，同比下降9.9%；成本收入比27.37%，同比上升0.92个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 27.66,
+      "unit": "%",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "成本收入比27.66%，同比下降0.24个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "成本收入比",
+      "value": 29.06,
+      "unit": "%",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "成本收入比29.06%，同比上升1.40个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "不良贷款率",
+      "value": 1.05,
+      "unit": "%",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "不良贷款率1.05%。",
+      "note": ""
+    },
+    {
+      "metric_name": "不良贷款率",
+      "value": 1.06,
+      "unit": "%",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "不良贷款率1.06%。",
+      "note": ""
+    },
+    {
+      "metric_name": "不良贷款率",
+      "value": 1.06,
+      "unit": "%",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "不良贷款率1.06%。",
+      "note": ""
+    },
+    {
+      "metric_name": "不良贷款率",
+      "value": 1.05,
+      "unit": "%",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "不良贷款率1.05%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入",
+      "value": 1030.07,
+      "unit": "亿元",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "分部经营数据：营业收入—零售金融业务 金额103,007（百万元），占比57.3%。",
+      "note": "原表单位为人民币百万元，此处按1亿元=100百万元换算展示，同时保留原文百万元数值于 quote。"
+    },
+    {
+      "metric_name": "零售金融业务营业收入",
+      "value": 961.61,
+      "unit": "亿元",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "分部经营数据：营业收入—零售金融业务 金额96,161（百万元），占比58.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入",
+      "value": 712.55,
+      "unit": "亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "分部经营数据：营业收入—零售金融业务 金额71,255（百万元），占比48.6%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入",
+      "value": 616.26,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "分部经营数据：营业收入—零售金融业务 金额61,626（百万元），占比46.9%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入占比",
+      "value": 57.3,
+      "unit": "%",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "占比% 57.3。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入占比",
+      "value": 58.4,
+      "unit": "%",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "全年零售业务营业收入占比58.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入占比",
+      "value": 48.6,
+      "unit": "%",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "占比% 48.6。",
+      "note": ""
+    },
+    {
+      "metric_name": "零售金融业务营业收入占比",
+      "value": 46.9,
+      "unit": "%",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "占比% 46.9。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 15288.32,
+      "unit": "万户",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "平安口袋银行APP注册用户数15,288.32万户，较上年末增长13.3%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 15992.5,
+      "unit": "万户",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "平安口袋银行APP注册用户数15,992.50万户，较上年末增长4.6%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 16603.91,
+      "unit": "万户",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年末，平安口袋银行APP注册用户数16,603.91万户，较上年末增长8.6%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 16968.46,
+      "unit": "万户",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "2024年6月末，平安口袋银行APP注册用户数16,968.46万户，较上年末增长2.2%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 17403.96,
+      "unit": "万户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "2024年末，平安口袋银行APP注册用户数17,403.96万户，较上年末增长4.8%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP注册用户数",
+      "value": 18223.26,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，平安口袋银行APP注册用户数18,223.26万户，较上年末增长4.7%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 5068.44,
+      "unit": "万户",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "月活跃用户数（MAU）5,068.44万户，较上年末增长5.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 5105.36,
+      "unit": "万户",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "口袋银行APP月活跃用户数（万户）5,105.36。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 5193.67,
+      "unit": "万户",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "其中，月活跃用户数（MAU）5,193.67万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 4338.25,
+      "unit": "万户",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "月活跃用户数（MAU）4,338.25万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 4351.63,
+      "unit": "万户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "其中，月活跃用户数（MAU）4,351.63万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "口袋银行APP月活跃用户数（MAU）",
+      "value": 3995.47,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "其中，月活跃用户数（MAU）3,995.47万户。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1191,
+      "unit": "家",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年末，本行共有109家分行（含香港分行），合计1,191家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1205,
+      "unit": "家",
+      "period": "2023H",
+      "region": "全国",
+      "source_id": "S20",
+      "quote": "2023年6月末，本行共有109家分行（含香港分行），合计1,205家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1201,
+      "unit": "家",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年末，本行共有109家分行（含香港分行），合计1,201家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1180,
+      "unit": "家",
+      "period": "2024H",
+      "region": "全国",
+      "source_id": "S22",
+      "quote": "2024年6月末，本行共有109家分行（含香港分行），合计1,180家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1149,
+      "unit": "家",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "2024年末，本行共有110家分行（含香港分行），合计1,149家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数量",
+      "value": 1108,
+      "unit": "家",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行共有110家分行（含香港分行），合计1,108家营业机构。",
+      "note": ""
+    },
+    {
+      "metric_name": "分行数量（含香港分行）",
+      "value": 109,
+      "unit": "家",
+      "period": "2022A",
+      "region": "全国",
+      "source_id": "S18",
+      "quote": "2022年末，本行共有109家分行（含香港分行）。",
+      "note": ""
+    },
+    {
+      "metric_name": "分行数量（含香港分行）",
+      "value": 109,
+      "unit": "家",
+      "period": "2023A",
+      "region": "全国",
+      "source_id": "S19",
+      "quote": "2023年末，本行共有109家分行（含香港分行）。",
+      "note": ""
+    },
+    {
+      "metric_name": "分行数量（含香港分行）",
+      "value": 110,
+      "unit": "家",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S21",
+      "quote": "2024年末，本行共有110家分行（含香港分行）。",
+      "note": ""
+    },
+    {
+      "metric_name": "分行数量（含香港分行）",
+      "value": 110,
+      "unit": "家",
+      "period": "2025A",
+      "region": "全国",
+      "source_id": "S23",
+      "quote": "2025年末，本行共有110家分行（含香港分行）。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 685.12,
+      "unit": "亿元",
+      "period": "2022A",
+      "region": "上海自贸试验区",
+      "source_id": "S18",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 68,512 159",
+      "note": "年报「机构建设情况」表：机构数1家、资产规模68,512百万元、员工人数159人。按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 159,
+      "unit": "人",
+      "period": "2022A",
+      "region": "上海自贸试验区",
+      "source_id": "S18",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 68,512 159",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 837.82,
+      "unit": "亿元",
+      "period": "2023H",
+      "region": "上海自贸试验区",
+      "source_id": "S20",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 83,782 157",
+      "note": "按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 157,
+      "unit": "人",
+      "period": "2023H",
+      "region": "上海自贸试验区",
+      "source_id": "S20",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 83,782 157",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 780.16,
+      "unit": "亿元",
+      "period": "2023A",
+      "region": "上海自贸试验区",
+      "source_id": "S19",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 78,016 153",
+      "note": "按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 153,
+      "unit": "人",
+      "period": "2023A",
+      "region": "上海自贸试验区",
+      "source_id": "S19",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路 799 号 1 78,016 153",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 1085.26,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "上海自贸试验区",
+      "source_id": "S23",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 108,526 152",
+      "note": "年报「机构建设情况」表：机构数1家、资产规模108,526百万元、员工人数152人。按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 152,
+      "unit": "人",
+      "period": "2025A",
+      "region": "上海自贸试验区",
+      "source_id": "S23",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 108,526 152",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 883.66,
+      "unit": "亿元",
+      "period": "2024A",
+      "region": "上海自贸试验区",
+      "source_id": "S21",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 88,366 158",
+      "note": "按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 158,
+      "unit": "人",
+      "period": "2024A",
+      "region": "上海自贸试验区",
+      "source_id": "S21",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 88,366 158",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸试验区分行 资产规模",
+      "value": 828.51,
+      "unit": "亿元",
+      "period": "2024H",
+      "region": "上海自贸试验区",
+      "source_id": "S22",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 82,851 157",
+      "note": "按1亿元=100百万元换算。"
+    },
+    {
+      "metric_name": "上海自贸试验区分行 员工人数",
+      "value": 157,
+      "unit": "人",
+      "period": "2024H",
+      "region": "上海自贸试验区",
+      "source_id": "S22",
+      "quote": "上海自贸试验区分行 上海市浦东新区杨高南路799号 1 82,851 157",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 74,
+      "unit": "家",
+      "period": "2022A",
+      "region": "上海市",
+      "source_id": "S18",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 74 372,484 2,347",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 75,
+      "unit": "家",
+      "period": "2023H",
+      "region": "上海市",
+      "source_id": "S20",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 75 349,443 2,242",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 74,
+      "unit": "家",
+      "period": "2023A",
+      "region": "上海市",
+      "source_id": "S19",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 74 362,933 2,221",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 73,
+      "unit": "家",
+      "period": "2024H",
+      "region": "上海市",
+      "source_id": "S22",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 73 354,904 2,079",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 68,
+      "unit": "家",
+      "period": "2024A",
+      "region": "上海市",
+      "source_id": "S21",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路1333号 68 364,463 2,073",
+      "note": ""
+    },
+    {
+      "metric_name": "营业机构数（上海分行）",
+      "value": 64,
+      "unit": "家",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S23",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路1333号 64 346,278 2,107",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2347,
+      "unit": "人",
+      "period": "2022A",
+      "region": "上海市",
+      "source_id": "S18",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 74 372,484 2,347",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2242,
+      "unit": "人",
+      "period": "2023H",
+      "region": "上海市",
+      "source_id": "S20",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 75 349,443 2,242",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2221,
+      "unit": "人",
+      "period": "2023A",
+      "region": "上海市",
+      "source_id": "S19",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 74 362,933 2,221",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2079,
+      "unit": "人",
+      "period": "2024H",
+      "region": "上海市",
+      "source_id": "S22",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路 1333 号 73 354,904 2,079",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2073,
+      "unit": "人",
+      "period": "2024A",
+      "region": "上海市",
+      "source_id": "S21",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路1333号 68 364,463 2,073",
+      "note": ""
+    },
+    {
+      "metric_name": "员工人数（上海分行）",
+      "value": 2107,
+      "unit": "人",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S23",
+      "quote": "上海分行 上海市浦东新区陆家嘴环路1333号 64 346,278 2,107",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构本外币资产总额",
+      "value": 467.3,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "2025年二季度末，我国银行业金融机构本外币资产总额467.3万亿元，同比增长7.9%。",
+      "note": ""
+    },
+    {
+      "metric_name": "大型商业银行本外币资产总额",
+      "value": 204.2,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "其中，大型商业银行本外币资产总额204.2万亿元，同比增长10.4%，占比43.7%。",
+      "note": ""
+    },
+    {
+      "metric_name": "股份制商业银行本外币资产总额",
+      "value": 75.7,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "股份制商业银行本外币资产总额75.7万亿元，同比增长5%，占比16.2%。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行不良贷款率",
+      "value": 1.49,
+      "unit": "%",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "商业银行不良贷款率1.49%，较上季末下降0.02个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行不良贷款余额",
+      "value": 3.4,
+      "unit": "万亿元",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "不良贷款余额3.4万亿元，较上季末减少24亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行平均资本利润率",
+      "value": 8.19,
+      "unit": "%",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "2025年二季度末，平均资本利润率为8.19%。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行平均资产利润率",
+      "value": 0.63,
+      "unit": "%",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "平均资产利润率为0.63%。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行拨备覆盖率",
+      "value": 211.97,
+      "unit": "%",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "拨备覆盖率为211.97%，较上季末上升3.84个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行资本充足率",
+      "value": 15.58,
+      "unit": "%",
+      "period": "2025Q2",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "资本充足率为15.58%,较上季末上升0.30个百分点。",
+      "note": ""
+    },
+    {
+      "metric_name": "商业银行上半年累计净利润",
+      "value": 1.2,
+      "unit": "万亿元",
+      "period": "2025H1",
+      "region": "全国",
+      "source_id": "S24",
+      "quote": "2025年上半年，商业银行累计实现净利润1.2万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行业营业网点总数",
+      "value": 22.37,
+      "unit": "万个",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "据中国银行业协会不完全统计，截至2024年末，中国银行业共设立营业网点22.37万家，包括社区支行3788个、小微支行5905个，营业网点总数较上年末减少1,344家。",
+      "note": "中国银行业协会「不完全统计」口径。"
+    },
+    {
+      "metric_name": "全国银行业自助银行数量",
+      "value": 12.43,
+      "unit": "万家",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "截至2024年末，全国营业网点总数达22.37万个，自助银行12.43万家。",
+      "note": ""
+    },
+    {
+      "metric_name": "全国银行业自助设备布放量",
+      "value": 81.74,
+      "unit": "万台",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "累计布放自助设备81.74万台。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构离柜交易总额",
+      "value": 2626.8,
+      "unit": "万亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "据中国银行业协会不完全统计，2024年，银行业金融机构离柜交易总额达2626.80万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构手机银行交易总额",
+      "value": 365.51,
+      "unit": "万亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "银行业金融机构手机银行交易总额达365.51万亿元。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构手机银行个人客户数",
+      "value": 31.95,
+      "unit": "亿户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "手机银行个人客户数达31.95亿户，企业客户数达0.43亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构手机银行企业客户数",
+      "value": 0.43,
+      "unit": "亿户",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "企业客户数达0.43亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构网上银行交易总额",
+      "value": 2147.73,
+      "unit": "亿元",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "银行业金融机构网上银行交易总额达2147.73亿元。",
+      "note": "原文如此标注单位「亿元」，与同段落其他「万亿元」量级不符，疑为原文笔误；此处照抄未作修改。"
+    },
+    {
+      "metric_name": "银行业金融机构客服从业人员",
+      "value": 5.3,
+      "unit": "万人",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "截至2024年末，银行业金融机构客服从业人员为5.30万人。",
+      "note": ""
+    },
+    {
+      "metric_name": "中国银行业营业网点数（协会不完全统计口径）",
+      "value": 22.37,
+      "unit": "万个",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "截至2024年末，全国营业网点总数达22.37万个，自助银行12.43万家，累计布放自助设备81.74万台，通过手机银行、网上银行等线上渠道累计服务客户个人101.04亿户，企业3.08亿户。",
+      "note": ""
+    },
+    {
+      "metric_name": "银行业金融机构法人数量",
+      "value": 4070,
+      "unit": "家",
+      "period": "2025H1",
+      "region": "全国",
+      "source_id": "S28",
+      "quote": "10月9日，国家金融监管总局公布了2025年6月末银行业金融机构法人名单，共计4070家，较2024年6月底，减少355家。",
+      "note": "【来自二手转载】金融界转载普益标准整理，未能读取金融监管总局官网原始名单页（JS 渲染）。"
+    },
+    {
+      "metric_name": "上海市常住人口",
+      "value": 2485.41,
+      "unit": "万人",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "至年末，全市常住人口为2485.41万人。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市户籍常住人口",
+      "value": 1510.91,
+      "unit": "万人",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "其中，户籍常住人口1510.91万人，外来常住人口974.50万人。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市外来常住人口",
+      "value": 974.5,
+      "unit": "万人",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "外来常住人口974.50万人。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市居民人均可支配收入",
+      "value": 91987,
+      "unit": "元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "全年全市居民人均可支配收入91987元，比上年增长4.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市城镇常住居民人均可支配收入",
+      "value": 96842,
+      "unit": "元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "其中，城镇常住居民人均可支配收入96842元，增长4.0%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市农村常住居民人均可支配收入",
+      "value": 48122,
+      "unit": "元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "农村常住居民人均可支配收入48122元，增长5.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市地区生产总值",
+      "value": 56708.71,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "初步核算，全年实现地区生产总值56708.71亿元，比上年增长5.4%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市金融业增加值",
+      "value": 8979.66,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "全年实现金融业增加值8979.66亿元，比上年增长9.7%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市中外资金融机构本外币存款余额",
+      "value": 24.5,
+      "unit": "万亿元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "至年末，全市中外资金融机构本外币各项存款余额24.50万亿元，比上年末增长11.3%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市中外资金融机构本外币贷款余额",
+      "value": 13.07,
+      "unit": "万亿元",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "各项贷款余额13.07万亿元，增长6.5%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海市经营主体总量",
+      "value": 351.52,
+      "unit": "万户",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S26",
+      "quote": "至年末，全市共有各类经营主体351.52万户，比上年末增长2.8%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海监管局直接监管的银行业机构数量",
+      "value": 302,
+      "unit": "家",
+      "period": "2025A",
+      "region": "上海市",
+      "source_id": "S27",
+      "quote": "国家金融监督管理总局上海监管局直接监管的银行业机构名单（截至2025年12月31日）",
+      "note": "本项目按名单序号计数得出共 302 条记录（序号 1-302 连续）。",
+      "derived": true
+    },
+    {
+      "metric_name": "上海自贸区临港新片区离岸贸易规模",
+      "value": 327.37,
+      "unit": "亿美元",
+      "period": "2025A",
+      "region": "上海自贸区临港新片区",
+      "source_id": "S26",
+      "quote": "离岸贸易实现跨越式增长，全年离岸贸易规模达327.37亿美元，比上年增长32.1%。",
+      "note": ""
+    },
+    {
+      "metric_name": "洋山特殊综合保税区进出口总额",
+      "value": 4339.93,
+      "unit": "亿元",
+      "period": "2025A",
+      "region": "上海自贸区临港新片区",
+      "source_id": "S26",
+      "quote": "洋山特殊综合保税区全年进出口总额达4339.93亿元，比上年增长59.2%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸区临港新片区人才落户人数",
+      "value": 7965,
+      "unit": "人",
+      "period": "2025A",
+      "region": "上海自贸区临港新片区",
+      "source_id": "S26",
+      "quote": "人才集聚效应显著，全年人才落户7965人，比上年增长50.7%。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸区向全国复制推广试点经验条数",
+      "value": 77,
+      "unit": "条",
+      "period": "2025A",
+      "region": "上海自贸区",
+      "source_id": "S26",
+      "quote": "至年末，经国务院发文，中国（上海）自由贸易试验区77条试点经验向全国或各自贸试验区复制推广。",
+      "note": ""
+    },
+    {
+      "metric_name": "上海自贸区开展自由贸易账户功能升级试点企业数",
+      "value": 26,
+      "unit": "家",
+      "period": "2025A",
+      "region": "上海自贸区",
+      "source_id": "S26",
+      "quote": "全年中国（上海）自由贸易试验区内26家企业开展自由贸易账户功能升级试点。",
+      "note": ""
+    },
+    {
+      "metric_name": "每万人拥有银行网点数（全国，派生值）",
+      "value": 1.59,
+      "unit": "个/万人",
+      "period": "2024A",
+      "region": "全国",
+      "source_id": "S25",
+      "quote": "由「全国营业网点总数22.37万个（中国银行业协会，S25）」÷「2024年末全国大陆总人口140828万人（人民银行支付体系报告脚注，S10）」计算得出：223700 ÷ 140828 = 1.588。",
+      "note": "【本项目自行计算，非任何来源原文数据】分子分母分别来自 S25 与 S10。",
+      "derived": true
+    }
+  ],
+  "not_found": [
+    {
+      "item": "全国银行网点数量（人民银行口径）",
+      "reason": "人民银行《支付体系运行总体情况》系列报告（2023Q1-2026Q2，共17份）正文与脚注均未披露银行网点数量，仅有 ATM 机具、联网特约商户、联网 POS 机具。已逐份核对全文。"
+    },
+    {
+      "item": "每万人拥有的银行网点数（官方口径）",
+      "reason": "人民银行报告只披露「每万人拥有ATM机具」「每万人拥有联网POS机具」，无网点维度；银保监会/金融监管总局公开数据中亦未找到该指标。仅能由 22.37万网点÷人口 自行派生（见 metrics 中 derived 字段）。"
+    },
+    {
+      "item": "助农取款服务点数量",
+      "reason": "对 17 份人民银行支付体系报告全文检索「助农」，命中 0 次。该指标已不在现行报告披露范围内。"
+    },
+    {
+      "item": "上海地区分省支付业务数据",
+      "reason": "17 份人民银行支付体系报告中，仅「上海票据交易所电子商业汇票系统」业务量被单独列示（属票据基础设施，非上海地区银行业务），无上海分省银行卡/账户/电子支付数据。人民银行上海总部网站未检索到同口径分省披露。"
+    },
+    {
+      "item": "上海市银行业营业网点数量 / 上海银行业从业人员数量",
+      "reason": "上海市统计局统计公报金融业章节只披露存贷款余额与金融市场成交额；上海监管局公开的是「直接监管的银行业机构名单」（302条，为法人及分支机构层级，非网点层级）。未找到官方网点数与从业人员数。"
+    },
+    {
+      "item": "银行业平均成本收入比（行业整体）",
+      "reason": "金融监管总局《2025年二季度银行业保险业主要监管指标数据情况》PDF 全文无成本收入比；其附表《2025年商业银行主要监管指标情况表》页面为 JS 动态渲染（https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1208453 ），web_fetch 仅返回模板占位符，未能读到表格。故未收录行业平均值，只有平安银行单家数据。"
+    },
+    {
+      "item": "银行业平均离柜交易率（%）",
+      "reason": "中国银行业协会《2024年中国银行业服务报告》披露「离柜交易总额2626.80万亿元」（绝对值），但未披露离柜交易率/电子渠道分流率百分比。未找到公开的官方比率。"
+    },
+    {
+      "item": "网点平均服务客户数 / 网点平均柜面业务量",
+      "reason": "检索人民银行、金融监管总局、中国银行业协会公开材料，均未找到该口径的官方统计。属各行内部经营指标，无公开汇总值。"
+    },
+    {
+      "item": "中国银行业法人机构数量（官网原始页核实）",
+      "reason": "仅取得二手转载值 4070 家（2025年6月末，S28）。金融监管总局官网法人名单发布页为 JS 动态渲染，web_fetch 无法读取表格；未取得官网原始名单文件，故该数字标记为「来自二手转载」。"
+    },
+    {
+      "item": "上海市金融机构总数（含非银行金融机构）",
+      "reason": "仅取得上海监管局「直接监管的银行业机构」302 条（S27）。上海市统计局公报未给出金融机构法人总数。未找到覆盖证券、保险、非银的官方合计数。"
+    },
+    {
+      "item": "平安银行 2022 年零售金融业务营业收入占比的官方文字表述",
+      "reason": "2022 年报分部经营数据表给出「占比% 57.3」（S18），但正文未出现「零售业务营业收入占比57.3%」的成句表述（2023年报正文有「58.4%」）。数值来自表格，非正文句子。"
+    }
+  ]
+}

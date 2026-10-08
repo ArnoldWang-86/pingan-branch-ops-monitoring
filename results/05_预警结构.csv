@@ -1,0 +1,13 @@
+﻿cause,severity,alerts
+caliber_gap,1,5
+data_error_duplicate,1,2
+data_error_unit,2,1
+true_risk_capacity,1,7
+true_risk_capacity,2,1
+true_risk_channel_outage,1,1
+true_risk_channel_outage,2,1
+true_risk_operational,1,62
+true_risk_operational,2,1
+true_risk_service,1,9
+true_risk_service,2,4
+undetermined,1,77

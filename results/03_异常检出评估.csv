@@ -1,0 +1,8 @@
+﻿subtype,kind,branch_code,start,end,detected,detected_on,detected_cause,cause_correct,cause_correct_on
+duplicate_batch,data_error,SH020,2026-07-22,2026-07-24,True,2026-07-23,data_error_duplicate,True,2026-07-23
+unit_error,data_error,SH012,2026-09-02,2026-09-02,True,2026-09-02,data_error_unit,True,2026-09-02
+definition_change,caliber_gap,SH014,2026-07-24,2026-09-19,True,2026-07-25,caliber_gap,True,2026-07-25
+capacity_shortage,true_risk,SH002,2026-07-13,2026-09-19,True,2026-07-25,true_risk_capacity,True,2026-07-25
+error_drift,true_risk,SH011,2026-07-23,2026-09-19,True,2026-07-27,true_risk_service,True,2026-07-27
+service_event,true_risk,SH013,2026-08-28,2026-09-01,True,2026-08-28,true_risk_service,True,2026-08-28
+atm_outage,true_risk,SH007,2026-07-11,2026-07-12,True,2026-07-11,true_risk_channel_outage,True,2026-07-11

@@ -1,0 +1,36 @@
+MIT License
+
+Copyright (c) 2026 王嘉钰 (ArnoldWang-86)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+关于本项目内数据的使用说明（不属于 MIT 授权范围）：
+
+1. **模拟数据**（data/raw/branch_ops_detail.jsonl 等）由本项目脚本生成，
+   可自由使用，但**不代表任何真实银行的经营情况**。
+
+2. **真实公开数据**（data/raw/公开数据_原始提取.json 中的指标值）
+   摘录自公开披露文件：中国人民银行《支付体系运行总体情况》、
+   平安银行定期报告、国家金融监督管理总局、中国银行业协会、上海市统计局。
+   本仓库只保留**数值与出处引用**，不包含原始 PDF 文件。
+   如需使用请回溯原始来源并遵守其各自的使用条款。
+
+3. 本项目仅用于个人学习与研究，不代表任何机构的观点或立场。

@@ -1,0 +1,34 @@
+# 私有配置与密钥
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 过程产物
+_qa/
+.pytest_cache/
+
+# 大体积中间产物（analyze_ops.py 可重建，非交付物）
+results/01_检测证据_全量.csv
+
+# 大数据文件（可由脚本复现）
+data/raw/_pdf/
+
+# 本地数据库文件（可由 load_to_db.py 重建）
+tools/*.duckdb
+tools/*.duckdb.wal
+
+# 网页构建中间产物（可由 build_web_agent.py 自动重建）
+tools/web_data.json
+tools/web_data.js
+
+# 个人信息（不进公开仓库）
+assets/证件照.jpg
+assets/
+简历*.docx
+*简历*

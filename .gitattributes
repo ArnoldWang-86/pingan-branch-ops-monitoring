@@ -1,0 +1,23 @@
+# 统一换行符，避免 Windows/Linux 协作时整文件 diff
+* text=auto eol=lf
+
+# 批处理文件必须是 CRLF：cmd.exe 对 LF 结尾的 .bat 处理不稳定
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# 二进制文件不做行尾转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.xlsx binary
+*.docx binary
+*.duckdb binary
+*.pdf binary
+
+# 生成的 HTML 体积大且由脚本产出，diff 无意义
+results/*.html linguist-generated=true
+tools/xlsx.full.min.js linguist-vendored=true
+
+# GitHub 语言统计：不要把 HTML/JS 当成主语言
+results/*.html linguist-documentation
+web/template.html linguist-documentation

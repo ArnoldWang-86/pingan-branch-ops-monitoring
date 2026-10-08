@@ -1,0 +1,88 @@
+{
+  "seed": 20260901,
+  "warning": "本文件为模拟数据中人为注入的异常清单，用作检测算法的评估基准",
+  "definition": {
+    "data_error": "数据错误：录入/接口/单位问题，应修正或剔除，不是业务风险",
+    "caliber_gap": "口径差异：统计口径变化导致的台阶式跳变，不应问责网点",
+    "true_risk": "真实风险：业务指标真实劣化，需要运营干预"
+  },
+  "anomalies": [
+    {
+      "branch_code": "SH020",
+      "start": "2026-07-22",
+      "end": "2026-07-24",
+      "kind": "data_error",
+      "subtype": "duplicate_batch",
+      "description": "SH020 普陀区第2支行：核心系统日终批量任务重跑，柜面业务量按 1.85 倍重复计数 3 天；成本收入比因分母虚高而被动下降，指标之间不自洽",
+      "expect_metric": "counter_txn_cnt",
+      "expect_direction": "up",
+      "expect_min_delta": 0.45
+    },
+    {
+      "branch_code": "SH012",
+      "start": "2026-09-02",
+      "end": "2026-09-02",
+      "kind": "data_error",
+      "subtype": "unit_error",
+      "description": "SH012 闵行区第1支行：叫号系统对接字段单位错误，等候时长按秒写入（放大 60 倍）1 天；业务量、差错率均无异常",
+      "expect_metric": "avg_wait_minutes",
+      "expect_direction": "up",
+      "expect_min_delta": 8.0
+    },
+    {
+      "branch_code": "SH014",
+      "start": "2026-07-24",
+      "end": "2026-09-19",
+      "kind": "caliber_gap",
+      "subtype": "definition_change",
+      "description": "SH014 闵行区第3支行：2026-07-24 起柜面业务量口径调整（剔除查询类交易），柜面业务量台阶式下降约 30%，但等候时长、差错率、投诉率均保持基线水平",
+      "expect_metric": "counter_txn_cnt",
+      "expect_direction": "down",
+      "expect_min_delta": 0.25
+    },
+    {
+      "branch_code": "SH002",
+      "start": "2026-07-13",
+      "end": "2026-09-19",
+      "kind": "true_risk",
+      "subtype": "capacity_shortage",
+      "description": "SH002 浦东新区第2支行：2026-07-13 起周边社区集中交付入住，柜面业务量持续上升约 35%、平均等候时长上升约 55%，窗口数未同步调整（产能不足）",
+      "expect_metric": "avg_wait_minutes",
+      "expect_direction": "up",
+      "expect_min_delta": 0.25
+    },
+    {
+      "branch_code": "SH011",
+      "start": "2026-07-23",
+      "end": "2026-09-19",
+      "kind": "true_risk",
+      "subtype": "error_drift",
+      "description": "SH011 自贸区临港新片区分行营业部：2026-07-23 起 3 名柜员轮换为新人，业务差错率由约 0.45% 逐步升至约 1.4%，事后监督复核量同步上升",
+      "expect_metric": "error_rate",
+      "expect_direction": "up",
+      "expect_min_delta": 0.4
+    },
+    {
+      "branch_code": "SH013",
+      "start": "2026-08-28",
+      "end": "2026-09-01",
+      "kind": "true_risk",
+      "subtype": "service_event",
+      "description": "SH013 闵行区第2支行：2026-08-28 起发生一起集中服务投诉事件，每日新增投诉约 5~9 笔并持续 5 天",
+      "expect_metric": "complaint_per_10k",
+      "expect_direction": "up",
+      "expect_min_delta": 1.0
+    },
+    {
+      "branch_code": "SH007",
+      "start": "2026-07-11",
+      "end": "2026-07-12",
+      "kind": "true_risk",
+      "subtype": "atm_outage",
+      "description": "SH007 黄浦区第3支行：自助设备故障 2 天，电子渠道分流率骤降、柜面业务量与等候时长同步上升",
+      "expect_metric": "counter_txn_cnt",
+      "expect_direction": "up",
+      "expect_min_delta": 0.2
+    }
+  ]
+}

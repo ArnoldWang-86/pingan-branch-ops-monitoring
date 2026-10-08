@@ -1,0 +1,37 @@
+{
+  "engine": "DuckDB 1.5.6",
+  "engine_choice_note": "原设计目标 MySQL 8；本机无法获取 MySQL/MariaDB 二进制（官方 CDN TLS 被重置、国内镜像仅镜像 Linux 包、无管理员权限），改用 DuckDB 作为可执行引擎。已逐项验证本项目 SQL 的 8 类语法结构均兼容。",
+  "database_file": "tools\\pingan_ops.duckdb",
+  "sql_file": "src\\sql\\01_indicator_layer.sql",
+  "sql_file_executed": true,
+  "table_rows": {
+    "ods_branch_ops_detail": 1800,
+    "dim_branch": 20,
+    "dwd_branch_ops_daily": 1800,
+    "dws_branch_ops_monitor": 1800,
+    "ads_ops_alert": 942
+  },
+  "indicator_summary": {
+    "dwd_avg_counter_txn": 134.57,
+    "dwd_avg_wait": 9.87,
+    "dwd_avg_e_channel": 0.7301,
+    "alert_by_cause": {
+      "true_risk_operational": 495,
+      "undetermined": 418,
+      "true_risk_capacity": 24,
+      "data_error_duplicate": 3,
+      "caliber_gap": 1,
+      "true_risk_channel_outage": 1
+    },
+    "alert_total": 942,
+    "alert_severity_ge2": 2
+  },
+  "cross_check": {
+    "mysql_layer_vol_dev_gt20pct": 466
+  },
+  "comparison_with_python": {
+    "note": "两边预警数不一致是**预期**的：SQL 层基线用「前 7 日均值」未按星期几对齐，会产生周期性假信号；Python 层用「同星期几中位数」基线。同一份数据实测 SQL 层 466 条 vs Python 层 171 条（约 2.7 倍）。本项目最终检测与评估结论以 Python 层为准，SQL 层用于展示建模与窗口函数写法。",
+    "python_alerts_total": 171,
+    "sql_layer_alerts_total": 942
+  }
+}

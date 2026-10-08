@@ -1,0 +1,197 @@
+{
+  "simulated": true,
+  "note": "本数据集为 bootstrap 模拟数据，用于方法验证；生成参数锚定真实公开数据，锚点见 public_anchors 字段。网点级日运营微观数据在国内没有公开来源，故采用模拟数据。",
+  "seed": 20260901,
+  "start_date": "2026-06-22",
+  "days": 90,
+  "branches": 20,
+  "rows": 1800,
+  "anomalies_injected": 7,
+  "anchor_warning": null,
+  "public_anchors": {
+    "used_fallback": false,
+    "meta": {
+      "source_file": "D:\\秋招\\平安银行运营指标监控\\data\\raw\\公开数据_原始提取.json",
+      "source_count": 28,
+      "metric_count": 601,
+      "not_found_count": 11
+    },
+    "anchors": {
+      "成本收入比": {
+        "center": 0.27449999999999997,
+        "range": [
+          0.2196,
+          0.32939999999999997
+        ],
+        "source_id": "S18",
+        "raw_metric": "成本收入比",
+        "raw_value": 27.45,
+        "raw_unit": "%",
+        "period": "2022A",
+        "matched_keyword": "成本收入比",
+        "note": "取自上市银行年报披露的成本收入比（公开值，按 % 归一化为比例）。"
+      },
+      "业务差错率": {
+        "center": 0.0045,
+        "range": [
+          0.0018,
+          0.009
+        ],
+        "note": "公开渠道无银行业统一差错率口径，采用行业普遍区间作为模拟参数。（未在公开数据中找到单位与量级都匹配的指标）"
+      },
+      "电子渠道分流率": {
+        "center": 0.72,
+        "range": [
+          0.6,
+          0.86
+        ],
+        "note": "公开渠道无「电子渠道分流率」口径（人行与银行业协会均为绝对量披露），采用行业普遍区间作为模拟参数的量级参照，**不是**由公开数据计算得出。"
+      },
+      "人均等候时长_分钟": {
+        "center": 12.0,
+        "range": [
+          4.0,
+          28.0
+        ]
+      }
+    },
+    "industry_reference": {
+      "全国银行业营业网点数": {
+        "value": 22.37,
+        "unit": "万个",
+        "period": "2024A",
+        "source_id": "S25",
+        "raw_metric": "全国银行业营业网点总数"
+      },
+      "自助银行数量": {
+        "value": 12.43,
+        "unit": "万家",
+        "period": "2024A",
+        "source_id": "S25",
+        "raw_metric": "全国银行业自助银行数量"
+      },
+      "离柜交易总额": {
+        "value": 2626.8,
+        "unit": "万亿元",
+        "period": "2024A",
+        "source_id": "S25",
+        "raw_metric": "银行业金融机构离柜交易总额"
+      },
+      "手机银行个人客户数": {
+        "value": 365.51,
+        "unit": "万亿元",
+        "period": "2024A",
+        "source_id": "S25",
+        "raw_metric": "银行业金融机构手机银行交易总额"
+      },
+      "上海市常住人口": {
+        "value": 2485.41,
+        "unit": "万人",
+        "period": "2025A",
+        "source_id": "S26",
+        "raw_metric": "上海市常住人口"
+      },
+      "上海自贸区临港新片区离岸贸易规模": {
+        "value": 327.37,
+        "unit": "亿美元",
+        "period": "2025A",
+        "source_id": "S26",
+        "raw_metric": "上海自贸区临港新片区离岸贸易规模"
+      }
+    },
+    "ftz_branch_series": [
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 685.12,
+        "unit": "亿元",
+        "period": "2022A",
+        "source_id": "S18"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 159,
+        "unit": "人",
+        "period": "2022A",
+        "source_id": "S18"
+      },
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 837.82,
+        "unit": "亿元",
+        "period": "2023H",
+        "source_id": "S20"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 157,
+        "unit": "人",
+        "period": "2023H",
+        "source_id": "S20"
+      },
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 780.16,
+        "unit": "亿元",
+        "period": "2023A",
+        "source_id": "S19"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 153,
+        "unit": "人",
+        "period": "2023A",
+        "source_id": "S19"
+      },
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 1085.26,
+        "unit": "亿元",
+        "period": "2025A",
+        "source_id": "S23"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 152,
+        "unit": "人",
+        "period": "2025A",
+        "source_id": "S23"
+      },
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 883.66,
+        "unit": "亿元",
+        "period": "2024A",
+        "source_id": "S21"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 158,
+        "unit": "人",
+        "period": "2024A",
+        "source_id": "S21"
+      },
+      {
+        "metric": "上海自贸试验区分行 资产规模",
+        "value": 828.51,
+        "unit": "亿元",
+        "period": "2024H",
+        "source_id": "S22"
+      },
+      {
+        "metric": "上海自贸试验区分行 员工人数",
+        "value": 157,
+        "unit": "人",
+        "period": "2024H",
+        "source_id": "S22"
+      }
+    ]
+  },
+  "model_constants": {
+    "service_min_per_txn": 8.5,
+    "effective_hours_per_day": 7.5,
+    "base_wait_coef": 12.0,
+    "base_error_rate": 0.0045,
+    "base_complaint_per_10k": 0.65,
+    "base_cost_ratio": 0.28
+  }
+}
